@@ -31,6 +31,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected Servo leftPush;
     protected Servo rightPush;
 
+    //this is a comment
 
     @Override public void init() {
         /////////////////////////////////////////////////////////////////
