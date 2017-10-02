@@ -58,6 +58,9 @@ import java.util.Locale;
 @Autonomous(name = "Sensor: REVColor", group = "Sensor")
 public class SensorREVColorDistance extends LinearOpMode {
 
+
+
+    //demo comment
     /**
      * Note that the REV Robotics Color-Distance incorporates two sensors into one device.
      * It has a light/distance (range) sensor.  It also has an RGB color sensor.
@@ -120,7 +123,7 @@ public class SensorREVColorDistance extends LinearOpMode {
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
             telemetry.addData("Hue", hsvValues[0]);
-            telemetry.addData("Touch: ", touch.getState());
+            telemetry.addData("Touch: ", !touch.getState());
 
             // change the background color to match the color detected by the RGB sensor.
             // pass a reference to the hue, saturation, and value array as an argument
