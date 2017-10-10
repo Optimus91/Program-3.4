@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODERS;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODERS;
 
-@TeleOp(name="Teleop meccanum", group="Teleop")
+@TeleOp(name="8668 Teleop meccanum", group="Teleop")
 
 public class team8668Teleop extends OpMode {
     ////////////////////////////////////////////
