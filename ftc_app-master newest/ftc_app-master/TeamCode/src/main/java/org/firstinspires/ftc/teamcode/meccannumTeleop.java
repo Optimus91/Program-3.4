@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODERS;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODERS;
 
-@TeleOp(name="Teleop meccanum", group="Teleop")
+@TeleOp(name="Meccanum Teleop Test", group="Teleop")
 
 public class meccannumTeleop extends OpMode {
     ////////////////////////////////////////////
@@ -53,10 +53,10 @@ public class meccannumTeleop extends OpMode {
         xL_val = (float) scaleInput(xL_val);
         xR_val = (float) scaleInput(xR_val);
 
-        float RF =(yL_val-xR_val-xL_val);  //these are the calculations need to make a simple
-        float LF =(yL_val+xR_val+xL_val);  // mecaccnum drive. The left joystick controls moving
-        float RR= (yL_val-xR_val+xL_val);  //straight forward/backward and straight sideways. The
-        float LR =(yL_val+xR_val-xL_val);  //right joystick controls turning.
+        float RF =(yL_val+xR_val+xL_val);  //these are the calculations need to make a simple
+        float LF =(yL_val-xR_val-xL_val);  // mecaccnum drive. The left joystick controls moving
+        float RR= (yL_val+xR_val-xL_val);  //straight forward/backward and straight sideways. The
+        float LR =(yL_val-xR_val+xL_val);  //right joystick controls turning.
 
         RF = Range.clip(RF, -1, 1);
         LF = Range.clip(LF, -1, 1);
