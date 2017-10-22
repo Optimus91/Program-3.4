@@ -18,6 +18,8 @@ public class wannabeTeleop extends OpMode {
     ////////////////////////////////////////////////
     DcMotor rightFront;
     DcMotor leftFront;
+    DcMotor rightRear;
+    DcMotor leftRear;
     Servo flashlightServo;
     Servo flipperServo;
     double powerval;
@@ -28,16 +30,24 @@ public class wannabeTeleop extends OpMode {
     @Override
     public void init() {
         telemetry.addData ("0", "I AM HERE");
-        flipperServo = hardwareMap.servo.get("flipper");
+        //flipperServo = hardwareMap.servo.get("flipper");
         //flashlightServo= hardwareMap.servo.get("flashlight");
 
-        leftFront = hardwareMap.dcMotor.get("left");
-        rightFront = hardwareMap.dcMotor.get("right");
+        leftFront = hardwareMap.dcMotor.get("leftFront");
+        rightFront = hardwareMap.dcMotor.get("rightFront");
 
         leftFront.setMode(RUN_USING_ENCODERS);
         rightFront.setMode(RUN_USING_ENCODERS);
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        leftFront.setDirection(DcMotor.Direction.FORWARD);
         rightFront.setDirection(DcMotor.Direction.REVERSE);
+
+        leftRear = hardwareMap.dcMotor.get("leftRear");
+        rightRear = hardwareMap.dcMotor.get("rightRear");
+
+        leftRear.setMode(RUN_USING_ENCODERS);
+        rightRear.setMode(RUN_USING_ENCODERS);
+        leftRear.setDirection(DcMotor.Direction.FORWARD);
+        rightRear.setDirection(DcMotor.Direction.REVERSE);
         telemetry.addData("","V 2");
 
         flipper=0.5;
@@ -60,7 +70,7 @@ public class wannabeTeleop extends OpMode {
         //////BEACON PRESSER////////////////
         /////////////////////////////////////
 
-        if(gamepad1.y){
+       /* if(gamepad1.y){
             flipper+=0.01;
         }
         else if(gamepad1.a){
@@ -82,7 +92,7 @@ public class wannabeTeleop extends OpMode {
         flipperServo.setPosition(flipper);
 //        flashlightServo.setPosition(flashlight);
 
-
+*/
         /////////////////////////////////////////////////////////////
         //     LAUNCHER MOTORS                ////////////////
         //The below statements allow the driver to write a constant speed to the launcher motors.
@@ -92,6 +102,9 @@ public class wannabeTeleop extends OpMode {
         leftStick=(float)scaleInput(leftStick);
         rightFront.setPower(rightStick);
         leftFront.setPower(leftStick);
+        rightRear.setPower(rightStick);
+        leftRear.setPower(leftStick);
+
 
     }
     @Override
