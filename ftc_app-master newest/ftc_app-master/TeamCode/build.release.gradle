@@ -1,6 +1,5 @@
 repositories {
     flatDir {
-        dirs 'libs', '\\Users\\andrew\\Downloads\\navx-mxp-libs\\android\\libs'
 	dirs 'libs', 'C:\\Users\\Nick\\navx-mxp\\android\\libs'
     }
 }
