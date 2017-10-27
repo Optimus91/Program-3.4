@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
@@ -11,7 +12,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
  * You can use the X button on either gamepad to turn the LED on and off.
  */
 @Autonomous(name = "Nick Sensor Demo", group = "sensor")
-
+@Disabled
 public class nick_sensor extends LinearOpMode {
     ColorSensor RGB;
     GyroSensor gyro;
