@@ -3,9 +3,11 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODERS;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODERS;
 
@@ -35,6 +37,7 @@ public class team8668Teleop extends OpMode {
     public void init() {
         powerval=0.55;
         telemetry.addData ("0", "I AM HERE");
+        /*
         leftPush = hardwareMap.servo.get("leftPush");
         rightPush = hardwareMap.servo.get("rightPush");
         balllauncher1 = hardwareMap.dcMotor.get("balllauncher1");
@@ -45,17 +48,18 @@ public class team8668Teleop extends OpMode {
         balllauncher2.setDirection(DcMotor.Direction.REVERSE);
         ballcollector = hardwareMap.dcMotor.get("ballcollector");
         ballcollector.setMode(RUN_WITHOUT_ENCODERS);
+        */
         leftFront = hardwareMap.dcMotor.get("leftFront");
         rightFront = hardwareMap.dcMotor.get("rightFront");
-        leftFront.setMode(RUN_USING_ENCODERS);
-        rightFront.setMode(RUN_USING_ENCODERS);
+        leftFront.setMode(RUN_USING_ENCODER);
+        rightFront.setMode(RUN_USING_ENCODER);
         leftFront.setDirection(DcMotor.Direction.FORWARD);
-        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.FORWARD);
         leftRear = hardwareMap.dcMotor.get("leftRear");
         rightRear = hardwareMap.dcMotor.get("rightRear");
-        rightRear.setMode(RUN_USING_ENCODERS);
-        leftRear.setMode(RUN_USING_ENCODERS);
-        leftRear.setDirection(DcMotor.Direction.FORWARD);
+        rightRear.setMode(RUN_USING_ENCODER);
+        leftRear.setMode(RUN_USING_ENCODER);
+        leftRear.setDirection(DcMotor.Direction.REVERSE);
         rightRear.setDirection(DcMotor.Direction.REVERSE);
         telemetry.addData("","V 2");
         leftVal=0.5;
@@ -67,9 +71,9 @@ public class team8668Teleop extends OpMode {
         /////Drive Train//////////////////////////
         /////////////////////////////////////////
 
-        float yL_val = -gamepad1.left_stick_y*((float)0.7);            //reading raw values from the joysticks
-        float xL_val = gamepad1.left_stick_x*((float)0.7);            //reading raw values from the joysticks
-        float xR_val = gamepad1.right_stick_x/2;
+        float yL_val = -gamepad1.left_stick_y;            //reading raw values from the joysticks
+        float xL_val = gamepad1.left_stick_x;            //reading raw values from the joysticks
+        float xR_val = gamepad1.right_stick_x;
 
         //clip the right/left values so that the values never exceed +/- 1.
         yL_val = (float) scaleInput(yL_val);
@@ -89,14 +93,14 @@ public class team8668Teleop extends OpMode {
         //////////////////////////////////////////
         /////Ball Collector//////////////////////
         /////////////////////////////////////////
-        float collector = gamepad2.right_trigger-gamepad2.left_trigger;
-        collector = (float) scaleInput(collector);
-        collector = Range.clip(collector, -1, 1); //To keep power value within the acceptable range.
+        //float collector = gamepad2.right_trigger-gamepad2.left_trigger;
+        //collector = (float) scaleInput(collector);
+        //collector = Range.clip(collector, -1, 1); //To keep power value within the acceptable range.
 
         //////////////////////////////////////////////////////////
         //////BEACON PRESSER////////////////
         /////////////////////////////////////
-
+/*
         if(gamepad1.y){
             leftVal=0.15;
             rightVal=0.15;
@@ -160,14 +164,15 @@ public class team8668Teleop extends OpMode {
         launchpower1=Range.clip(launchpower1, -1, 1); //clip the launcher power to keep in within aceptable range
         balllauncher1.setPower(launchpower1);
         balllauncher2.setPower(launchpower1);
+        */
         rightFront.setPower(RF);
         leftFront.setPower(LF);
         rightRear.setPower(RR);
         leftRear.setPower(LR);
 
         telemetry.addData ("01: Ball Launcher Power: ", powerval);
-        telemetry.addData ("02: right pusher:  "+rightPush.getPosition()+ "||||   left pusher: "+leftPush.getPosition()+"","");
-        telemetry.addData ("03: Ball Collector Power: ", collector);
+        //telemetry.addData ("02: right pusher:  "+rightPush.getPosition()+ "||||   left pusher: "+leftPush.getPosition()+"","");
+        //telemetry.addData ("03: Ball Collector Power: ", collector);
         telemetry.addData ("04: back right position: ", rightRear.getCurrentPosition());
         telemetry.addData ("04: back left position: ", leftRear.getCurrentPosition());
 

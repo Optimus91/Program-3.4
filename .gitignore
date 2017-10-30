@@ -64,3 +64,7 @@ $RECYCLE.BIN/
 ftc_app-master newest/ftc_app-master/TeamCode/build.release.gradle
 .idea
 Test.txt
+ftc_app-master newest/ftc_app-master/TeamCode/build.release_BACKUP_50665.gradle
+ftc_app-master newest/ftc_app-master/TeamCode/build.release_BASE_50665.gradle
+ftc_app-master newest/ftc_app-master/TeamCode/build.release_LOCAL_50665.gradle
+ftc_app-master newest/ftc_app-master/TeamCode/build.release_REMOTE_50665.gradle
