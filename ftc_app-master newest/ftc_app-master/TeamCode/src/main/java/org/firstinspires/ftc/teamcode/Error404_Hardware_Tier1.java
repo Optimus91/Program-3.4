@@ -1,13 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RESET_ENCODERS;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
@@ -19,17 +28,10 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected DcMotor rightFront;
     protected DcMotor leftRear;
     protected DcMotor rightRear;
-    protected DcMotor ballCollector;
-    protected DcMotor balllauncher1;
-    protected DcMotor balllauncher2;
-    protected ColorSensor RGB;
-    protected ColorSensor beacon;
-    protected ColorSensor beacon2;
-    protected GyroSensor gyro;
-    protected TouchSensor touch;
-    protected TouchSensor touch2;
-    protected Servo leftPush;
-    protected Servo rightPush;
+    protected Servo arm;
+    protected IntegratingGyroscope gyro;
+    protected NavxMicroNavigationSensor navxMicro;
+    protected AnalogInput camera;
 
     //this is a comment
 
@@ -40,60 +42,26 @@ public class Error404_Hardware_Tier1 extends OpMode {
         //    an error message shows on the driver station telemetry.  //
         *////////////////////////////////////////////////////////////////
         try {
-            touch2 = hardwareMap.touchSensor.get("touch2");
+            arm = hardwareMap.get(Servo.class, "jewelSword");
         } catch (Exception p_exeception) {
-            telemetry.addData("Touch 2 not found in config file", 0);
-            touch2 = null;
+            telemetry.addData("Jewel Sword not found in config file", 0);
+            arm = null;
         }
         try {
-            leftPush = hardwareMap.servo.get("leftPush");   ///beacon pusher
+            camera = hardwareMap.get(AnalogInput.class, "camera");
         } catch (Exception p_exeception) {
-            telemetry.addData("leftPush not found in config file", 0);
-            leftPush = null;
+            telemetry.addData("camera not found in config file", 0);
+            camera = null;
         }
         try {
-            rightPush = hardwareMap.servo.get("rightPush");
+            navxMicro = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
+            gyro = (IntegratingGyroscope)navxMicro;
         } catch (Exception p_exeception) {
-            telemetry.addData("rightPush not found in config file", 0);
-            rightPush = null;
-        }
-        try {
-            balllauncher2 = hardwareMap.dcMotor.get("balllauncher2");
-        } catch (Exception p_exeception) {
-            telemetry.addData("ball launcher 2 not found in config file", 0);
-            balllauncher2 = null;
-        }
-        try {
-            balllauncher1 = hardwareMap.dcMotor.get("balllauncher1");
-        } catch (Exception p_exeception) {
-            telemetry.addData("ball launcher 1 not found in config file", 0);
-            balllauncher1 = null;
-        }
-        try {
-            touch = hardwareMap.touchSensor.get("touch");
-        } catch (Exception p_exeception) {
-            telemetry.addData("Touch not found in config file", 0);
-            touch = null;
-        }
-        try {
-            gyro = hardwareMap.gyroSensor.get("gyro");
-        } catch (Exception p_exeception) {
-            telemetry.addData("Gyro not found in config file", 0);
-            gyro = null;
+            telemetry.addData("navx not found in config file", 0);
+            navxMicro = null;
         }
 
-        try {
-            RGB = hardwareMap.colorSensor.get("mr");
-        } catch (Exception p_exeception) {
-            telemetry.addData("Color Sensor not found in config file", 0);
-            RGB = null;
-        }
-        try {
-            beacon = hardwareMap.colorSensor.get("beacon");
-        } catch (Exception p_exeception) {
-            telemetry.addData("Beacon Color Sensor not found in config file", 0);
-            beacon = null;
-        }
+
         try {
             leftFront = hardwareMap.dcMotor.get("leftFront");
         } catch (Exception p_exeception) {
@@ -118,24 +86,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
             telemetry.addData("rightRear not found in config file", 0);
             rightRear = null;
         }
-        try {
-            ballCollector = hardwareMap.dcMotor.get("ballcollector");
-        } catch (Exception p_exeception) {
-            telemetry.addData("ballcollector not found in config file", 0);
-            leftFront = null;
-        }
-        try {
-            beacon2 = hardwareMap.colorSensor.get("beacon2");
-        } catch (Exception p_exeception) {
-            telemetry.addData("Beacon 2 Color Sensor not found in config file", 0);
-            beacon2 = null;
-        }
-        RGB.setI2cAddress(I2cAddr.create8bit(0x3C));       //30 is the decimal conversion from 7 bit hexadecimal value 0x1e converted from 8 bit hexadecimal 0x3c
-        beacon.setI2cAddress(I2cAddr.create8bit(0x2C));
-        beacon2.setI2cAddress(I2cAddr.create8bit(0x5C));
-        RGB.enableLed(false); //not sure why these are needed here.  Seems to help reset the LEDS so the next enable commands are obeyed.
-        beacon.enableLed(false);
-        beacon2.enableLed(false);
+
+        //RGB.setI2cAddress(I2cAddr.create8bit(0x3C));       //30 is the decimal conversion from 7 bit hexadecimal value 0x1e converted from 8 bit hexadecimal 0x3c
+        //beacon.setI2cAddress(I2cAddr.create8bit(0x2C));
+        //beacon2.setI2cAddress(I2cAddr.create8bit(0x5C));
+        //RGB.enableLed(false); //not sure why these are needed here.  Seems to help reset the LEDS so the next enable commands are obeyed.
+        //beacon.enableLed(false);
+        //beacon2.enableLed(false);
 
     }
 
@@ -270,6 +227,11 @@ public class Error404_Hardware_Tier1 extends OpMode {
             motor.setMode(RESET_ENCODERS);
         }
     }
+
+    public int getHeading(){
+        Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            return (int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
+        }
 
 
 

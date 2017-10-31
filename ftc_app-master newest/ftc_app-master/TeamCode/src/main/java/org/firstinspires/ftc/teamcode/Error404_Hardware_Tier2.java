@@ -10,16 +10,20 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         servomotor.setPosition(position);
     }
 
+    public boolean ourColorOnRight(int buffer){
+
+        return  true;
+    }
     public void gyroCalibrate()
     {
-        double before = gyro.getHeading();
-        gyro.calibrate();
-        while (gyro.getHeading() != 0) {
-            telemetry.addData("Gyro: ", gyro.getHeading());
+        double before = getHeading();
+        //gyro.calibrate();
+        while (getHeading() != 0) {
+            telemetry.addData("Gyro: ", getHeading());
         }
         telemetry.addData("Gyro Calibrated", "");
         telemetry.addData("Before: ", before);
-        telemetry.addData("After: ", gyro.getHeading());
+        telemetry.addData("After: ", getHeading());
 
     }
     public void driveStright(String mode, double power, String direction, int position) {
@@ -205,7 +209,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
     public void slide_sideways_gyro(String mode, double power, String direction, int zeropoint){
         int maxDrift=5;
         int drift=0;
-        int current=gyro.getHeading();
+        int current=getHeading();
         set_mode(leftFront, mode);
         set_mode(leftRear, mode);
         set_mode(rightFront, mode);
@@ -264,9 +268,10 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         }
     }
 
+
     public void turn_gyro_power_new(int desired_gyro, double starting_power, double fraction_to_change_power, String direction){
         double powervalue=0;
-        int heading = gyro.getHeading();
+        int heading = getHeading();
         double last_part=(desired_gyro*fraction_to_change_power);
         if(direction.toLowerCase().equals("r")) {
             if (heading <= last_part) {
@@ -310,11 +315,11 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         double powervalue=0;
         double last_part=(desired_gyro*fraction_to_change_power);
         if(direction.toLowerCase()=="r") {
-            if (gyro.getHeading() <= last_part) {
+            if (getHeading() <= last_part) {
                 powervalue = starting_power;
             }
-            if (gyro.getHeading() > last_part && gyro.getHeading() < desired_gyro) {
-                powervalue = (desired_gyro - gyro.getHeading()) / 200;
+            if (getHeading() > last_part && getHeading() < desired_gyro) {
+                powervalue = (desired_gyro - getHeading()) / 200;
 
             }
             if(powervalue <0.03) {
@@ -324,7 +329,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             pointTurn("RUE", powervalue, "r", 0); //turn towards line
         } // end if direction = r
         if(direction.toLowerCase()=="l") {
-            int heading = gyro.getHeading();
+            int heading = getHeading();
             if (heading>180)
             {
                 heading=-360+heading;
@@ -333,7 +338,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
                 powervalue = starting_power;
             }
             if (heading < last_part && heading > desired_gyro) {
-                powervalue = (desired_gyro - gyro.getHeading()) / 200;
+                powervalue = (desired_gyro - getHeading()) / 200;
             }
             if (powervalue < 0.03) {
                 powervalue = 0.03;

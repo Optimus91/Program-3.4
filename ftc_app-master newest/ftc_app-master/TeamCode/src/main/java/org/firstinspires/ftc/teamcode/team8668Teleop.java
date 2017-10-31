@@ -21,11 +21,7 @@ public class team8668Teleop extends OpMode {
     DcMotor leftFront;
     DcMotor rightRear;
     DcMotor leftRear;
-    DcMotor ballcollector;
-    DcMotor balllauncher1;
-    DcMotor balllauncher2;
-    Servo leftPush;
-    Servo rightPush;
+    Servo arm;
     float launchspeed1;
     double powerval;
     double rightVal=0;
@@ -49,6 +45,7 @@ public class team8668Teleop extends OpMode {
         ballcollector = hardwareMap.dcMotor.get("ballcollector");
         ballcollector.setMode(RUN_WITHOUT_ENCODERS);
         */
+        arm=hardwareMap.servo.get("jewelSword");
         leftFront = hardwareMap.dcMotor.get("leftFront");
         rightFront = hardwareMap.dcMotor.get("rightFront");
         leftFront.setMode(RUN_USING_ENCODER);
@@ -63,7 +60,7 @@ public class team8668Teleop extends OpMode {
         rightRear.setDirection(DcMotor.Direction.REVERSE);
         telemetry.addData("","V 2");
         leftVal=0.5;
-        rightVal=0.5;
+        //rightVal=0.5;
     }
     @Override
     public void loop() {
@@ -100,27 +97,15 @@ public class team8668Teleop extends OpMode {
         //////////////////////////////////////////////////////////
         //////BEACON PRESSER////////////////
         /////////////////////////////////////
-/*
+
         if(gamepad1.y){
-            leftVal=0.15;
-            rightVal=0.15;
+            leftVal+=0.01;
         }
         else if(gamepad1.a){
-            leftVal =1.0;
-            rightVal=1.0;
+            leftVal-=0.01;
         }
-        else if(gamepad1.x){
-            leftVal=0.5;
-            rightVal=0.5;
-        }
-        else if(gamepad1.b){
-            leftVal=0.75;
-            rightVal=0.75;
-        }
-        else{
-            // leftVal = 0.0;
-            // rightVal=0.0;
-        }
+        leftVal = Range.clip(leftVal,-1,1);
+        /*
         rightPush.setPosition(rightVal);
         leftPush.setPosition(leftVal);
 
@@ -169,6 +154,7 @@ public class team8668Teleop extends OpMode {
         leftFront.setPower(LF);
         rightRear.setPower(RR);
         leftRear.setPower(LR);
+        arm.setPosition(leftVal);
 
         telemetry.addData ("01: Ball Launcher Power: ", powerval);
         //telemetry.addData ("02: right pusher:  "+rightPush.getPosition()+ "||||   left pusher: "+leftPush.getPosition()+"","");
