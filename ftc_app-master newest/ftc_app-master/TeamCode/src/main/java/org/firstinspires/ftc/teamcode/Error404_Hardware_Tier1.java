@@ -18,10 +18,24 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RESET_ENCODERS;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
-import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODERS;
-import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODERS;
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODER;
+import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+
 
 public class Error404_Hardware_Tier1 extends OpMode {
     protected DcMotor leftFront;
@@ -33,7 +47,8 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected NavxMicroNavigationSensor navxMicro;
     protected AnalogInput camera;
 
-    //this is a comment
+    OpenGLMatrix lastLocation = null;
+    VuforiaLocalizer vuforia;
 
     @Override public void init() {
         /////////////////////////////////////////////////////////////////
@@ -94,8 +109,26 @@ public class Error404_Hardware_Tier1 extends OpMode {
         //beacon.enableLed(false);
         //beacon2.enableLed(false);
 
+
     }
 
+    public String readCryptograph(){
+        String dejavu="";
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        parameters.vuforiaLicenseKey = "AXqihmr/////AAAAGfBzFvn3mUp2pArXwOs50RaJ5JQdpAr4rsjsH+U8jWqZz9IZH657T+p7j4SgiRhOxlbMsoXP43dcRWb953uxv1Pd9ykpvITS8R0LGB8w8DIEYElzCWAvx0qxFO/6mUq2nuWvAhSyGbVsQk3IgjC17DwijqO1i21E7bZtAp3LRfUaNjvwh38Q0EZkIY0ulaUChjb/sep2XzJ8/yoOxq3deuAVx6pSPcQwaLpdV7vSvLr7rDr1OIOZeb5DGjAEA4QLiV/t8/daIVi3AAWTpCi0kskgtT/KZMzzok8ACYE96pDMKn7Z5epuguKyZ4/6w9Mc7oMF68XMbtf60AhZvgUApJCakYrDT9MwT7IpGa03e+HC";
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
+        this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+        VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
+        VuforiaTrackable relicTemplate = relicTrackables.get(0);
+        relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
+        relicTrackables.activate();
+        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+        if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+            dejavu = vuMark.toString();
+        }
+        return dejavu;
+    }
     public DcMotor convert(int mtr) {
         if (mtr == 1) {
             telemetry.addData("test",mtr);
@@ -216,18 +249,18 @@ public class Error404_Hardware_Tier1 extends OpMode {
     }
 
     ///////////////////////////////////////////
-    /* methods that resets encoders if found, //
+    /* methods that resets encoders if found,//
     //          else does nothing.           //
     *//////////////////////////////////////////
 
-    public void reset_encoder(DcMotor motor)
+   /* public void reset_encoder(DcMotor motor)
     {
         if(motor != null)
         {
             motor.setMode(RESET_ENCODERS);
         }
     }
-
+*/
     public int getHeading(){
         Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             return (int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
@@ -263,10 +296,10 @@ public class Error404_Hardware_Tier1 extends OpMode {
                 motor.setMode(RUN_TO_POSITION);
             }
             if (modetoset.equals("RUE")){
-                motor.setMode(RUN_USING_ENCODERS);
+                motor.setMode(RUN_USING_ENCODER);
             }
             if (modetoset.equals("RWOE")){
-                motor.setMode(RUN_WITHOUT_ENCODERS);
+                motor.setMode(RUN_WITHOUT_ENCODER);
             }
         }
     }

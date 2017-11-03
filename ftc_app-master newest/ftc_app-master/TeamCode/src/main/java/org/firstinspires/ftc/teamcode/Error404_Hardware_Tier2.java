@@ -11,7 +11,6 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
     }
 
     public boolean ourColorOnRight(int buffer){
-
         return  true;
     }
     public void gyroCalibrate()
@@ -26,17 +25,17 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         telemetry.addData("After: ", getHeading());
 
     }
-    public void driveStright(String mode, double power, String direction, int position) {
+    public void driveStraight(String mode, double power, String direction, int position) {
         position=distance2encoder(position,6,1);
         if (direction.toLowerCase().equals("f")) {
             set_direction(leftFront, "f");
-            set_direction(leftRear, "f");
-            set_direction(rightFront, "r");
+            set_direction(leftRear, "r");
+            set_direction(rightFront, "f");
             set_direction(rightRear, "r");
         } else {
             set_direction(leftFront, "r");
-            set_direction(leftRear, "r");
-            set_direction(rightFront, "f");
+            set_direction(leftRear, "f");
+            set_direction(rightFront, "r");
             set_direction(rightRear, "f");
         }
         set_mode(leftFront, mode);
@@ -62,7 +61,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         set_power(power, rightFront);
         set_power(power, rightRear);
     }
-    public void resetAllEncoders_withWait(){
+    /*public void resetAllEncoders_withWait(){
         int count=0;
         reset_encoder(rightFront);
         reset_encoder(rightRear);
@@ -79,20 +78,20 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         reset_encoder(leftFront);
         reset_encoder(leftRear);
     }
-
+*/
 
     //Direction is either l "L" for left or r for right, instead of F for forward and B for backward
     public void pointTurn(String mode, double power, String direction, int position){
         position=distance2encoder(position,6,1);
         if (direction.toLowerCase().equals("r")) {
             set_direction(leftFront, "f");
-            set_direction(leftRear, "f");
-            set_direction(rightFront, "f");
+            set_direction(leftRear, "r");
+            set_direction(rightFront, "r");
             set_direction(rightRear, "f");
         } else {
             set_direction(leftFront, "r");
-            set_direction(leftRear, "r");
-            set_direction(rightFront, "r");
+            set_direction(leftRear, "f");
+            set_direction(rightFront, "f");
             set_direction(rightRear, "r");
         }
         //sets mode to what is sent in with the "mode" parameter
@@ -110,65 +109,6 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         right_set_power(power);
     }
 
-//Unused at current time
-    /*
-    public void swing_turn(String mode, double powerLeft, double powerRight, String direction, int position)
-        {
-            position = distance2encoder(position, 6, 1);
-            set_direction(leftFront, "f");
-            set_direction(leftRear, "f");
-            set_direction(rightFront, "r");
-            set_direction(rightRear, "r");
-            set_mode(leftFront, mode);
-            set_mode(leftRear, mode);
-            set_mode(rightFront, mode);
-            set_mode(rightRear, mode);
-            if(direction.toLowerCase().equals("r"))
-                {
-                    set_position(rightFront, position);
-                    set_position(rightRear, position);
-                    double temp = powerLeft - powerRight;
-                    temp += 1;
-                    position *= temp;
-                    set_position(leftFront, position);
-                    set_position(leftRear, position);
-                } else {
-                    set_position(leftFront, position);
-                    set_position(leftRear, position);
-                    double temp = powerRight - powerLeft;
-                    temp += 1;
-                    position *= temp;
-                    set_position(rightFront, position);
-                    set_position(rightRear, position);
-                }
-            left_set_power(powerLeft);
-            right_set_power(powerRight);
-    }
-*/
-    //Unused at current time
-    /*
-    public void pivot_turn(String mode, double power, String direction, int position){
-        position = distance2encoder(position, 6, 1);
-        set_direction(leftFront, "f");
-        set_direction(leftRear, "f");
-        set_direction(rightFront, "r");
-        set_direction(rightRear, "r");
-        set_mode(leftFront, mode);
-        set_mode(leftRear, mode);
-        set_mode(rightFront, mode);
-        set_mode(rightRear, mode);
-        if (direction.toLowerCase().equals("l")) {
-            set_position(rightFront, position);
-            set_position(rightRear, position);
-            right_set_power(power);
-        } else {
-            set_position(leftFront, position);
-            set_position(leftRear, position);
-            left_set_power(power);
-        }
-    }
-    */
-
     public void slide_sideways(String mode, double power, String direction, int position){
         position = distance2encoder(position, 4, 1);
         position=position*2; //because the wheels on the meccanum wheels are at 45', multiply the encoder counts by 2
@@ -179,8 +119,8 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         if (direction.toLowerCase().equals("r")) {
             set_direction(leftFront, "f");
             set_direction(rightRear, "r");
-            set_direction(rightFront, "f");
-            set_direction(leftRear, "r");
+            set_direction(rightFront, "r");
+            set_direction(leftRear, "f");
             set_position(rightFront, position);
             set_position(rightRear, position);
             set_position(leftFront, position);
@@ -193,8 +133,8 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         } else if (direction.toLowerCase().equals("l")) {  // added else tim
             set_direction(leftFront, "r");
             set_direction(rightRear, "f");
-            set_direction(rightFront, "r");
-            set_direction(leftRear, "f");
+            set_direction(rightFront, "f");
+            set_direction(leftRear, "r");
             set_position(rightFront, position);
             set_position(rightRear, position);
             set_position(leftFront, position);
@@ -232,8 +172,8 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             else {
                 set_direction(leftFront, "f");
                 set_direction(rightRear, "r");
-                set_direction(rightFront, "f");
-                set_direction(leftRear, "r");
+                set_direction(rightFront, "r");
+                set_direction(leftRear, "f");
                 set_power(power, rightRear);
                 set_power(power, rightFront);
                 set_power(power, leftFront);
@@ -258,8 +198,8 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             else {
                 set_direction(leftFront, "r");
                 set_direction(rightRear, "f");
-                set_direction(rightFront, "r");
-                set_direction(leftRear, "f");
+                set_direction(rightFront, "f");
+                set_direction(leftRear, "r");
                 set_power(power, rightRear);
                 set_power(power, rightFront);
                 set_power(power, leftFront);
