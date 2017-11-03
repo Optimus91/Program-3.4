@@ -1,24 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+@Autonomous(name="Blue Jewel Back", group="Jewel")
 
-@Autonomous(name="Blue Jewel Front", group="Jewel")
-
-public class frontJewelBlue10_30 extends Error404_Hardware_Tier2
+public class RearJewelBlue10_30 extends Error404_Hardware_Tier2
 
 {
     ///////////////////////////////////////////////////////////////////
     private int state = 0;
     private int encoder=0;
     private int test=0;
-    public frontJewelBlue10_30()
+    public RearJewelBlue10_30()
     {
     }
     @Override public void init(){
@@ -59,7 +52,7 @@ public class frontJewelBlue10_30 extends Error404_Hardware_Tier2
                     break;
                 }
             case 2:
-                driveStraight("RUE",0.2,"f",0);
+                driveStraight("RUE",0.1,"f",0);
                 if(leftFront.getCurrentPosition()-encoder>50) {
                     driveStraight("RUE",0,"f",0);
                     state=4;
@@ -67,7 +60,7 @@ public class frontJewelBlue10_30 extends Error404_Hardware_Tier2
                 }
                 break;
             case 3:
-                driveStraight("RUE",0.2,"r",0);
+                driveStraight("RUE",0.1,"r",0);
                 if(leftFront.getCurrentPosition()-encoder>50) {
                     driveStraight("RUE",0,"f",0);
                     state=4;
@@ -77,17 +70,10 @@ public class frontJewelBlue10_30 extends Error404_Hardware_Tier2
             case 4:
                 arm.setPosition(0);
                 driveStraight("RUE",0.2,"f",0);
-                if(leftFront.getCurrentPosition()-encoder>600) {
-                    slide_sideways("RUE",0,"l",0);
+                if(leftFront.getCurrentPosition()-encoder>800) {
+                    driveStraight("RUE",0,"f",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
-                }
-                break;
-            case 5:
-                slide_sideways("RUE",0.2,"l",0);
-                if(leftFront.getCurrentPosition()-encoder>200) {
-                    slide_sideways("RUE", 0, "r", 0);
-                    state++;
                 }
                 break;
             default:
