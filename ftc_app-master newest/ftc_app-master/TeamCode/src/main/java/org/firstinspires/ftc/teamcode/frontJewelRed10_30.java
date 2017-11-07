@@ -2,16 +2,16 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Blue Jewel Back", group="Jewel")
+@Autonomous(name="Red Jewel Front", group="Jewel")
 
-public class RearJewelBlue10_30 extends Error404_Hardware_Tier2
+public class frontJewelRed10_30 extends Error404_Hardware_Tier2
 
 {
     ///////////////////////////////////////////////////////////////////
     private int state = 0;
     private int encoder=0;
     private int test=0;
-    public RearJewelBlue10_30()
+    public frontJewelRed10_30()
     {
     }
     @Override public void init(){
@@ -20,6 +20,8 @@ public class RearJewelBlue10_30 extends Error404_Hardware_Tier2
         telemetry.addData("","V 1");
     }
     @Override public void start(){
+        //resetAllEncoders_withWait();
+        //gyroCalibrate();
 
     }
     @Override public void loop ()
@@ -27,7 +29,7 @@ public class RearJewelBlue10_30 extends Error404_Hardware_Tier2
         switch (state)
         {
             case 0:
-                slide_sideways("RUE",0.3,"r",0);
+                slide_sideways("RUE",0.2,"r",0);
                 if(leftFront.getCurrentPosition()>90) {
                     slide_sideways("RUE", 0, "r", 0);
                     state++;
@@ -38,21 +40,21 @@ public class RearJewelBlue10_30 extends Error404_Hardware_Tier2
 
                 if(camera.getVoltage()<1.2){
                     telemetry.addData("On left","");
-                    driveStraight("RUE",0,"f",0);
-                    state=2;
+                    driveStraight("RUE",0,"r",0);
+                    state=3;
                     encoder=leftFront.getCurrentPosition();
                     break;
                 }
                 else if(camera.getVoltage()>1.2){
                     telemetry.addData("On right","");
-                    driveStraight("RUE",0,"r",0);
-                    state=3;
+                    driveStraight("RUE",0,"f",0);
+                    state=2;
                     break;
                 }
             case 2:
                 driveStraight("RUE",0.2,"f",0);
-                if(leftFront.getCurrentPosition()-encoder>120) {
-                    driveStraight("RUE",0,"r",0);
+                if(leftFront.getCurrentPosition()-encoder>50) {
+                    driveStraight("RUE",0,"f",0);
                     state=4;
                     encoder=leftFront.getCurrentPosition();
                 }
@@ -60,18 +62,25 @@ public class RearJewelBlue10_30 extends Error404_Hardware_Tier2
             case 3:
                 driveStraight("RUE",0.2,"r",0);
                 if(leftFront.getCurrentPosition()-encoder>50) {
-                    driveStraight("RUE",0,"r",0);
+                    driveStraight("RUE",0,"f",0);
                     state=4;
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
             case 4:
                 arm.setPosition(0);
-                driveStraight("RUE",0.3,"r",0);
-                if(leftFront.getCurrentPosition()-encoder>800) {
-                    driveStraight("RUE",0,"r",0);
+                driveStraight("RUE",0.2,"f",0);
+                if(leftFront.getCurrentPosition()-encoder>600) {
+                    slide_sideways("RUE",0,"l",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
+                }
+                break;
+            case 5:
+                slide_sideways("RUE",0.2,"l",0);
+                if(leftFront.getCurrentPosition()-encoder>200) {
+                    slide_sideways("RUE", 0, "r", 0);
+                    state++;
                 }
                 break;
             default:
@@ -85,6 +94,8 @@ public class RearJewelBlue10_30 extends Error404_Hardware_Tier2
         telemetry.addData("3. Camera:  ", camera.getVoltage());
         telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("5. Delta Position: ", encoder);
+
+
 
     } // loop
 } //

@@ -3,12 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-
 @Autonomous(name="Blue Jewel Front", group="Jewel")
 
 public class frontJewelBlue10_30 extends Error404_Hardware_Tier2
@@ -36,14 +30,14 @@ public class frontJewelBlue10_30 extends Error404_Hardware_Tier2
         switch (state)
         {
             case 0:
-                slide_sideways("RUE",0.2,"r",0);
+                slide_sideways("RUE",0.3,"r",0);
                 if(leftFront.getCurrentPosition()>90) {
                     slide_sideways("RUE", 0, "r", 0);
                     state++;
                 }
                 break;
             case 1:
-                arm.setPosition(0.45);
+                arm.setPosition(0.55);
 
                 if(camera.getVoltage()<1.2){
                     telemetry.addData("On left","");
@@ -61,7 +55,7 @@ public class frontJewelBlue10_30 extends Error404_Hardware_Tier2
             case 2:
                 driveStraight("RUE",0.2,"f",0);
                 if(leftFront.getCurrentPosition()-encoder>50) {
-                    driveStraight("RUE",0,"f",0);
+                    driveStraight("RUE",0,"r",0);
                     state=4;
                     encoder=leftFront.getCurrentPosition();
                 }
@@ -69,14 +63,14 @@ public class frontJewelBlue10_30 extends Error404_Hardware_Tier2
             case 3:
                 driveStraight("RUE",0.2,"r",0);
                 if(leftFront.getCurrentPosition()-encoder>50) {
-                    driveStraight("RUE",0,"f",0);
+                    driveStraight("RUE",0,"r",0);
                     state=4;
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
             case 4:
                 arm.setPosition(0);
-                driveStraight("RUE",0.2,"f",0);
+                driveStraight("RUE",0.3,"r",0);
                 if(leftFront.getCurrentPosition()-encoder>600) {
                     slide_sideways("RUE",0,"l",0);
                     state++;
@@ -84,7 +78,7 @@ public class frontJewelBlue10_30 extends Error404_Hardware_Tier2
                 }
                 break;
             case 5:
-                slide_sideways("RUE",0.2,"l",0);
+                slide_sideways("RUE",0.3,"l",0);
                 if(leftFront.getCurrentPosition()-encoder>200) {
                     slide_sideways("RUE", 0, "r", 0);
                     state++;
