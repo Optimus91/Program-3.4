@@ -50,6 +50,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
     OpenGLMatrix lastLocation = null;
     VuforiaLocalizer vuforia;
 
+    VuforiaTrackables relicTrackables;
+    VuforiaTrackable relicTemplate;
+
     @Override public void init() {
         /////////////////////////////////////////////////////////////////
         /* Attempting a hardware map of the motors, servos, and sensors//
@@ -109,20 +112,20 @@ public class Error404_Hardware_Tier1 extends OpMode {
         //beacon.enableLed(false);
         //beacon2.enableLed(false);
 
-
     }
 
     public String readCryptograph(){
         String dejavu="";
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-        parameters.vuforiaLicenseKey = "AXqihmr/////AAAAGfBzFvn3mUp2pArXwOs50RaJ5JQdpAr4rsjsH+U8jWqZz9IZH657T+p7j4SgiRhOxlbMsoXP43dcRWb953uxv1Pd9ykpvITS8R0LGB8w8DIEYElzCWAvx0qxFO/6mUq2nuWvAhSyGbVsQk3IgjC17DwijqO1i21E7bZtAp3LRfUaNjvwh38Q0EZkIY0ulaUChjb/sep2XzJ8/yoOxq3deuAVx6pSPcQwaLpdV7vSvLr7rDr1OIOZeb5DGjAEA4QLiV/t8/daIVi3AAWTpCi0kskgtT/KZMzzok8ACYE96pDMKn7Z5epuguKyZ4/6w9Mc7oMF68XMbtf60AhZvgUApJCakYrDT9MwT7IpGa03e+HC";
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
-        this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
-        VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-        VuforiaTrackable relicTemplate = relicTrackables.get(0);
-        relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
-        relicTrackables.activate();
+//        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+//        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+//        parameters.vuforiaLicenseKey = "AXqihmr/////AAAAGfBzFvn3mUp2pArXwOs50RaJ5JQdpAr4rsjsH+U8jWqZz9IZH657T+p7j4SgiRhOxlbMsoXP43dcRWb953uxv1Pd9ykpvITS8R0LGB8w8DIEYElzCWAvx0qxFO/6mUq2nuWvAhSyGbVsQk3IgjC17DwijqO1i21E7bZtAp3LRfUaNjvwh38Q0EZkIY0ulaUChjb/sep2XzJ8/yoOxq3deuAVx6pSPcQwaLpdV7vSvLr7rDr1OIOZeb5DGjAEA4QLiV/t8/daIVi3AAWTpCi0kskgtT/KZMzzok8ACYE96pDMKn7Z5epuguKyZ4/6w9Mc7oMF68XMbtf60AhZvgUApJCakYrDT9MwT7IpGa03e+HC";
+//        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
+//        vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+//        VuforiaTrackables relicTrackables = vuforia.loadTrackablesFromAsset("RelicVuMark");
+//        VuforiaTrackable relicTemplate = relicTrackables.get(0);
+//        relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
+//        relicTrackables.activate();
+
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
         if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
             dejavu = vuMark.toString();
@@ -140,7 +143,17 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return null;
     }
 
-    public void start() {}
+    public void start() {
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        parameters.vuforiaLicenseKey = "AXqihmr/////AAAAGfBzFvn3mUp2pArXwOs50RaJ5JQdpAr4rsjsH+U8jWqZz9IZH657T+p7j4SgiRhOxlbMsoXP43dcRWb953uxv1Pd9ykpvITS8R0LGB8w8DIEYElzCWAvx0qxFO/6mUq2nuWvAhSyGbVsQk3IgjC17DwijqO1i21E7bZtAp3LRfUaNjvwh38Q0EZkIY0ulaUChjb/sep2XzJ8/yoOxq3deuAVx6pSPcQwaLpdV7vSvLr7rDr1OIOZeb5DGjAEA4QLiV/t8/daIVi3AAWTpCi0kskgtT/KZMzzok8ACYE96pDMKn7Z5epuguKyZ4/6w9Mc7oMF68XMbtf60AhZvgUApJCakYrDT9MwT7IpGa03e+HC";
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
+        vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+            relicTrackables = vuforia.loadTrackablesFromAsset("RelicVuMark");
+        relicTemplate = relicTrackables.get(0);
+        relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
+        relicTrackables.activate();
+    }
     public void loop() { }
     public void stop() { }
 
