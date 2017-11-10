@@ -32,11 +32,7 @@ public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
         telemetry.addData("Gyro: ", getHeading());
         telemetry.addData("","V 1");
     }
-    @Override public void start(){
-        //resetAllEncoders_withWait();
-        //gyroCalibrate();
-
-    }
+    
     @Override public void loop ()
     {
         switch (state)
