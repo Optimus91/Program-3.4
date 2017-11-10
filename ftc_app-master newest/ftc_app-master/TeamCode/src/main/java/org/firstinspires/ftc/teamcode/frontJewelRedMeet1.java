@@ -18,7 +18,6 @@ public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
     public static final String TAG = "Vuforia VuMark Sample";
 
     OpenGLMatrix lastLocation = null;
-    int holder = 0;
 
     ///////////////////////////////////////////////////////////////////
     private int state = 0;
@@ -31,14 +30,21 @@ public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
         super.init();
         telemetry.addData("Gyro: ", getHeading());
         telemetry.addData("","V 1");
+        telemetry.update();
     }
-    
+    @Override public void start(){
+        super.start();
+        telemetry.addData("6. Pattern: ", readCryptograph());
+        telemetry.update();
+    }
+
     @Override public void loop ()
     {
         switch (state)
         {
             case 0:
                 telemetry.addData("6. Pattern: ", readCryptograph());
+                telemetry.addData("test1","test1");
                 telemetry.update();
                 slide_sideways("RUE",0.3,"r",0);
                 if(leftFront.getCurrentPosition()>50) {
@@ -81,6 +87,7 @@ public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
                 break;
             case 4:
                 telemetry.addData("6. Pattern: ", readCryptograph());
+                telemetry.addData("test2","test2");
                 telemetry.update();
                 arm.setPosition(0);
                 driveStraight("RUE",0.3,"f",0);
