@@ -30,13 +30,13 @@ public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
         {
             case 0:
                 slide_sideways("RUE",0.3,"r",0);
-                if(leftFront.getCurrentPosition()>90) {
+                if(leftFront.getCurrentPosition()>50) {
                     slide_sideways("RUE", 0, "r", 0);
                     state++;
                 }
                 break;
             case 1:
-                arm.setPosition(0.45);
+                arm.setPosition(0.5);
 
                 if(camera.getVoltage()<1.2){
                     telemetry.addData("On left","");
@@ -49,6 +49,7 @@ public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
                     telemetry.addData("On right","");
                     driveStraight("RUE",0,"f",0);
                     state=2;
+                    encoder=leftFront.getCurrentPosition();
                     break;
                 }
             case 2:

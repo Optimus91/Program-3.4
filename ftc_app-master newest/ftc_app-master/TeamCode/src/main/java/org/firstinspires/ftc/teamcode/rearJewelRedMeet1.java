@@ -30,13 +30,13 @@ public class rearJewelRedMeet1 extends Error404_Hardware_Tier2
         {
             case 0:
                 slide_sideways("RUE",0.2,"r",0);
-                if(leftFront.getCurrentPosition()>90) {
+                if(leftFront.getCurrentPosition()>50) {
                     slide_sideways("RUE", 0, "r", 0);
                     state++;
                 }
                 break;
             case 1:
-                arm.setPosition(0.45);
+                arm.setPosition(0.5);
 
                 if(camera.getVoltage()<1.2){
                     telemetry.addData("On left","");
@@ -49,11 +49,12 @@ public class rearJewelRedMeet1 extends Error404_Hardware_Tier2
                     telemetry.addData("On right","");
                     driveStraight("RUE",0,"f",0);
                     state=2;
+                    encoder=leftFront.getCurrentPosition();
                     break;
                 }
             case 2:
                 driveStraight("RUE",0.2,"f",0);
-                if(leftFront.getCurrentPosition()-encoder>50) {
+                if(leftFront.getCurrentPosition()-encoder>70) {
                     driveStraight("RUE",0,"f",0);
                     state=4;
                     encoder=leftFront.getCurrentPosition();
@@ -61,7 +62,7 @@ public class rearJewelRedMeet1 extends Error404_Hardware_Tier2
                 break;
             case 3:
                 driveStraight("RUE",0.2,"r",0);
-                if(leftFront.getCurrentPosition()-encoder>50) {
+                if(leftFront.getCurrentPosition()-encoder>70) {
                     driveStraight("RUE",0,"f",0);
                     state=4;
                     encoder=leftFront.getCurrentPosition();
@@ -77,10 +78,19 @@ public class rearJewelRedMeet1 extends Error404_Hardware_Tier2
                 }
                 break;
             case 5:
-                slide_sideways("RUE",0.2,"l",0);
-                if(leftFront.getCurrentPosition()-encoder>200) {
-                    slide_sideways("RUE", 0, "r", 0);
+                slide_sideways("RUE",0.3,"l",0);
+                if(leftFront.getCurrentPosition()-encoder>400) {
+                    driveStraight("RUE",0,"f",0);
                     state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+            case 6:
+                driveStraight("RUE",0.3,"f",0);
+                if(leftFront.getCurrentPosition()-encoder>100) {
+                    slide_sideways("RUE",0,"l",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
                 }
                 break;
             default:

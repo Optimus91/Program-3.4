@@ -30,7 +30,7 @@ public class rearJewelBlueMeet1 extends Error404_Hardware_Tier2
         {
             case 0:
                 slide_sideways("RUE",0.3,"r",0);
-                if(leftFront.getCurrentPosition()>90) {
+                if(leftFront.getCurrentPosition()>50) {
                     slide_sideways("RUE", 0, "r", 0);
                     state++;
                 }
@@ -49,6 +49,7 @@ public class rearJewelBlueMeet1 extends Error404_Hardware_Tier2
                     telemetry.addData("On right","");
                     driveStraight("RUE",0,"r",0);
                     state=3;
+                    encoder=leftFront.getCurrentPosition();
                     break;
                 }
             case 2:
@@ -70,7 +71,7 @@ public class rearJewelBlueMeet1 extends Error404_Hardware_Tier2
             case 4:
                 arm.setPosition(0);
                 driveStraight("RUE",0.3,"r",0);
-                if(leftFront.getCurrentPosition()-encoder>600) {
+                if(leftFront.getCurrentPosition()-encoder>400) {
                     slide_sideways("RUE",0,"l",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
@@ -78,9 +79,18 @@ public class rearJewelBlueMeet1 extends Error404_Hardware_Tier2
                 break;
             case 5:
                 slide_sideways("RUE",0.3,"l",0);
-                if(leftFront.getCurrentPosition()-encoder>200) {
-                    slide_sideways("RUE", 0, "r", 0);
+                if(leftFront.getCurrentPosition()-encoder>400) {
+                    driveStraight("RUE",0,"r",0);
                     state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+            case 6:
+                driveStraight("RUE",0.3,"r",0);
+                if(leftFront.getCurrentPosition()-encoder>100) {
+                    slide_sideways("RUE",0,"l",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
                 }
                 break;
             default:
