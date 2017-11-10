@@ -2,16 +2,16 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Red Jewel Back", group="Jewel")
+@Autonomous(name="Red Jewel Rear", group="Jewel")
 
-public class RearJewelRed10_30 extends Error404_Hardware_Tier2
+public class rearJewelRedMeet1 extends Error404_Hardware_Tier2
 
 {
     ///////////////////////////////////////////////////////////////////
     private int state = 0;
     private int encoder=0;
     private int test=0;
-    public RearJewelRed10_30()
+    public rearJewelRedMeet1()
     {
     }
     @Override public void init(){
@@ -29,7 +29,7 @@ public class RearJewelRed10_30 extends Error404_Hardware_Tier2
         switch (state)
         {
             case 0:
-                slide_sideways("RUE",0.3,"r",0);
+                slide_sideways("RUE",0.2,"r",0);
                 if(leftFront.getCurrentPosition()>90) {
                     slide_sideways("RUE", 0, "r", 0);
                     state++;
@@ -69,11 +69,18 @@ public class RearJewelRed10_30 extends Error404_Hardware_Tier2
                 break;
             case 4:
                 arm.setPosition(0);
-                driveStraight("RUE",0.3,"f",0);
-                if(leftFront.getCurrentPosition()-encoder>800) {
-                    driveStraight("RUE",0,"f",0);
+                driveStraight("RUE",0.2,"f",0);
+                if(leftFront.getCurrentPosition()-encoder>600) {
+                    slide_sideways("RUE",0,"l",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
+                }
+                break;
+            case 5:
+                slide_sideways("RUE",0.2,"l",0);
+                if(leftFront.getCurrentPosition()-encoder>200) {
+                    slide_sideways("RUE", 0, "r", 0);
+                    state++;
                 }
                 break;
             default:

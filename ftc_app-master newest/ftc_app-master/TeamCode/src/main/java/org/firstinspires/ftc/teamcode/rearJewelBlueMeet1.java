@@ -1,18 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="Blue Jewel Front", group="Jewel")
+@Autonomous(name="Blue Jewel Rear", group="Jewel")
 
-public class frontJewelBlue10_30 extends Error404_Hardware_Tier2
+public class rearJewelBlueMeet1 extends Error404_Hardware_Tier2
 
 {
     ///////////////////////////////////////////////////////////////////
     private int state = 0;
     private int encoder=0;
     private int test=0;
-    public frontJewelBlue10_30()
+    public rearJewelBlueMeet1()
     {
     }
     @Override public void init(){
