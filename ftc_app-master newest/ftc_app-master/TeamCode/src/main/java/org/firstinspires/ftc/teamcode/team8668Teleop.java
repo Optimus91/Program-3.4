@@ -22,29 +22,22 @@ public class team8668Teleop extends OpMode {
     DcMotor rightRear;
     DcMotor leftRear;
     Servo arm;
+    Servo glyph;
+    Servo shoulder;
+    Servo hand;
+    Servo elbow;
     float launchspeed1;
     double powerval;
     double rightVal=0;
     double leftVal=0;
     double incrementDir=0;
+    double elbowPos=0.0;
+    double shoulderPos=0.9;
     public team8668Teleop() {
     }
     @Override
     public void init() {
-        powerval=0.55;
         telemetry.addData ("0", "I AM HERE");
-        /*
-        leftPush = hardwareMap.servo.get("leftPush");
-        rightPush = hardwareMap.servo.get("rightPush");
-        balllauncher1 = hardwareMap.dcMotor.get("balllauncher1");
-        balllauncher1.setMode(RUN_USING_ENCODERS);
-        balllauncher1.setDirection(DcMotor.Direction.FORWARD);
-        balllauncher2 = hardwareMap.dcMotor.get("balllauncher2");
-        balllauncher2.setMode(RUN_USING_ENCODERS);
-        balllauncher2.setDirection(DcMotor.Direction.REVERSE);
-        ballcollector = hardwareMap.dcMotor.get("ballcollector");
-        ballcollector.setMode(RUN_WITHOUT_ENCODERS);
-        */
         arm=hardwareMap.servo.get("jewelSword");
         leftFront = hardwareMap.dcMotor.get("leftFront");
         rightFront = hardwareMap.dcMotor.get("rightFront");
@@ -59,7 +52,13 @@ public class team8668Teleop extends OpMode {
         leftRear.setDirection(DcMotor.Direction.REVERSE);
         rightRear.setDirection(DcMotor.Direction.REVERSE);
         telemetry.addData("","V 2");
-        leftVal=0.5;
+        shoulder = hardwareMap.servo.get("shoulder");
+        elbow = hardwareMap.servo.get("elbow");
+        hand = hardwareMap.servo.get("hand");
+        glyph = hardwareMap.servo.get("glyph");
+        hand.setPosition(0.5);
+        glyph.setPosition(0);
+
         //rightVal=0.5;
     }
     @Override
@@ -99,66 +98,38 @@ public class team8668Teleop extends OpMode {
         /////////////////////////////////////
 
         if(gamepad1.y){
-            leftVal+=0.01;
+            shoulderPos+=0.01;
         }
         else if(gamepad1.a){
-            leftVal-=0.01;
+            shoulderPos-=0.01;
         }
-        leftVal = Range.clip(leftVal,-1,1);
-        /*
-        rightPush.setPosition(rightVal);
-        leftPush.setPosition(leftVal);
+        shoulderPos = Range.clip(shoulderPos,-1,1);
+
+        if(gamepad1.dpad_up){
+            elbowPos+=0.01;
+        }
+        else if(gamepad1.dpad_down){
+            elbowPos-=0.01;
+        }
+        elbowPos = Range.clip(elbowPos,-1,1);
+
+        if(gamepad1.right_bumper){
+            hand.setPosition(0);
+        }
+        if(gamepad1.left_bumper){
+            hand.setPosition(1);
+        }
 
 
-        /////////////////////////////////////////////////////////////
-        //     LAUNCHER MOTORS                ////////////////
-        //The below statements allow the driver to write a constant speed to the launcher motors.
-        // The driver can also increase or decrease the launcher power in increments of 5%.
-        /////////////////////////////////////
-        float launcher = gamepad2.right_stick_y;
-        launcher = (float) scaleInput(launcher);
 
-        if(gamepad2.x){
-            incrementDir=1;
-        }
-        if(gamepad2.b){
-            incrementDir=2;
-        }
-        if(incrementDir==1&&!gamepad2.x){
-            powerval=powerval-0.05;
-            incrementDir=0;
-        }
-        if(incrementDir==2&&!gamepad2.b){
-            powerval=powerval+0.05;
-            incrementDir=0;
-        }
-        ballcollector.setPower(collector);
-        powerval=Range.clip(powerval, 0.05, 1);
-        if(gamepad2.a){                   //Preset values for motor speeds for ball launcher
-            launchspeed1=(float)powerval;
-        }
-        else if(gamepad2.y){
-            launchspeed1=-1;
-        }
-
-        else{
-            launchspeed1=0;
-        }
-
-        float launchpower1=launcher+launchspeed1;
-        launchpower1=Range.clip(launchpower1, -1, 1); //clip the launcher power to keep in within aceptable range
-        balllauncher1.setPower(launchpower1);
-        balllauncher2.setPower(launchpower1);
-        */
         rightFront.setPower(RF);
         leftFront.setPower(LF);
         rightRear.setPower(RR);
         leftRear.setPower(LR);
-        arm.setPosition(leftVal);
+        arm.setPosition(0);
+        elbow.setPosition(elbowPos);
+        shoulder.setPosition(shoulderPos);
 
-        telemetry.addData ("01: Ball Launcher Power: ", powerval);
-        //telemetry.addData ("02: right pusher:  "+rightPush.getPosition()+ "||||   left pusher: "+leftPush.getPosition()+"","");
-        //telemetry.addData ("03: Ball Collector Power: ", collector);
         telemetry.addData ("04: back right position: ", rightRear.getCurrentPosition());
         telemetry.addData ("04: back left position: ", leftRear.getCurrentPosition());
 
