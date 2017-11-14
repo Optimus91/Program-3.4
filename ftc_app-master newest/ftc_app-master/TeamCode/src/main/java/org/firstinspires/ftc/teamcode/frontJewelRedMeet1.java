@@ -33,9 +33,9 @@ public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
         telemetry.addData("Gyro: ", getHeading());
         telemetry.addData("","V 1");
         telemetry.update();
-    }
+        glyph.setPosition(0.25);
+        }
     @Override public void start(){
-        super.start();
     }
 
     @Override public void loop ()
@@ -89,23 +89,43 @@ public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
                 telemetry.update();
                 arm.setPosition(0);
                 driveStraight("RUE",0.3,"f",0);
-                if(leftFront.getCurrentPosition()-encoder>800) {
+                if(leftFront.getCurrentPosition()-encoder>700) {
                     pointTurn("RUE",0,"r",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
-            case 5:
-                pointTurn("RUE",0.3,"r",0);
-                if(getHeading()>89) {
-                    pointTurn("RUE",0,"r",0);
-                    state++;
-                }
-                break;
-            case 6:
-                setServoPos(glyph, 1);
-                break;
+//            case 5:
+//                pointTurn("RUE",0.3,"r",0);
+//                if(Math.abs(getHeading())>89) {
+//                    driveStraight("RUE",0,"f",0);
+//                    state++;
+//                    encoder=leftFront.getCurrentPosition();
+//                }
+//                break;
+//            case 6:
+//                telemetry.update();
+//                arm.setPosition(0);
+//                driveStraight("RUE",0.3,"f",0);
+//                if(leftFront.getCurrentPosition()-encoder>60) {
+//                    pointTurn("RUE",0,"r",0);
+//                    state++;
+//                    encoder=leftFront.getCurrentPosition();
+//                }
+//                break;
+//            case 7:
+//                glyph.setPosition(0.75);
+//                break;
+//            case 8:
+//                try {
+//                    Thread.sleep(1550);                 // one second.
+//                } catch (InterruptedException ex) {
+//                    Thread.currentThread().interrupt();
+//                }
+//                state++;
+//                break;
             default:
+               // glyph.setPosition(0.25);
                 break;
 
         }

@@ -73,25 +73,25 @@ public class Error404_Hardware_Tier1 extends OpMode {
             arm = null;
         }
         try {
-            glyph = hardwareMap.get(Servo.class, "glyphServo");
+            glyph = hardwareMap.get(Servo.class, "glyph");
         } catch (Exception p_exeception) {
             telemetry.addData("glyph servo not found in config file", 0);
             glyph = null;
         }
         try {
-            shoulder = hardwareMap.get(Servo.class, "shoulderServo");
+            shoulder = hardwareMap.get(Servo.class, "shoulder");
         } catch (Exception p_exeception) {
             telemetry.addData("shoulder servo not found in config file", 0);
             shoulder = null;
         }
         try {
-            hand = hardwareMap.get(Servo.class, "handServo");
+            hand = hardwareMap.get(Servo.class, "hand");
         } catch (Exception p_exeception) {
             telemetry.addData("hand servo not found in config file", 0);
             hand = null;
         }
         try {
-            elbow = hardwareMap.get(Servo.class, "elbowServo");
+            elbow = hardwareMap.get(Servo.class, "elbow");
         } catch (Exception p_exeception) {
             telemetry.addData("elbow servo not found in config file", 0);
             elbow = null;
@@ -379,7 +379,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //drive the distance input.                     //
     //////////////////////////////////////////////////
     public int distance2encoder(int desiredDistance, double wheel_diameter, double gear_ratio) {
-        return (int) ( 1140*(desiredDistance/(((3.14159265)*(wheel_diameter))*gear_ratio)));}
+        return (int) ( 280*(desiredDistance/(((3.14159265)*(wheel_diameter))*gear_ratio)));}
 
     ///////////////////////////////////
     //This scale motor power method  //

@@ -31,8 +31,8 @@ public class team8668Teleop extends OpMode {
     double rightVal=0;
     double leftVal=0;
     double incrementDir=0;
-    double elbowPos=0.0;
-    double shoulderPos=0.9;
+    double elbowPos=1;
+    double shoulderPos=0.95;
     public team8668Teleop() {
     }
     @Override
@@ -56,8 +56,9 @@ public class team8668Teleop extends OpMode {
         elbow = hardwareMap.servo.get("elbow");
         hand = hardwareMap.servo.get("hand");
         glyph = hardwareMap.servo.get("glyph");
-        hand.setPosition(0.2);
-        glyph.setPosition(1);
+        hand.setPosition(1);
+        glyph.setPosition(0.25);
+        arm.setPosition(0.0);
 
         //rightVal=0.5;
     }
@@ -96,27 +97,32 @@ public class team8668Teleop extends OpMode {
         //////////////////////////////////////////////////////////
         //////BEACON PRESSER////////////////
         /////////////////////////////////////
-
         if(gamepad1.y){
-            shoulderPos+=0.001;
+            arm.setPosition(0.5);
         }
         else if(gamepad1.a){
+            arm.setPosition(0.0);
+        }
+        if(gamepad2.y){
+            shoulderPos+=0.001;
+        }
+        else if(gamepad2.a){
             shoulderPos-=0.001;
         }
         shoulderPos = Range.clip(shoulderPos,0.83,0.95);
 
-        if(gamepad1.dpad_up){
+        if(gamepad2.dpad_up){
             elbowPos+=0.001;
         }
-        else if(gamepad1.dpad_down){
+        else if(gamepad2.dpad_down){
             elbowPos-=0.001;
         }
         elbowPos = Range.clip(elbowPos,0,1);
 
-        if(gamepad1.right_bumper){
-            hand.setPosition(0.7);
+        if(gamepad2.right_bumper){
+            hand.setPosition(0.8);
         }
-        if(gamepad1.left_bumper){
+        if(gamepad2.left_bumper){
             hand.setPosition(1);
         }
 

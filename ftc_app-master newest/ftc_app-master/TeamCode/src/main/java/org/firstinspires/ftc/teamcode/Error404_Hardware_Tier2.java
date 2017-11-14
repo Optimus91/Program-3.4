@@ -7,6 +7,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
 
     /// Beacon pusher method  //
     public void setServoPos(Servo servomotor, Double position){
+
         servomotor.setPosition(position);
     }
 
