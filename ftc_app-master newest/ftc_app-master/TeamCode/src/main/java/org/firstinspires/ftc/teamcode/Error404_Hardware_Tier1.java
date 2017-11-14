@@ -43,6 +43,10 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected DcMotor leftRear;
     protected DcMotor rightRear;
     protected Servo arm;
+    protected Servo glyph;
+    protected Servo shoulder;
+    protected Servo hand;
+    protected Servo elbow;
     protected IntegratingGyroscope gyro;
     protected NavxMicroNavigationSensor navxMicro;
     protected AnalogInput camera;
@@ -67,6 +71,30 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("Jewel Sword not found in config file", 0);
             arm = null;
+        }
+        try {
+            glyph = hardwareMap.get(Servo.class, "glyphServo");
+        } catch (Exception p_exeception) {
+            telemetry.addData("glyph servo not found in config file", 0);
+            glyph = null;
+        }
+        try {
+            shoulder = hardwareMap.get(Servo.class, "shoulderServo");
+        } catch (Exception p_exeception) {
+            telemetry.addData("shoulder servo not found in config file", 0);
+            shoulder = null;
+        }
+        try {
+            hand = hardwareMap.get(Servo.class, "handServo");
+        } catch (Exception p_exeception) {
+            telemetry.addData("hand servo not found in config file", 0);
+            hand = null;
+        }
+        try {
+            elbow = hardwareMap.get(Servo.class, "elbowServo");
+        } catch (Exception p_exeception) {
+            telemetry.addData("elbow servo not found in config file", 0);
+            elbow = null;
         }
         try {
             camera = hardwareMap.get(AnalogInput.class, "camera");
