@@ -1,18 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 
-@Autonomous(name="Red Jewel Front", group="Jewel")
+@Autonomous(name="Red Jewel Front Vuforia", group="Jewel")
+@Disabled
 
-public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
+public class frontJewelRedMeet1Vuforia extends Error404_Hardware_Tier2
 
 {
     public static final String TAG = "Vuforia VuMark Sample";
@@ -25,7 +21,7 @@ public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
     private int tempDelta=0;
     private int patternSeen=0;
 
-    public frontJewelRedMeet1()
+    public frontJewelRedMeet1Vuforia()
     {
     }
     @Override public void init(){
@@ -89,21 +85,41 @@ public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
                 telemetry.update();
                 arm.setPosition(0);
                 driveStraight("RUE",0.3,"f",0);
-                if(leftFront.getCurrentPosition()-encoder>800) {
-                    pointTurn("RUE",0,"r",0);
+                if(leftFront.getCurrentPosition()-encoder+tempDelta>400) {
+                    slide_sideways("RUE",0,"l",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
             case 5:
-                pointTurn("RUE",0.3,"r",0);
-                if(getHeading()>89) {
-                    pointTurn("RUE",0,"r",0);
+                if(readCryptograph()=="LEFT"){
+                    tempDelta=600;
+                    break;
+                }
+                if(readCryptograph()=="CENTER"){
+                    tempDelta=400;
+                    break;
+                }
+                if(readCryptograph()=="RIGHT"){
+                    tempDelta=200;
+                    break;
+            }
+                else{};
+                break;
+            case 6:
+                slide_sideways("RUE",0.3,"l",0);
+                if(leftFront.getCurrentPosition()>50) {
+                    driveStraight("RUE",0,"f",0);
                     state++;
                 }
                 break;
-            case 6:
-                setServoPos(glyph, 1);
+            case 7:
+                driveStraight("RUE",0.3,"f",0);
+                if(leftFront.getCurrentPosition()-encoder+tempDelta>400) {
+                    driveStraight("RUE",0,"f",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
                 break;
             default:
                 break;
@@ -114,6 +130,7 @@ public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
         telemetry.addData("3. Camera:  ", camera.getVoltage());
         telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("5. Delta Position: ", encoder);
+        telemetry.addData("6. Pattern: ", readCryptograph());
         telemetry.update();
 
     } // loop

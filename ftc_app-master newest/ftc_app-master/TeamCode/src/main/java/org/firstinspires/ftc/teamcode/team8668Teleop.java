@@ -56,8 +56,8 @@ public class team8668Teleop extends OpMode {
         elbow = hardwareMap.servo.get("elbow");
         hand = hardwareMap.servo.get("hand");
         glyph = hardwareMap.servo.get("glyph");
-        hand.setPosition(0.5);
-        glyph.setPosition(0);
+        hand.setPosition(0.2);
+        glyph.setPosition(1);
 
         //rightVal=0.5;
     }
@@ -98,23 +98,23 @@ public class team8668Teleop extends OpMode {
         /////////////////////////////////////
 
         if(gamepad1.y){
-            shoulderPos+=0.01;
+            shoulderPos+=0.001;
         }
         else if(gamepad1.a){
-            shoulderPos-=0.01;
+            shoulderPos-=0.001;
         }
-        shoulderPos = Range.clip(shoulderPos,-1,1);
+        shoulderPos = Range.clip(shoulderPos,0.83,0.95);
 
         if(gamepad1.dpad_up){
-            elbowPos+=0.01;
+            elbowPos+=0.001;
         }
         else if(gamepad1.dpad_down){
-            elbowPos-=0.01;
+            elbowPos-=0.001;
         }
-        elbowPos = Range.clip(elbowPos,-1,1);
+        elbowPos = Range.clip(elbowPos,0,1);
 
         if(gamepad1.right_bumper){
-            hand.setPosition(0);
+            hand.setPosition(0.7);
         }
         if(gamepad1.left_bumper){
             hand.setPosition(1);
@@ -130,8 +130,10 @@ public class team8668Teleop extends OpMode {
         elbow.setPosition(elbowPos);
         shoulder.setPosition(shoulderPos);
 
-        telemetry.addData ("04: back right position: ", rightRear.getCurrentPosition());
-        telemetry.addData ("04: back left position: ", leftRear.getCurrentPosition());
+      telemetry.addData("shoulder: ",shoulder.getPosition());
+      telemetry.addData("grabber:",hand.getPosition());
+      telemetry.addData("elbow: ",elbow.getPosition());
+      telemetry.addData("pusher: ",glyph.getPosition());
 
     }
     @Override
