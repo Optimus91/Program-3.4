@@ -11,6 +11,7 @@ public class rearJewelBlueMeet1 extends Error404_Hardware_Tier2
     private int state = 0;
     private int encoder=0;
     private int test=0;
+    double timer=0;
     public rearJewelBlueMeet1()
     {
     }
@@ -71,7 +72,7 @@ public class rearJewelBlueMeet1 extends Error404_Hardware_Tier2
             case 4:
                 arm.setPosition(0);
                 driveStraight("RUE",0.3,"r",0);
-                if(leftFront.getCurrentPosition()-encoder>400) {
+                if(leftFront.getCurrentPosition()-encoder>600) {
                     slide_sideways("RUE",0,"l",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
@@ -83,12 +84,51 @@ public class rearJewelBlueMeet1 extends Error404_Hardware_Tier2
                     driveStraight("RUE",0,"r",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
+                    timer =getRuntime();
                 }
                 break;
             case 6:
                 driveStraight("RUE",0.3,"r",0);
                 if(leftFront.getCurrentPosition()-encoder>100) {
-                    slide_sideways("RUE",0,"l",0);
+                    pointTurn("RUE",0,"r",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+            case 7:
+                pointTurn("RUE",0.3,"r",0);
+                if(Math.abs(getHeading())>178){
+                    state++;
+                    driveStraight("RUE",0,"f",0);
+                    encoder=leftFront.getCurrentPosition();
+                    timer =getRuntime();
+                }
+                break;
+            case 8:
+                driveStraight("RUE",0.3,"f",0);
+                if(((int)(getRuntime()-timer))>2) {
+                    driveStraight("RUE",0,"r",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+            case 9:
+                glyph.setPosition(0.75);
+                timer =getRuntime();
+                state++;
+                break;
+            case 10:
+                if(((int)(getRuntime()-timer))>2){
+                    driveStraight("RUE",0,"r",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+            case 11:
+                glyph.setPosition(0.25);
+                driveStraight("RUE",0.3,"r",0);
+                if(leftFront.getCurrentPosition()-encoder>80) {
+                    driveStraight("RUE",0,"f",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
