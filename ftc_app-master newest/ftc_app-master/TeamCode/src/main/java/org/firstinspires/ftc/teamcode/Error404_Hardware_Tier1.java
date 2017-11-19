@@ -1,37 +1,64 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 
-import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RESET_ENCODERS;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
-import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODERS;
-import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODERS;
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODER;
+import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+
 
 public class Error404_Hardware_Tier1 extends OpMode {
     protected DcMotor leftFront;
     protected DcMotor rightFront;
     protected DcMotor leftRear;
     protected DcMotor rightRear;
-    protected DcMotor ballCollector;
-    protected DcMotor balllauncher1;
-    protected DcMotor balllauncher2;
-    protected ColorSensor RGB;
-    protected ColorSensor beacon;
-    protected ColorSensor beacon2;
-    protected GyroSensor gyro;
-    protected TouchSensor touch;
-    protected TouchSensor touch2;
-    protected Servo leftPush;
-    protected Servo rightPush;
+    protected Servo arm;
+    protected Servo glyph;
+    protected Servo shoulder;
+    protected Servo hand;
+    protected Servo elbow;
+    protected IntegratingGyroscope gyro;
+    protected NavxMicroNavigationSensor navxMicro;
+    protected AnalogInput camera;
 
-    //this is a comment
+    OpenGLMatrix lastLocation = null;
+    VuforiaLocalizer vuforia;
+
+    VuforiaTrackables relicTrackables;
+    VuforiaTrackable relicTemplate;
+    int cameraMonitorViewId;
+    VuforiaLocalizer.Parameters parameters;
+    RelicRecoveryVuMark vuMark;
 
     @Override public void init() {
         /////////////////////////////////////////////////////////////////
@@ -40,60 +67,50 @@ public class Error404_Hardware_Tier1 extends OpMode {
         //    an error message shows on the driver station telemetry.  //
         *////////////////////////////////////////////////////////////////
         try {
-            touch2 = hardwareMap.touchSensor.get("touch2");
+            arm = hardwareMap.get(Servo.class, "jewelSword");
         } catch (Exception p_exeception) {
-            telemetry.addData("Touch 2 not found in config file", 0);
-            touch2 = null;
+            telemetry.addData("Jewel Sword not found in config file", 0);
+            arm = null;
         }
         try {
-            leftPush = hardwareMap.servo.get("leftPush");   ///beacon pusher
+            glyph = hardwareMap.get(Servo.class, "glyph");
         } catch (Exception p_exeception) {
-            telemetry.addData("leftPush not found in config file", 0);
-            leftPush = null;
+            telemetry.addData("glyph servo not found in config file", 0);
+            glyph = null;
         }
         try {
-            rightPush = hardwareMap.servo.get("rightPush");
+            shoulder = hardwareMap.get(Servo.class, "shoulder");
         } catch (Exception p_exeception) {
-            telemetry.addData("rightPush not found in config file", 0);
-            rightPush = null;
+            telemetry.addData("shoulder servo not found in config file", 0);
+            shoulder = null;
         }
         try {
-            balllauncher2 = hardwareMap.dcMotor.get("balllauncher2");
+            hand = hardwareMap.get(Servo.class, "hand");
         } catch (Exception p_exeception) {
-            telemetry.addData("ball launcher 2 not found in config file", 0);
-            balllauncher2 = null;
+            telemetry.addData("hand servo not found in config file", 0);
+            hand = null;
         }
         try {
-            balllauncher1 = hardwareMap.dcMotor.get("balllauncher1");
+            elbow = hardwareMap.get(Servo.class, "elbow");
         } catch (Exception p_exeception) {
-            telemetry.addData("ball launcher 1 not found in config file", 0);
-            balllauncher1 = null;
+            telemetry.addData("elbow servo not found in config file", 0);
+            elbow = null;
         }
         try {
-            touch = hardwareMap.touchSensor.get("touch");
+            camera = hardwareMap.get(AnalogInput.class, "camera");
         } catch (Exception p_exeception) {
-            telemetry.addData("Touch not found in config file", 0);
-            touch = null;
+            telemetry.addData("camera not found in config file", 0);
+            camera = null;
         }
         try {
-            gyro = hardwareMap.gyroSensor.get("gyro");
+            navxMicro = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
+            gyro = (IntegratingGyroscope)navxMicro;
         } catch (Exception p_exeception) {
-            telemetry.addData("Gyro not found in config file", 0);
-            gyro = null;
+            telemetry.addData("navx not found in config file", 0);
+            navxMicro = null;
         }
 
-        try {
-            RGB = hardwareMap.colorSensor.get("mr");
-        } catch (Exception p_exeception) {
-            telemetry.addData("Color Sensor not found in config file", 0);
-            RGB = null;
-        }
-        try {
-            beacon = hardwareMap.colorSensor.get("beacon");
-        } catch (Exception p_exeception) {
-            telemetry.addData("Beacon Color Sensor not found in config file", 0);
-            beacon = null;
-        }
+
         try {
             leftFront = hardwareMap.dcMotor.get("leftFront");
         } catch (Exception p_exeception) {
@@ -118,27 +135,25 @@ public class Error404_Hardware_Tier1 extends OpMode {
             telemetry.addData("rightRear not found in config file", 0);
             rightRear = null;
         }
-        try {
-            ballCollector = hardwareMap.dcMotor.get("ballcollector");
-        } catch (Exception p_exeception) {
-            telemetry.addData("ballcollector not found in config file", 0);
-            leftFront = null;
-        }
-        try {
-            beacon2 = hardwareMap.colorSensor.get("beacon2");
-        } catch (Exception p_exeception) {
-            telemetry.addData("Beacon 2 Color Sensor not found in config file", 0);
-            beacon2 = null;
-        }
-        RGB.setI2cAddress(I2cAddr.create8bit(0x3C));       //30 is the decimal conversion from 7 bit hexadecimal value 0x1e converted from 8 bit hexadecimal 0x3c
-        beacon.setI2cAddress(I2cAddr.create8bit(0x2C));
-        beacon2.setI2cAddress(I2cAddr.create8bit(0x5C));
-        RGB.enableLed(false); //not sure why these are needed here.  Seems to help reset the LEDS so the next enable commands are obeyed.
-        beacon.enableLed(false);
-        beacon2.enableLed(false);
+
+        //RGB.setI2cAddress(I2cAddr.create8bit(0x3C));       //30 is the decimal conversion from 7 bit hexadecimal value 0x1e converted from 8 bit hexadecimal 0x3c
+        //beacon.setI2cAddress(I2cAddr.create8bit(0x2C));
+        //beacon2.setI2cAddress(I2cAddr.create8bit(0x5C));
+        //RGB.enableLed(false); //not sure why these are needed here.  Seems to help reset the LEDS so the next enable commands are obeyed.
+        //beacon.enableLed(false);
+        //beacon2.enableLed(false);
 
     }
 
+    public String readCryptograph(){
+        String dejavu="";
+
+        vuMark = RelicRecoveryVuMark.from(relicTemplate);
+        if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+            dejavu = vuMark.toString();
+        }
+        return dejavu;
+    }
     public DcMotor convert(int mtr) {
         if (mtr == 1) {
             telemetry.addData("test",mtr);
@@ -150,7 +165,17 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return null;
     }
 
-    public void start() {}
+    public void start() {
+        cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        parameters.vuforiaLicenseKey = "AXqihmr/////AAAAGfBzFvn3mUp2pArXwOs50RaJ5JQdpAr4rsjsH+U8jWqZz9IZH657T+p7j4SgiRhOxlbMsoXP43dcRWb953uxv1Pd9ykpvITS8R0LGB8w8DIEYElzCWAvx0qxFO/6mUq2nuWvAhSyGbVsQk3IgjC17DwijqO1i21E7bZtAp3LRfUaNjvwh38Q0EZkIY0ulaUChjb/sep2XzJ8/yoOxq3deuAVx6pSPcQwaLpdV7vSvLr7rDr1OIOZeb5DGjAEA4QLiV/t8/daIVi3AAWTpCi0kskgtT/KZMzzok8ACYE96pDMKn7Z5epuguKyZ4/6w9Mc7oMF68XMbtf60AhZvgUApJCakYrDT9MwT7IpGa03e+HC";
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
+        vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+        relicTrackables = vuforia.loadTrackablesFromAsset("RelicVuMark");
+        relicTemplate = relicTrackables.get(0);
+        relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
+        relicTrackables.activate();
+    }
     public void loop() { }
     public void stop() { }
 
@@ -259,17 +284,22 @@ public class Error404_Hardware_Tier1 extends OpMode {
     }
 
     ///////////////////////////////////////////
-    /* methods that resets encoders if found, //
+    /* methods that resets encoders if found,//
     //          else does nothing.           //
     *//////////////////////////////////////////
 
-    public void reset_encoder(DcMotor motor)
+   /* public void reset_encoder(DcMotor motor)
     {
         if(motor != null)
         {
             motor.setMode(RESET_ENCODERS);
         }
     }
+*/
+    public int getHeading(){
+        Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            return (int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
+        }
 
 
 
@@ -301,10 +331,10 @@ public class Error404_Hardware_Tier1 extends OpMode {
                 motor.setMode(RUN_TO_POSITION);
             }
             if (modetoset.equals("RUE")){
-                motor.setMode(RUN_USING_ENCODERS);
+                motor.setMode(RUN_USING_ENCODER);
             }
             if (modetoset.equals("RWOE")){
-                motor.setMode(RUN_WITHOUT_ENCODERS);
+                motor.setMode(RUN_WITHOUT_ENCODER);
             }
         }
     }
@@ -349,7 +379,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //drive the distance input.                     //
     //////////////////////////////////////////////////
     public int distance2encoder(int desiredDistance, double wheel_diameter, double gear_ratio) {
-        return (int) ( 1140*(desiredDistance/(((3.14159265)*(wheel_diameter))*gear_ratio)));}
+        return (int) ( 280*(desiredDistance/(((3.14159265)*(wheel_diameter))*gear_ratio)));}
 
     ///////////////////////////////////
     //This scale motor power method  //
