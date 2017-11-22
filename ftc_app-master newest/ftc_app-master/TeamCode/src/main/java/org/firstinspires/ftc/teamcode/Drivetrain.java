@@ -143,7 +143,7 @@ public class Drivetrain {
 
         boolean positionReached = Math.abs( encoder2Distance( leftFront.getCurrentPosition() ) - finalPosition ) < 0.25;
 
-        return (busyCount > 0) && positionReached;
+        return (busyCount == 0) && positionReached;
     }
 
     protected void driveImpl( double distance, double power, String direction )
