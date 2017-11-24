@@ -132,7 +132,6 @@ public class team8668Teleop extends OpMode {
         leftFront.setPower(LF);
         rightRear.setPower(RR);
         leftRear.setPower(LR);
-        arm.setPosition(0);
         elbow.setPosition(elbowPos);
         shoulder.setPosition(shoulderPos);
 
