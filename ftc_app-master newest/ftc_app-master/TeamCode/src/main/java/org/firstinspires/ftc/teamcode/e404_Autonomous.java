@@ -141,7 +141,7 @@ public class e404_Autonomous extends OpMode
                 }
                 break;
             case 5: // Pivot to get the glyph pointed at the box
-                bilbo.pivotTurnCCW(178);
+                bilbo.pivotTurnCCW(178, 0.3);
                 state = 100;
                 nextState = 6;
                 break;

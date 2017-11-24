@@ -42,8 +42,8 @@ public class Arm
         arm.setPosition(0.0);
     }
 
-    public void swingLeft() { pivot.setPosition(1.0); }
+    public void swingLeft() { pivot.setPosition(0.75); }
 
-    public void swingRight() { pivot.setPosition(0.0);}
+    public void swingRight() { pivot.setPosition(0.25);}
 
 }
