@@ -10,39 +10,68 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class e404_Autonomous extends OpMode
 {
-
+    // Alliance info to that
     protected String allianceColor = "BLUE";
     protected String alliancePos = "FRONT";
 
-    private double safeZoneSlide;
-    private double safeZoneTranslation;
+    // Distances used to tell the robot where to go during the autonomous portion.  They
+    // are named with s# in front of them to indicate step numbers in the sequence.
+    private double s1_safeZoneTranslation;
+    private double s2_safeZoneSlide;
+    private double s3_cryptoBoxClearance;
+    private double s4_cryptoBoxSnuggle;
+    private double s5_cryptoBoxBackup;
+    private double  glyphOffset = 0.0;
 
-    private Telemetry telemetry;
-
+    // The items needed to accomplish the tasks
     private Drivetrain bilbo;
     private VisionSystem palantir;
     private Arm sting;
+    private GlyphMechanism precious;
 
-    private int state = 0;
+    // Used for managing the state machine
+    private int state = 0;  // What state should I execute now?
+    private int nextState = 0;  // If I have gone to a wait state (99 or 100), what state do I go to next?
+    private double timeValue = 0; // Used for timed states
 
     @Override public void init()
     {
         bilbo = new Drivetrain( hardwareMap, telemetry );
         sting = new Arm( hardwareMap, telemetry);
         palantir = new VisionSystem( hardwareMap, telemetry, allianceColor );
-        //telemetry.addData("Gyro: ", getHeading());
+        precious = new GlyphMechanism( hardwareMap, telemetry );
+
         telemetry.addData("","V 1");
 
-        if (alliancePos.equals("FRONT") )
+        // Set up my specific positions
+        String keyColumn = palantir.readCryptograph();
+
+        if (keyColumn.equals("LEFT"))
         {
-            safeZoneSlide = 12.0;
-            safeZoneTranslation = -54.0;
+            glyphOffset = 6.0;
+        }
+        else if (keyColumn.equals("CENTER"))
+        {
+            glyphOffset = 10.0;
+        }
+        else if (keyColumn.equals("RIGHT"))
+        {
+            glyphOffset = 14.0;
+        }
+        if (alliancePos.equals("REAR") )
+        {
+            s1_safeZoneTranslation = -54.0;
+            s2_safeZoneSlide = 12.0 + glyphOffset;
+            s3_cryptoBoxClearance = 6.0;
         }
         else
         {
-            safeZoneSlide = 0.0;
-            safeZoneTranslation = -27.0;
+            s1_safeZoneTranslation = -27.0 + glyphOffset;
+            s2_safeZoneSlide = 0.0;
+            s3_cryptoBoxClearance = 0.0;
         }
+        s4_cryptoBoxSnuggle = 3.0;
+        s5_cryptoBoxBackup = 6.0;
     }
 
 
@@ -50,65 +79,122 @@ public class e404_Autonomous extends OpMode
     {
         switch (state)
         {
-            case 0: // Drive off balancing stone
-                bilbo.slideRight( 3.65, 0.3 );
-                if ( bilbo.finishedDriving() )
-                {
-                    bilbo.stop();
-                    state++;
-                }
-                break;
-            case 1: // Determine which way to bump the correct jewel
-                sting.down();
+            case 0: // Knock the jewel off
+                sting.plungDown();
 
                 if ( palantir.keepJewelOnRight() )
                 {
-                    bilbo.driveStraight(8.08, 0.2 );
+                    sting.swingLeft();
                 }
                 else
                 {
-                    bilbo.driveStraight( -3.36, 0.2 );
+                    sting.swingRight();
                 }
                 state++;
+                nextState = state;
+                timeValue = getRuntime();
                 break;
-            case 2:
-                if (bilbo.finishedDriving() )
+            case 1: // Wait 3 seconds to make sure the jewel sword has done its thing
+                if ( (getRuntime() - timeValue) > 3 )
                 {
-                    bilbo.stop();
+                    sting.pullUp();
                     state++;
                 }
                 break;
-            case 3:
-                sting.up();
-                if ( allianceColor.equals("BLUE" ))
+            case 2: // Drive towards safe zone
+                if ( Math.abs(s1_safeZoneTranslation) >  0.01 )
                 {
-                    bilbo.driveStraight(safeZoneTranslation, 0.3);
+                    bilbo.driveStraight(s1_safeZoneTranslation);
+                    state = 99;
+                    nextState = 3;
                 }
                 else
                 {
-                    bilbo.driveStraight(safeZoneTranslation, 0.3);
+                    state++;
+                    nextState = state;
                 }
+                break;
+            case 3: // If I need to slide over to the box, do that
+                if ( Math.abs(s2_safeZoneSlide) >  0.01 )
+                {
+                    bilbo.slideLeft(s2_safeZoneSlide, 0.3);
+                    state = 99;
+                    nextState = 4;
+                }
+                else
+                {
+                    state++;
+                    nextState = state;
+                }
+                break;
+            case 4: // Make sure I have enough clearance to pivot
+                if (Math.abs(s3_cryptoBoxClearance) > 0.01 )
+                {
+                    bilbo.driveStraight(s3_cryptoBoxClearance);
+                    state = 99;
+                    nextState = 5;
+                }
+                else
+                {
+                    state++;
+                    nextState = state;
+                }
+                break;
+            case 5: // Pivot to get the glyph pointed at the box
+                bilbo.pivotTurnCCW(178);
+                state = 100;
+                nextState = 6;
+                break;
+            case 6: // Snuggle up to the box so that I can push the glyph in
+                if ( Math.abs(s4_cryptoBoxSnuggle) >  0.01 )
+                {
+                    bilbo.driveStraight(s4_cryptoBoxSnuggle);
+                    state = 99;
+                    nextState = 7;
+                }
+                else
+                {
+                    state++;
+                    nextState = state;
+                }
+                break;
+            case 7:  //Do Glyph
+                precious.pushOut();
+                timeValue = getRuntime();
                 state++;
                 break;
-            case 4:
-                if (bilbo.finishedDriving() )
+            case 8:
+                if ( (getRuntime() - timeValue) > 8 )
                 {
-                    bilbo.stop();
+                    precious.pullIn();
                     state++;
                 }
                 break;
-            case 5:
-                if ( Math.abs(safeZoneSlide) >  0.01 )
+            case 9: // Back up a little from box so tha the robot is not touching the glyph
+                if ( Math.abs(s5_cryptoBoxBackup) >  0.01 )
                 {
-                    bilbo.slideLeft(safeZoneSlide, 0.3);
+                    bilbo.driveStraight(s5_cryptoBoxBackup);
+                    state = 99;
+                    nextState = 10;
                 }
-                state++;
+                else
+                {
+                    state++;
+                    nextState = state;
+                }
                 break;
-            case 6:
+            case 99:
                 if (bilbo.finishedDriving() )
                 {
                     bilbo.stop();
-                    state++;
+                    state = nextState;
+                }
+                break;
+            case 100:
+                if ( bilbo.finishedPivoting() )
+                {
+                    bilbo.stop();
+                    state = nextState;
                 }
                 break;
             default:

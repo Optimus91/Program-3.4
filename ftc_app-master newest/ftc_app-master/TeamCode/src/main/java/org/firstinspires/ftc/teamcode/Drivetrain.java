@@ -90,7 +90,12 @@ public class Drivetrain {
         return encoder2Distance( leftFront.getCurrentPosition() );
     }
 
-	public void driveStraight( double distance, double power )
+    public void driveStraight( double distance )
+    {
+        driveStraightAtPower( distance, 0.3 );
+    }
+
+	public void driveStraightAtPower( double distance, double power )
     {
         wheelDiam = ROT_DIAM;
         String dir = "F";
@@ -99,20 +104,23 @@ public class Drivetrain {
             dir = "R";
             distance = Math.abs( distance );
         }
+        finalPosition = encoder2Distance( leftFront.getCurrentPosition() + distance;
         driveImpl( distance, power, dir);
     }
 
 
-    public void pivotTurnCW( double distance, double power )
+    public void pivotTurnCW( double targetAngle, double power )
     {
         wheelDiam = ROT_DIAM;
-        driveImpl( distance, power, "CW");
+        finalPosition = targetAngle;
+        driveImpl( 0, power, "CW");
     }
 
-    public void pivotTurnCCW( double distance, double power )
+    public void pivotTurnCCW( double targetAngle, double power )
     {
         wheelDiam = ROT_DIAM;
-        driveImpl( distance, power, "CCW");
+        finalPosition = targetAngle;
+        driveImpl( 0, power, "CCW");
     }
 
     public void slideLeft( double distance, double power )
@@ -145,6 +153,21 @@ public class Drivetrain {
         boolean positionReached = Math.abs( encoder2Distance( leftFront.getCurrentPosition() ) - finalPosition ) < 0.25;
 
         return (busyCount == 0) && positionReached;
+    }
+
+    public boolean finishedPivoting()
+    {
+        int busyCount = 0;
+
+        if (leftFront  != null && leftFront.isBusy() ){ busyCount++; }
+        if (rightFront != null && rightFront.isBusy() ){ busyCount++; }
+        if (leftRear   != null && leftRear.isBusy() ){ busyCount++; }
+        if (rightRear  != null && rightRear.isBusy() ){ busyCount++; }
+
+        boolean  positionReached = Math.abs( getHeading() - finalPosition ) < 0.25;
+
+        return (busyCount == 0) && positionReached;
+
     }
 
     protected void driveImpl( double distance, double power, String direction )
