@@ -26,6 +26,7 @@ public class team8668Teleop extends OpMode {
     Servo shoulder;
     Servo hand;
     Servo elbow;
+    Servo pivot;
     float launchspeed1;
     double powerval;
     double rightVal=0;
@@ -56,9 +57,11 @@ public class team8668Teleop extends OpMode {
         elbow = hardwareMap.servo.get("elbow");
         hand = hardwareMap.servo.get("hand");
         glyph = hardwareMap.servo.get("glyph");
+        pivot=hardwareMap.servo.get("jewelSwivel");
         hand.setPosition(1);
         glyph.setPosition(0.25);
         arm.setPosition(0.0);
+        pivot.setPosition(0.5);
 
         //rightVal=0.5;
     }
@@ -124,6 +127,15 @@ public class team8668Teleop extends OpMode {
         }
         if(gamepad2.left_bumper){
             hand.setPosition(1);
+        }
+        if(gamepad1.x){
+            pivot.setPosition(0.25);
+        }
+        else if(gamepad1.b){
+            pivot.setPosition(0.75);
+        }
+        else{
+            pivot.setPosition(0.5);
         }
 
 
