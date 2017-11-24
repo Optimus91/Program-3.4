@@ -11,34 +11,37 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class e404_Autonomous extends OpMode
 {
 
-    private static final String ALLIANCE_COLOR = "BLUE";
-    private static final String ALLIANCE_POS = "FRONT";
+    protected String allianceColor = "BLUE";
+    protected String alliancePos = "FRONT";
 
     private double safeZoneSlide;
-    private double safeZoneTranlation;
+    private double safeZoneTranslation;
 
     private Telemetry telemetry;
 
-    private Drivetrain bilbo = new Drivetrain( hardwareMap, telemetry );
-    private VisionSystem palantir = new VisionSystem( hardwareMap, telemetry, ALLIANCE_COLOR );
-    private Arm sting = new Arm( hardwareMap, telemetry);
+    private Drivetrain bilbo;
+    private VisionSystem palantir;
+    private Arm sting;
 
     private int state = 0;
 
     @Override public void init()
     {
+        bilbo = new Drivetrain( hardwareMap, telemetry );
+        sting = new Arm( hardwareMap, telemetry);
+        palantir = new VisionSystem( hardwareMap, telemetry, allianceColor );
         //telemetry.addData("Gyro: ", getHeading());
         telemetry.addData("","V 1");
 
-        if (ALLIANCE_POS.equals("FRONT") )
+        if (alliancePos.equals("FRONT") )
         {
             safeZoneSlide = 12.0;
-            safeZoneTranlation = 54.0;
+            safeZoneTranslation = -54.0;
         }
         else
         {
             safeZoneSlide = 0.0;
-            safeZoneTranlation = 27.0;
+            safeZoneTranslation = -27.0;
         }
     }
 
@@ -60,11 +63,11 @@ public class e404_Autonomous extends OpMode
 
                 if ( palantir.keepJewelOnRight() )
                 {
-                    bilbo.driveForward(8.08, 0.2 );
+                    bilbo.driveStraight(8.08, 0.2 );
                 }
                 else
                 {
-                    bilbo.driveBackwards( 3.36, 0.2 );
+                    bilbo.driveStraight( -3.36, 0.2 );
                 }
                 state++;
                 break;
@@ -77,13 +80,13 @@ public class e404_Autonomous extends OpMode
                 break;
             case 3:
                 sting.up();
-                if ( ALLIANCE_COLOR.equals("BLUE" ))
+                if ( allianceColor.equals("BLUE" ))
                 {
-                    bilbo.driveBackwards(safeZoneTranlation, 0.3);
+                    bilbo.driveStraight(safeZoneTranslation, 0.3);
                 }
                 else
                 {
-                    bilbo.driveForward(safeZoneTranlation, 0.3);
+                    bilbo.driveStraight(safeZoneTranslation, 0.3);
                 }
                 state++;
                 break;

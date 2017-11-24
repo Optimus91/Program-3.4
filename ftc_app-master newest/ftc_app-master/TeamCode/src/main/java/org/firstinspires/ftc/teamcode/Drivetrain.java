@@ -90,17 +90,18 @@ public class Drivetrain {
         return encoder2Distance( leftFront.getCurrentPosition() );
     }
 
-	public void driveForward( double distance, double power )
+	public void driveStraight( double distance, double power )
     {
         wheelDiam = ROT_DIAM;
-        driveImpl( distance, power, "F");
+        String dir = "F";
+        if ( distance < 0)
+        {
+            dir = "R";
+            distance = Math.abs( distance );
+        }
+        driveImpl( distance, power, dir);
     }
 
-    public void driveBackwards( double distance, double power )
-    {
-        wheelDiam = ROT_DIAM;
-        driveImpl( distance, power, "B");
-    }
 
     public void pivotTurnCW( double distance, double power )
     {
