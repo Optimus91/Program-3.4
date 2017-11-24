@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Arm
 {
     protected Servo arm;
-    protected Servo pivot;
+    protected Servo swivel;
 
     public Arm(HardwareMap hardwareMap, Telemetry telemetry)
     {
@@ -23,11 +23,11 @@ public class Arm
             arm = null;
         }
         try {
-            pivot = hardwareMap.get(Servo.class, "jewelSwordPivot");
-            pivot.setPosition(0.5);
+            swivel = hardwareMap.get(Servo.class, "jewelSwivel");
+            swivel.setPosition(0.5);
         } catch (Exception p_exeception) {
-            telemetry.addData("Jewel Sword Pivot not found in config file", 0);
-            pivot = null;
+            telemetry.addData("Jewel Swivel not found in config file", 0);
+            swivel = null;
         }
 
     }
@@ -42,8 +42,8 @@ public class Arm
         arm.setPosition(0.0);
     }
 
-    public void swingLeft() { pivot.setPosition(0.75); }
+    public void swingLeft() { swivel.setPosition(0.75); }
 
-    public void swingRight() { pivot.setPosition(0.25);}
+    public void swingRight() { swivel.setPosition(0.25);}
 
 }
