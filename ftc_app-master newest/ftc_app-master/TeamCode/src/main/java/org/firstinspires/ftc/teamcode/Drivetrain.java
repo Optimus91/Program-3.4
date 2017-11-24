@@ -104,7 +104,7 @@ public class Drivetrain {
             dir = "R";
             distance = Math.abs( distance );
         }
-        finalPosition = encoder2Distance( leftFront.getCurrentPosition() + distance;
+        finalPosition = encoder2Distance( leftFront.getCurrentPosition() + distance);
         driveImpl( distance, power, dir);
     }
 
