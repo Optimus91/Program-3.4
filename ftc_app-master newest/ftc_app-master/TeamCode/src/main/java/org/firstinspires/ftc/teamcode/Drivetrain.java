@@ -90,12 +90,12 @@ public class Drivetrain {
         return encoder2Distance( leftFront.getCurrentPosition() );
     }
 
-    public void driveStraight( double distance )
+    public void driveStraight( int distance )
     {
         driveStraightAtPower( distance, 0.3 );
     }
 
-	public void driveStraightAtPower( double distance, double power )
+	public void driveStraightAtPower( int distance, double power )
     {
         wheelDiam = ROT_DIAM;
         String dir = "F";
@@ -104,7 +104,7 @@ public class Drivetrain {
             dir = "R";
             distance = Math.abs( distance );
         }
-        finalPosition = encoder2Distance( leftFront.getCurrentPosition() + distance);
+        finalPosition = encoder2Distance(leftFront.getCurrentPosition() + distance);
         driveImpl( distance, power, dir);
     }
 
