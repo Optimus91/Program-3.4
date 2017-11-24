@@ -16,12 +16,12 @@ public class e404_Autonomous extends OpMode
 
     // Distances used to tell the robot where to go during the autonomous portion.  They
     // are named with s# in front of them to indicate step numbers in the sequence.
-    private double s1_safeZoneTranslation;
-    private double s2_safeZoneSlide;
-    private double s3_cryptoBoxClearance;
-    private double s4_cryptoBoxSnuggle;
-    private double s5_cryptoBoxBackup;
-    private double  glyphOffset = 0.0;
+    private int s1_safeZoneTranslation;
+    private int s2_safeZoneSlide;
+    private int s3_cryptoBoxClearance;
+    private int s4_cryptoBoxSnuggle;
+    private int s5_cryptoBoxBackup;
+    private int  glyphOffset = 0;
 
     // The items needed to accomplish the tasks
     private Drivetrain bilbo;
@@ -48,30 +48,30 @@ public class e404_Autonomous extends OpMode
 
         if (keyColumn.equals("LEFT"))
         {
-            glyphOffset = 6.0;
+            glyphOffset = 6;
         }
         else if (keyColumn.equals("CENTER"))
         {
-            glyphOffset = 10.0;
+            glyphOffset = 10;
         }
         else if (keyColumn.equals("RIGHT"))
         {
-            glyphOffset = 14.0;
+            glyphOffset = 14;
         }
         if (alliancePos.equals("REAR") )
         {
-            s1_safeZoneTranslation = -54.0;
-            s2_safeZoneSlide = 12.0 + glyphOffset;
-            s3_cryptoBoxClearance = 6.0;
+            s1_safeZoneTranslation = -54;
+            s2_safeZoneSlide = 12 + glyphOffset;
+            s3_cryptoBoxClearance = 6;
         }
         else
         {
-            s1_safeZoneTranslation = -27.0 + glyphOffset;
-            s2_safeZoneSlide = 0.0;
-            s3_cryptoBoxClearance = 0.0;
+            s1_safeZoneTranslation = -27 + glyphOffset;
+            s2_safeZoneSlide = 0;
+            s3_cryptoBoxClearance = 0;
         }
-        s4_cryptoBoxSnuggle = 3.0;
-        s5_cryptoBoxBackup = 6.0;
+        s4_cryptoBoxSnuggle = 3;
+        s5_cryptoBoxBackup = 6;
     }
 
 
