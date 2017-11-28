@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -94,7 +95,14 @@ public class Drivetrain {
 
 	public double getPosition()
     {
-        return encoder2Distance( leftFront.getCurrentPosition() );
+        double distance;
+        distance = encoder2Distance(leftFront.getCurrentPosition());
+
+        if ( leftFront.getDirection() == DcMotor.Direction.REVERSE )
+        {
+            distance *= -1.0;
+        }
+        return distance;
     }
 
     public void driveStraight( int distance )
@@ -157,7 +165,7 @@ public class Drivetrain {
         //if (leftRear   != null && leftRear.isBusy() ){ busyCount++; }
         //if (rightRear  != null && rightRear.isBusy() ){ busyCount++; }
 
-        boolean positionReached = Math.abs( encoder2Distance( leftFront.getCurrentPosition() ) - finalPosition ) < 0.25;
+        boolean positionReached = Math.abs( getPosition() - finalPosition ) < 0.25;
 
         return (busyCount == 0) && positionReached;
     }
