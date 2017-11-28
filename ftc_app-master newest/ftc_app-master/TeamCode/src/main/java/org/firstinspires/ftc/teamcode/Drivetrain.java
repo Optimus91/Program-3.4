@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
@@ -21,6 +22,7 @@ public class Drivetrain {
 	protected DcMotor leftRear;
 	protected DcMotor rightRear;
     protected IntegratingGyroscope gyro;
+    protected NavxMicroNavigationSensor navxMicro;
     protected int wheelDiam;
     protected double initialPosition;
     protected double finalPosition;
@@ -33,7 +35,13 @@ public class Drivetrain {
 	public  Drivetrain(HardwareMap hardwareMap, Telemetry telemetry)
     {
         wheelDiam = ROT_DIAM;
-
+        try {
+            navxMicro = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
+            gyro = (IntegratingGyroscope)navxMicro;
+        } catch (Exception p_exeception) {
+            telemetry.addData("navx not found in config file", 0);
+            navxMicro = null;
+        }
 		try {
 			leftFront = hardwareMap.dcMotor.get("leftFront");
 			if ( leftFront != null )
@@ -81,7 +89,6 @@ public class Drivetrain {
 	public int getHeading()
     {
 		Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-
 		return (int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
 	}
 
@@ -101,10 +108,10 @@ public class Drivetrain {
         String dir = "F";
         if ( distance < 0)
         {
-            dir = "R";
-            distance = Math.abs( distance );
+            dir = "B";
+            //distance = Math.abs( distance );
         }
-        finalPosition = encoder2Distance(leftFront.getCurrentPosition() + distance);
+        //finalPosition = encoder2Distance(leftFront.getCurrentPosition()) + distance;
         driveImpl( distance, power, dir);
     }
 
@@ -177,6 +184,7 @@ public class Drivetrain {
 
 	    int encoderPosition = distance2Encoder( distance );
         setDirection( direction );
+        encoderPosition=Math.abs(encoderPosition);
         setPosition( encoderPosition );
         setPower( power );
     }

@@ -24,7 +24,7 @@ public class Arm
         }
         try {
             swivel = hardwareMap.get(Servo.class, "jewelSwivel");
-            swivel.setPosition(0.5);
+            swivel.setPosition(0.52);
         } catch (Exception p_exeception) {
             telemetry.addData("Jewel Swivel not found in config file", 0);
             swivel = null;
@@ -34,7 +34,7 @@ public class Arm
 
     public void plungDown()
     {
-        arm.setPosition(0.5);
+        arm.setPosition(0.75);
     }
 
     public void pullUp()
@@ -42,8 +42,10 @@ public class Arm
         arm.setPosition(0.0);
     }
 
-    public void swingLeft() { swivel.setPosition(0.75); }
+    public void swingLeft() { swivel.setPosition(0.44); }
 
-    public void swingRight() { swivel.setPosition(0.25);}
+    public void swingCenter() { swivel.setPosition(0.52); }
+
+    public void swingRight() { swivel.setPosition(0.64);}
 
 }
