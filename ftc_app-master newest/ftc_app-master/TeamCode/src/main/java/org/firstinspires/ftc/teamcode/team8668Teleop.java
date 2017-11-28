@@ -37,6 +37,12 @@ public class team8668Teleop extends OpMode {
     double pivotPos =0.522;
     public team8668Teleop() {
     }
+
+    /**
+     * Initializes all the motors and servos
+     * <p>
+     * Brings servos to their zero positions and sets the directional names to the various drive motors
+     */
     @Override
     public void init() {
         telemetry.addData ("0", "I AM HERE");
@@ -64,6 +70,16 @@ public class team8668Teleop extends OpMode {
         arm.setPosition(0.0);
         pivot.setPosition(0.5);
     }
+
+    /**
+     * Robot control code
+     * <ul>
+     *   <li>Is responsible for reading the values coming in from the joysticks,</li>
+     *   <li>making the calculations needed for basic mecannum drive,</li>
+     *   <li>setting the different buttons on the controller to different servo movments,</li>
+     *   <li>and setting the different joystick movements to motor commands.</li>
+     * </ul>
+     */
     @Override
     public void loop() {
         //////////////////////////////////////////
@@ -80,7 +96,7 @@ public class team8668Teleop extends OpMode {
         xR_val = (float) scaleInput(xR_val);
 
         float RF =(yL_val-xR_val-xL_val);  //these are the calculations need to make a simple
-        float LF =(yL_val+xR_val+xL_val);  // mecaccnum drive. The left joystick controls moving
+        float LF =(yL_val+xR_val+xL_val);  // mecannum drive. The left joystick controls moving
         float RR= (yL_val-xR_val+xL_val);  //straight forward/backward and straight sideways. The
         float LR =(yL_val+xR_val-xL_val);  //right joystick controls turning.
 
@@ -144,6 +160,10 @@ public class team8668Teleop extends OpMode {
       telemetry.addData("pivot: ",pivot.getPosition());
 
     }
+
+    /**
+     * Does something....No idea what lol
+     */
     @Override
     public void stop() {
     }

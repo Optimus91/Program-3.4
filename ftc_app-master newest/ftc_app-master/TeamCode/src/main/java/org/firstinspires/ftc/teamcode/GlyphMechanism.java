@@ -13,7 +13,14 @@ public class GlyphMechanism
 {
     protected Servo glyph;
 
-
+    /**
+     * Checks to make sure the servo(s) used in the glyph mechanism are
+     * registered in the hardware map and ready to be used
+     *
+     * @param hardwareMap  accesses the hardware map which contains the information
+     *                     about the motors the code requires to uyse the motors
+     * @param telemetry  Dunno
+     */
     public GlyphMechanism(HardwareMap hardwareMap, Telemetry telemetry)
     {
         try {

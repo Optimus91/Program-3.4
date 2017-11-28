@@ -35,7 +35,13 @@ public class e404_Autonomous extends OpMode
     private double timeValue = 0; // Used for timed states
 
     /**
-     * Brings the motors and cameras to their start configurations
+     * Initializes all the motors and cameras in preparation for running the autonomous moves:
+     * <ul>
+     *     <lI>The number of, type, and port number for the motors are brought in from the
+     *     hardware map and they are set to their zero positions so that they are ready to run</lI>
+     *     <li>The cameras are sourced from the hardware map so they can be used</li>
+     * </ul>
+     *
      */
     @Override public void init()
     {
