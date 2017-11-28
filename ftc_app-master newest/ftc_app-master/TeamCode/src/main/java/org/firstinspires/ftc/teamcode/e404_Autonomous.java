@@ -34,6 +34,9 @@ public class e404_Autonomous extends OpMode
     private int nextState = 0;  // If I have gone to a wait state (99 or 100), what state do I go to next?
     private double timeValue = 0; // Used for timed states
 
+    /**
+     * Brings the motors and cameras to their start configurations
+     */
     @Override public void init()
     {
         bilbo = new Drivetrain( hardwareMap, telemetry );
@@ -74,7 +77,10 @@ public class e404_Autonomous extends OpMode
         s5_cryptoBoxBackup = 6;
     }
 
-
+    /**
+     * Overrides the original OpMode
+     * Contains a state machine which steps sequentially through the autonomous moves
+     */
     @Override public void loop ()
     {
         switch (state)
