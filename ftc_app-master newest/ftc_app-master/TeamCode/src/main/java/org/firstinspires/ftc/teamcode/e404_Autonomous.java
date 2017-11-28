@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
- * Created by kalee1 on 11/16/17.
+ * This class is the Autonomous class for the 8668 robot.  It extends the
+ * OpMode class and implements the logic necessary to perform the mission.
  */
 
 public class e404_Autonomous extends OpMode
