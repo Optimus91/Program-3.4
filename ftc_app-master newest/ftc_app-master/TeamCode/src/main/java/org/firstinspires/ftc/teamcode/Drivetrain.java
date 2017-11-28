@@ -13,7 +13,11 @@ import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
 
-
+/**
+ * This class is the Drivetrain class for 8668. It sets up the drive motors and NavX gryo sensor by
+ * importing the various libraries and repositories FIRST, Qualcomm, and Kauailabs has made available
+ * for use with their components.
+ */
 public class Drivetrain {
 
 	protected DcMotor leftFront;
@@ -78,6 +82,11 @@ public class Drivetrain {
 
 	}
 
+    /**
+     *
+     *
+     * @return
+     */
 	public int getHeading()
     {
 		Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -85,16 +94,27 @@ public class Drivetrain {
 		return (int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
 	}
 
+    /**
+     * @return
+     */
 	public double getPosition()
     {
         return encoder2Distance( leftFront.getCurrentPosition() );
     }
 
+    /**
+     * @param distance
+     */
     public void driveStraight( int distance )
     {
         driveStraightAtPower( distance, 0.3 );
     }
 
+    /**
+     *
+     * @param distance
+     * @param power
+     */
 	public void driveStraightAtPower( int distance, double power )
     {
         wheelDiam = ROT_DIAM;
@@ -109,6 +129,11 @@ public class Drivetrain {
     }
 
 
+    /**
+     *
+     * @param targetAngle
+     * @param power
+     */
     public void pivotTurnCW( double targetAngle, double power )
     {
         wheelDiam = ROT_DIAM;
@@ -116,6 +141,11 @@ public class Drivetrain {
         driveImpl( 0, power, "CW");
     }
 
+    /**
+     *
+     * @param targetAngle
+     * @param power
+     */
     public void pivotTurnCCW( double targetAngle, double power )
     {
         wheelDiam = ROT_DIAM;
@@ -123,12 +153,22 @@ public class Drivetrain {
         driveImpl( 0, power, "CCW");
     }
 
+    /**
+     *
+     * @param distance
+     * @param power
+     */
     public void slideLeft( double distance, double power )
     {
         wheelDiam = STRAFE_DIAM;
         driveImpl( distance, power, "L");
     }
 
+    /**
+     *
+     * @param distance
+     * @param power
+     */
     public void slideRight( double distance, double power )
     {
         wheelDiam = STRAFE_DIAM;
@@ -136,6 +176,9 @@ public class Drivetrain {
 
     }
 
+    /**
+     *
+     */
     public void stop()
     {
         setPower( 0 );
@@ -155,6 +198,10 @@ public class Drivetrain {
         return (busyCount == 0) && positionReached;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean finishedPivoting()
     {
         int busyCount = 0;
@@ -170,6 +217,12 @@ public class Drivetrain {
 
     }
 
+    /**
+     *
+     * @param distance
+     * @param power
+     * @param direction
+     */
     protected void driveImpl( double distance, double power, String direction )
     {
         initialPosition = encoder2Distance( leftFront.getCurrentPosition() );
@@ -182,6 +235,10 @@ public class Drivetrain {
     }
 
 
+    /**
+     *
+     * @param direction
+     */
     protected void setDirection( String direction )
     {
         String theDirection = direction.toLowerCase();
@@ -235,6 +292,10 @@ public class Drivetrain {
         }
     }
 
+    /**
+     *
+     * @param position
+     */
     protected void setPosition( int position )
     {
         if (leftFront  != null){  leftFront.setTargetPosition(position); }
@@ -245,6 +306,10 @@ public class Drivetrain {
     }
 
 
+    /**
+     *
+     * @param power
+     */
     protected void setPower( double power )
     {
         if (leftFront  != null){  leftFront.setPower(power); }
@@ -261,6 +326,14 @@ public class Drivetrain {
     //needed number of encoder ticks needed to      //
     //drive the distance input.                     //
     //////////////////////////////////////////////////
+
+    /**
+     * This method takes in input of inches and converts it to encoder counts
+     * using the specified wheel diameter and any gear ratios
+     *
+     * @param distance  Records the desired distance in inches
+     * @return  returns the needed amount of encoder ticks required to move said number of inches
+     */
     protected int distance2Encoder( double distance )
     {
         double circumference = Math.PI * wheelDiam;
@@ -270,6 +343,11 @@ public class Drivetrain {
         return (int) ( ENCODER_TICKS_PER_ROT * motorRotations );
     }
 
+    /**
+     *
+     * @param encoder
+     * @return
+     */
     protected double encoder2Distance ( int encoder )
     {
         double motorRotations = encoder / ENCODER_TICKS_PER_ROT;

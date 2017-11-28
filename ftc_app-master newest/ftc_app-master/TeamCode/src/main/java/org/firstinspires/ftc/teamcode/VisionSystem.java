@@ -12,9 +12,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 /**
- * Created by kalee1 on 11/16/17.
+ * This class imports the needed libraries for the Vuforia Vumark ID tracking
+ * and the Pixycam and checks that the cameras are in the hardware map
  */
-
 public class VisionSystem
 {
     // Pixy cam stuff for jewel ID
@@ -33,6 +33,12 @@ public class VisionSystem
     RelicRecoveryVuMark vuMark;
 
 
+    /**
+     *
+     * @param hardwareMap
+     * @param telemetry
+     * @param color
+     */
     public VisionSystem(HardwareMap hardwareMap, Telemetry telemetry, String color )
     {
         try
@@ -58,11 +64,19 @@ public class VisionSystem
 
     }
 
+    /**
+     *
+     * @return
+     */
     public double getVoltage()
     {
         return camera.getVoltage();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean keepJewelOnRight()
     {
         boolean jewelOnRight = true;
@@ -80,6 +94,10 @@ public class VisionSystem
 
     }
 
+    /**
+     *
+     * @return
+     */
     public String readCryptograph()
     {
         String dejavu="";

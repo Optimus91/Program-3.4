@@ -6,9 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
- * Created by kalee1 on 11/16/17.
+ * This class checks that all the servos being used are in the hardware map
  */
-
 public class Arm
 {
     protected Servo arm;
