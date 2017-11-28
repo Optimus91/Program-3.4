@@ -27,7 +27,7 @@ public class Drivetrain {
     protected double initialPosition;
     protected double finalPosition;
 
-    static final int ROT_DIAM = 6;
+    static final int ROT_DIAM = 4;
     static final int STRAFE_DIAM = 4;
     static final int GEAR_RATIO = 1;
     static final int ENCODER_TICKS_PER_ROT = 280;
@@ -152,10 +152,10 @@ public class Drivetrain {
     {
         int busyCount = 0;
 
-        if (leftFront  != null && leftFront.isBusy() ){ busyCount++; }
-        if (rightFront != null && rightFront.isBusy() ){ busyCount++; }
-        if (leftRear   != null && leftRear.isBusy() ){ busyCount++; }
-        if (rightRear  != null && rightRear.isBusy() ){ busyCount++; }
+        //if (leftFront  != null && leftFront.isBusy() ){ busyCount++; }
+        //if (rightFront != null && rightFront.isBusy() ){ busyCount++; }
+        //if (leftRear   != null && leftRear.isBusy() ){ busyCount++; }
+        //if (rightRear  != null && rightRear.isBusy() ){ busyCount++; }
 
         boolean positionReached = Math.abs( encoder2Distance( leftFront.getCurrentPosition() ) - finalPosition ) < 0.25;
 
@@ -285,6 +285,8 @@ public class Drivetrain {
 
         return motorRotations * circumference;
     }
-
+    protected int getTargetPosition(){
+        return (int)finalPosition;
+    }
 
 }

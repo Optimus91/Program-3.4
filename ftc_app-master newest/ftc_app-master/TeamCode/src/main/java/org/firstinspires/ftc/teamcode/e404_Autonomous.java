@@ -224,6 +224,7 @@ public class e404_Autonomous extends OpMode
         telemetry.addData("2. Gyro: ", bilbo.getHeading() );
         telemetry.addData("3. Camera:  ", palantir.getVoltage() );
         telemetry.addData("4. Left Front Position: ", bilbo.getPosition() );
+        telemetry.addData("5. Target Position: ", bilbo.getTargetPosition() );
 
         telemetry.update();
 
