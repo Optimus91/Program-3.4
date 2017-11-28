@@ -57,12 +57,23 @@ public class e404_Autonomous extends OpMode
 
     @Override public void loop ()
     {
+        double caseDT = 0;
+        double waitDT = 0;
+        double getHeadingDT = 0;
+        double getVoltageDT = 0;
+        double getPositionDT = 0;
+        double loopDT = 0;
+
+        double initTime = getRuntime();
+        double loopInitTime = getRuntime();
+
         switch (state)
         {
             case -1:
                 sting.plungDown();
                 timeValue = getRuntime();
                 state++;
+                caseDT = getRuntime() - initTime;
                 break;
             case 0: // Knock the jewel off
                 if ( (getRuntime() - timeValue) > 2 ) {
@@ -75,6 +86,7 @@ public class e404_Autonomous extends OpMode
                     nextState = state;
                     timeValue = getRuntime();
                 }
+                caseDT = getRuntime() - initTime;
                 break;
             case 1: // Wait 3 seconds to make sure the jewel sword has done its thing
                 if ( (getRuntime() - timeValue) > 2 )
@@ -83,11 +95,13 @@ public class e404_Autonomous extends OpMode
                     sting.swingCenter();
                     state++;
                 }
+                caseDT = getRuntime() - initTime;
                 break;
             case 2: // Drive towards vision pattern
                 bilbo.driveStraight(s6_toVuforiaPattern);
                 state = 99;
                 nextState = 3;
+                caseDT = getRuntime() - initTime;
                 break;
             case 3:
                 String keyColumn = palantir.readCryptograph();
@@ -119,6 +133,7 @@ public class e404_Autonomous extends OpMode
                     s2_safeZoneSlide = 0;
                     s3_cryptoBoxClearance = 0;
                 }
+                caseDT = getRuntime() - initTime;
                 break;
             case 4: // Drive towards safe zone
                 if ( Math.abs(s1_safeZoneTranslation) >  0.01 )
@@ -132,6 +147,7 @@ public class e404_Autonomous extends OpMode
                     state++;
                     nextState = state;
                 }
+                caseDT = getRuntime() - initTime;
                 break;
             case 5: // If I need to slide over to the box, do that
                 if ( Math.abs(s2_safeZoneSlide) >  0.01 )
@@ -145,6 +161,7 @@ public class e404_Autonomous extends OpMode
                     state++;
                     nextState = state;
                 }
+                caseDT = getRuntime() - initTime;
                 break;
             case 6: // Make sure I have enough clearance to pivot
                 if (Math.abs(s3_cryptoBoxClearance) > 0.01 )
@@ -158,11 +175,13 @@ public class e404_Autonomous extends OpMode
                     state++;
                     nextState = state;
                 }
+                caseDT = getRuntime() - initTime;
                 break;
             case 7: // Pivot to get the glyph pointed at the box
                 bilbo.pivotTurnCCW(178, 0.3);
                 state = 100;
                 nextState = 8;
+                caseDT = getRuntime() - initTime;
                 break;
             case 8: // Snuggle up to the box so that I can push the glyph in
                 if ( Math.abs(s4_cryptoBoxSnuggle) >  0.01 )
@@ -176,6 +195,7 @@ public class e404_Autonomous extends OpMode
                     state++;
                     nextState = state;
                 }
+                caseDT = getRuntime() - initTime;
                 break;
             case 9:  //Do Glyph
                 precious.pushOut();
@@ -188,6 +208,7 @@ public class e404_Autonomous extends OpMode
                     precious.pullIn();
                     state++;
                 }
+                caseDT = getRuntime() - initTime;
                 break;
             case 11: // Back up a little from box so tha the robot is not touching the glyph
                 if ( Math.abs(s5_cryptoBoxBackup) >  0.01 )
@@ -201,6 +222,7 @@ public class e404_Autonomous extends OpMode
                     state++;
                     nextState = state;
                 }
+                caseDT = getRuntime() - initTime;
                 break;
             case 99:
                 if (bilbo.finishedDriving() )
@@ -208,6 +230,7 @@ public class e404_Autonomous extends OpMode
                     bilbo.stop();
                     state = nextState;
                 }
+                waitDT = getRuntime() - initTime;
                 break;
             case 100:
                 if ( bilbo.finishedPivoting() )
@@ -215,16 +238,31 @@ public class e404_Autonomous extends OpMode
                     bilbo.stop();
                     state = nextState;
                 }
+                waitDT = getRuntime() - initTime;
                 break;
             default:
+                caseDT = getRuntime() - initTime;
                 break;
 
         }
+
         telemetry.addData("1. State: ", state);
+        initTime = getRuntime();
         telemetry.addData("2. Gyro: ", bilbo.getHeading() );
+        getHeadingDT = getRuntime() - initTime;
+        initTime = getRuntime();
         telemetry.addData("3. Camera:  ", palantir.getVoltage() );
+        getVoltageDT = getRuntime() - initTime;
+        initTime = getRuntime();
         telemetry.addData("4. Left Front Position: ", bilbo.getPosition() );
-        telemetry.addData("5. Target Position: ", bilbo.getTargetPosition() );
+        getPositionDT = getRuntime() - initTime;
+        loopDT = getRuntime() - loopInitTime;
+        telemetry.addData("5. Case DT: ", caseDT );
+        telemetry.addData("6. Wait DT: ", waitDT );
+        telemetry.addData("7. Heading DT: ", getHeadingDT );
+        telemetry.addData("8. Voltage DT: ", getVoltageDT );
+        telemetry.addData("9. Position DT: ", getPositionDT );
+        telemetry.addData("10. Loop DT: ", loopDT );
 
         telemetry.update();
 
