@@ -71,7 +71,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected AnalogInput camera;
 
 
-    /** The Vuforia system is used to track special patterns on the edge of the field. */
+    /* The Vuforia system is used to track special patterns on the edge of the field. */
 
     /** Part of the vuforia system. */
     OpenGLMatrix lastLocation = null;
@@ -180,6 +180,11 @@ public class Error404_Hardware_Tier1 extends OpMode {
 
     }
 
+    /**
+     * Detects cryptograph pattern.
+     *
+     * @return  a String denoting left, center, right, or blank if it can't determine the cryptograph.
+     */
     public String readCryptograph(){
         String dejavu="";
 
@@ -200,6 +205,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return null;
     }
 
+    /** When the driver hits start sets up Vuforia. */
     public void start() {
         cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -231,6 +237,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return motorReturn;
     }
 
+    /**
+     * Gets the motor's position and power
+     *
+     * @param motor  the motor whose position and power will be recorded
+     * @return  ......
+     */
     public String get_power_tele(DcMotor motor)
     {
         String motorReturn = "";
@@ -242,6 +254,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return motorReturn;
     }
 
+    /**
+     * Get the motor's position
+     *
+     * @param motor  the motor whose position will be recorded
+     * @return  the motor's posisiton
+     */
     public int get_position(DcMotor motor)
     {
         int motorReturn = 0;
@@ -253,6 +271,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return motorReturn;
     }
 
+    /**
+     * Get the motor's current encoder count
+     *
+     * @param motor  the motor whose encoder counts will be recorded
+     * @return  the motor's encoder count
+     */
     public String get_position_tele(DcMotor motor)
     {
         String motorReturn = "";
@@ -265,6 +289,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return motorReturn;
     }
 
+    /**
+     * Get the motor's current mode
+     *
+     * @param motor  the motor whose mode will be checked
+     * @return  the motor's mode
+     */
     public String get_mode(DcMotor motor) {
         String motorReturn = "";
         if (motor != null) {
@@ -275,6 +305,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return motorReturn;
     }
 
+    /**
+     * Get the motor's current direction
+     *
+     * @param motor  the motor whose direction will be recorded
+     * @return  the motor's direction
+     */
     public String get_direction(DcMotor motor) {
         String motorReturn = "";
         if (motor != null) {
@@ -287,12 +323,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
 
     //////////////////////////////////////////
     /*method that checks if the motor has   //
-    // reached it's goal if found, else     //
+    // reached or exceeded its goal. If found, else     //
     //          returns false.              //
     */////////////////////////////////////////
-//Sorry Josh. I had to change the if(encoderCount==goal) to
-// if(encoderCount>=goal) because otherwise, the method has to be called at the exact moment
-//the encoder value is at the desired position. ;-)
     public boolean is_encoder_reached(int goal, DcMotor motor)
     {
         int encoderCount = get_position(motor);
@@ -306,10 +339,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
     }
 
     //////////////////////////////////////////////
-    /*  method that checks if motors are reset  //
-    //      if found, else returns false        //
+    /*  method that checks if motors are reset.  //
+    // If found returns true, else returns false //
     */////////////////////////////////////////////
-
     public boolean is_encoder_reset(DcMotor motor)
     {
         if(get_position(motor) == 0)
@@ -322,7 +354,6 @@ public class Error404_Hardware_Tier1 extends OpMode {
     /* methods that resets encoders if found,//
     //          else does nothing.           //
     *//////////////////////////////////////////
-
    /* public void reset_encoder(DcMotor motor)
     {
         if(motor != null)
@@ -331,6 +362,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         }
     }
 */
+
+    /**
+     * Used to get the robot's heading.
+     *
+     * @return  the robtot's heading as an Int
+     */
     public int getHeading(){
         Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             return (int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
@@ -345,6 +382,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //If it is not null, the power is set //
     //to that motor.                      //
     ////////////////////////////////////////
+
+    /**
+     * If the motor is valid, set the motor to a certain power
+     *
+     * @param power  a double the is the power to be set to the motor
+     * @param motor  The motor whose power will be set.
+     */
     public void set_power(double power, DcMotor motor){
         if (motor != null) {
             motor.setPower(power);
@@ -359,6 +403,14 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //RUE= Run using encoders    //
     //RWOE= Run without encoders //
     ///////////////////////////////
+
+    /**
+     * If the motor is valid, set it with 3 different available modes (RUN_TO_POSITION,
+     * RUN-USING_ENCODERS, RUN_WITHOUT_ENCODERS).
+     *
+     * @param motor  The motor whose modes will be set.
+     * @param modetoset  The different modes to be set
+     */
     public void set_mode(DcMotor motor, String modetoset){
         modetoset=modetoset.toUpperCase();
         if (motor != null){
@@ -381,6 +433,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
     // and R for reversed. If the motor is not null, the     //
     //direction is set.                                      //
     ///////////////////////////////////////////////////////////
+
+    /**
+     * If the motor is valid, set the motor direction as either forward (f) or reverse (r).
+     *
+     * @param motor  The motor whose direction will be set
+     * @param direction  a String that sets the motor's direction.
+     */
     public void set_direction(DcMotor motor, String direction) {
         if (motor != null) {
             direction=direction.toLowerCase();
@@ -399,6 +458,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //position. It then sets the position   //
     //to the motor if the motor is not null.//
     //////////////////////////////////////////
+
+    /**
+     * Tells the motor to go to a certain position.
+     *
+     * @param motor  The motor whose position will be set.
+     * @param position  the desired posistion for the motor to achieve.
+     */
     public void set_position(DcMotor motor, int position)
     {
         if (motor != null){
@@ -413,6 +479,15 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //needed number of encoder ticks needed to      //
     //drive the distance input.                     //
     //////////////////////////////////////////////////
+
+    /**
+     * converts inches to encoder counts
+     *
+     * @param desiredDistance  an Int that is the target distance
+     * @param wheel_diameter  a Double that is your wheel diameter
+     * @param gear_ratio  a Double that is the gear ratio
+     * @return  the needed number of encoder ticks to move the target amount of inches
+     */
     public int distance2encoder(int desiredDistance, double wheel_diameter, double gear_ratio) {
         return (int) ( 280*(desiredDistance/(((3.14159265)*(wheel_diameter))*gear_ratio)));}
 
