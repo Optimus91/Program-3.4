@@ -44,9 +44,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * @see OpMode
  */
 public class Error404_Hardware_Tier1 extends OpMode {
+    /** This motor is one of the drive motors that makes up the robot drivetrain. */
     protected DcMotor leftFront;
+    // This motor is one of the drive motors that makes up the robot drivetrain.
     protected DcMotor rightFront;
-    protected DcMotor leftRear;
+
+    protected DcMotor leftRear;     // This motor is one of the drive motors that makes up the robot drivetrain.
+
     protected DcMotor rightRear;
     /**
      * The arm servo makes the jewel sword rotate down to push a jewel.
