@@ -36,7 +36,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-
+/**
+ * Tier 1 extends the OpMode class and captures all of our hardware and implements basic methods for
+ * interacting with the motors. Basic driving and robot operations are achieved in this class.
+ *
+ * @author Team 8668
+ * @see OpMode
+ */
 public class Error404_Hardware_Tier1 extends OpMode {
     protected DcMotor leftFront;
     protected DcMotor rightFront;
@@ -60,6 +66,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
     VuforiaLocalizer.Parameters parameters;
     RelicRecoveryVuMark vuMark;
 
+    /**
+     * reg
+     */
     @Override public void init() {
         /////////////////////////////////////////////////////////////////
         /* Attempting a hardware map of the motors, servos, and sensors//
