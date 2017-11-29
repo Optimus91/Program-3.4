@@ -44,22 +44,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * @see OpMode
  */
 public class Error404_Hardware_Tier1 extends OpMode {
-    /** This motor is one of the drive motors that makes up the robot drivetrain. */
-    protected DcMotor leftFront;
-    // This motor is one of the drive motors that makes up the robot drivetrain.
-    protected DcMotor rightFront;
 
-    protected DcMotor leftRear;     // This motor is one of the drive motors that makes up the robot drivetrain.
+    protected DcMotor leftFront;   /** This motor is one of the drive motors that makes up the robot drivetrain. */
+    protected DcMotor rightFront;  /** This motor is one of the drive motors that makes up the robot drivetrain. */
+    protected DcMotor leftRear;    /** This motor is one of the drive motors that makes up the robot drivetrain. */
+    protected DcMotor rightRear;   /** This motor is one of the drive motors that makes up the robot drivetrain. */
 
-    protected DcMotor rightRear;
     /**
      * The arm servo makes the jewel sword rotate down to push a jewel.
      */
     protected Servo arm;
-    protected Servo glyph;
-    protected Servo shoulder;
-    protected Servo hand;
-    protected Servo elbow;
+    protected Servo glyph;   /** The glyph servo pushes the glyph out of the holding slot in the robot. */
+    protected Servo shoulder;   /** The shoulder servo extends the relic arm during relic deployment. */
+    protected Servo elbow;   /** The elbow servo lifts the relic up and down. */
+    protected Servo hand;   /** The hand servo opens and closes the relic claw. */
     protected IntegratingGyroscope gyro;
     protected NavxMicroNavigationSensor navxMicro;
     protected AnalogInput camera;
