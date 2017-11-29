@@ -44,31 +44,49 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * @see OpMode
  */
 public class Error404_Hardware_Tier1 extends OpMode {
+    /** This motor is one of the drive motors that makes up the robot drivetrain. */
+    protected DcMotor leftFront;
+    /** This motor is one of the drive motors that makes up the robot drivetrain. */
+    protected DcMotor rightFront;
+    /** This motor is one of the drive motors that makes up the robot drivetrain. */
+    protected DcMotor leftRear;
+    /** This motor is one of the drive motors that makes up the robot drivetrain. */
+    protected DcMotor rightRear;
 
-    protected DcMotor leftFront;   /** This motor is one of the drive motors that makes up the robot drivetrain. */
-    protected DcMotor rightFront;  /** This motor is one of the drive motors that makes up the robot drivetrain. */
-    protected DcMotor leftRear;    /** This motor is one of the drive motors that makes up the robot drivetrain. */
-    protected DcMotor rightRear;   /** This motor is one of the drive motors that makes up the robot drivetrain. */
-
-    /**
-     * The arm servo makes the jewel sword rotate down to push a jewel.
-     */
+    /** The arm servo makes the jewel sword rotate down to push a jewel. */
     protected Servo arm;
-    protected Servo glyph;   /** The glyph servo pushes the glyph out of the holding slot in the robot. */
-    protected Servo shoulder;   /** The shoulder servo extends the relic arm during relic deployment. */
-    protected Servo elbow;   /** The elbow servo lifts the relic up and down. */
-    protected Servo hand;   /** The hand servo opens and closes the relic claw. */
+    /** The glyph servo pushes the glyph out of the holding slot in the robot. */
+    protected Servo glyph;
+    /** The shoulder servo extends the relic arm during relic deployment. */
+    protected Servo shoulder;
+    /** The elbow servo lifts the relic up and down. */
+    protected Servo elbow;
+    /** The hand servo opens and closes the relic claw. */
+    protected Servo hand;
+    /** The Rev Expansion Hub's own gryo and should only be used during initialization. */
     protected IntegratingGyroscope gyro;
+    /** The navxMicro is a gyro and is used to record the robot's heading. */
     protected NavxMicroNavigationSensor navxMicro;
+    /** The camera is used to differentiate colors during the jewel mission. */
     protected AnalogInput camera;
 
+
+    /** The Vuforia system is used to track special patterns on the edge of the field. */
+
+    /** Part of the vuforia system. */
     OpenGLMatrix lastLocation = null;
+    /** The Vuforia system uses this. */
     VuforiaLocalizer vuforia;
 
+    /** The Vuforia system uses this. */
     VuforiaTrackables relicTrackables;
+    /** The Vuforia system uses this. */
     VuforiaTrackable relicTemplate;
+    /** The Vuforia system uses this. */
     int cameraMonitorViewId;
+    /** The Vuforia system uses this. */
     VuforiaLocalizer.Parameters parameters;
+    /** The Vuforia system uses this. */
     RelicRecoveryVuMark vuMark;
 
     /**
