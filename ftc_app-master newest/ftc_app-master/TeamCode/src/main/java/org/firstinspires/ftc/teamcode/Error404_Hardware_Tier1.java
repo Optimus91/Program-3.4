@@ -37,7 +37,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 /**
- * Tier 1 extends the OpMode class and captures all of our hardware and implements basic methods for
+ * Tier 1 extends the <code>OpMode</code> class and captures all of our hardware and implements basic methods for
  * interacting with the motors. Basic driving and robot operations are achieved in this class.
  *
  * @author Team 8668
@@ -48,6 +48,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected DcMotor rightFront;
     protected DcMotor leftRear;
     protected DcMotor rightRear;
+    /**
+     * The arm servo makes the jewel sword rotate down to push a jewel.
+     */
     protected Servo arm;
     protected Servo glyph;
     protected Servo shoulder;
@@ -67,7 +70,10 @@ public class Error404_Hardware_Tier1 extends OpMode {
     RelicRecoveryVuMark vuMark;
 
     /**
-     * reg
+     * When the driver selects an <code>OpMode</code> on the driver station,
+     * this method initializes the hardware found in the <code>HardwareMap</code>.
+     * If the device cannot be found in the config file, an error message
+     * shows on the driver station telemetry.
      */
     @Override public void init() {
         /////////////////////////////////////////////////////////////////
