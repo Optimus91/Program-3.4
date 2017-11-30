@@ -242,7 +242,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * Gets the motor's position and power
      *
      * @param motor  the motor whose position and power will be recorded
-     * @return  ......
+     * @return  a String which is the motor's power
      */
     public String get_power_tele(DcMotor motor)
     {
