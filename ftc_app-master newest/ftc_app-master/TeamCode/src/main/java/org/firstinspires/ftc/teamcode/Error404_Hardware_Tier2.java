@@ -3,9 +3,17 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+/**
+ * Tier 2 extends <code>Error404_Hardware_Tier1</code> class and covers additional driving and servo methods.
+ *
+ * @author Team 8668
+ * @see Error404_Hardware_Tier1
+ */
 public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION 2.1.2
 
     /// Beacon pusher method  //
+
+
     public void setServoPos(Servo servomotor, Double position){
 
         servomotor.setPosition(position);
@@ -26,6 +34,15 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         telemetry.addData("After: ", getHeading());
 
     }
+
+    /**
+     * Uses various parameters to make the robot drive straight
+     *
+     * @param mode  a String that gives the motor mode
+     * @param power  a Double that gives the power
+     * @param direction  a String that tells the direction (forward "f" or reverse "r")
+     * @param position  an Int that tells the motor position on the robot
+     */
     public void driveStraight(String mode, double power, String direction, int position) {
         position=distance2encoder(position,6,1);
         if (direction.toLowerCase().equals("f")) {
@@ -51,12 +68,23 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         right_set_power(power);
 
     }
+
+    /**
+     * Sets the left drive motors' power
+     *
+     * @param power  a Duble that is the power for the left motors
+     */
     public void left_set_power(double power)
     {
         set_power(power, leftFront);
         set_power(power, leftRear);
     }
 
+    /**
+     * sets the right drive motors' power
+     *
+     * @param power  a Double that is the power for the right motors
+     */
     public void right_set_power(double power)
     {
         set_power(power, rightFront);
@@ -82,6 +110,15 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
 */
 
     //Direction is either l "L" for left or r for right, instead of F for forward and B for backward
+
+    /**
+     * A method for making point turns
+     *
+     * @param mode  a String that is the motor mode
+     * @param power  a Double that is the power
+     * @param direction  a String that is the direction of movement
+     * @param position  an Int that is the motors' position on the robot
+     */
     public void pointTurn(String mode, double power, String direction, int position){
         position=distance2encoder(position,6,1);
         if (direction.toLowerCase().equals("r")) {
@@ -110,6 +147,14 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         right_set_power(power);
     }
 
+    /**
+     * a method used for sliding sideways
+     *
+     * @param mode  a String that is the motors' mode
+     * @param power  a Double that is the power
+     * @param direction  a String that is the direction of movement
+     * @param position  an Int that is the motors' position on the robot
+     */
     public void slide_sideways(String mode, double power, String direction, int position){
         position = distance2encoder(position, 4, 1);
         position=position*2; //because the wheels on the meccanum wheels are at 45', multiply the encoder counts by 2
@@ -146,7 +191,6 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             set_power(power, leftRear);
         }
     }
-
     public void slide_sideways_gyro(String mode, double power, String direction, int zeropoint){
         int maxDrift=5;
         int drift=0;
@@ -210,6 +254,14 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
     }
 
 
+    /**
+     * a method used for making gyro turns
+     *
+     * @param desired_gyro  an Int that is the target gyro heading
+     * @param starting_power  a Double that is the starting power
+     * @param fraction_to_change_power
+     * @param direction  a String that is the direction of movement
+     */
     public void turn_gyro_power_new(int desired_gyro, double starting_power, double fraction_to_change_power, String direction){
         double powervalue=0;
         int heading = getHeading();
@@ -251,7 +303,6 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         } // end if direction = l
 
     }
-
     public void turn_gyro_power(int desired_gyro, double starting_power, double fraction_to_change_power, String direction){
         double powervalue=0;
         double last_part=(desired_gyro*fraction_to_change_power);
@@ -289,7 +340,6 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         } // end if direction = l
 
     }
-
     public double ramp_up(double powerBegin, double powerEnd, double powerToWrite){
         if (powerBegin<powerEnd)
         {
