@@ -2,8 +2,15 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+/**
+ * frontJewelBlueMeet1 extends the <code>Error404_Hardware_Tier2</code> class and
+ * contains the instructions to complete our autonomous missions on the
+ * front blue corner of the field.
+ *
+ * @author Team 8668
+ * @see Error404_Hardware_Tier2
+ */
 @Autonomous(name="Blue Jewel Front", group="Jewel")
-
 public class frontJewelBlueMeet1 extends Error404_Hardware_Tier2
 
 {
@@ -15,14 +22,33 @@ public class frontJewelBlueMeet1 extends Error404_Hardware_Tier2
     public frontJewelBlueMeet1()
     {
     }
+
+    /**
+     * Adding gyro functionality to the Tier1 init method for this program
+     */
     @Override public void init(){
         super.init();
         telemetry.addData("Gyro: ", getHeading());
         telemetry.addData("","V 1");
     }
+
+    /**
+     * Overriding the start method to provide a place to put things at this tier when the driver presses start.
+     */
     @Override public void start(){
 
     }
+
+    /**
+     * The autonomous program for this mission.
+     * It uses a state machine to step through the movements necessary to execute the mission.
+     * In this mission we:
+     * <ul>
+     *     <li>Identify the correct jewel with the pixycam and knock it off</li>
+     *     <li>Drive to the safezone</li>
+     *     <li>Insert pre-loaded glyph into the cryptobox</li>
+     * </ul>
+     */
     @Override public void loop ()
     {
         switch (state)

@@ -38,7 +38,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 /**
  * Tier 1 extends the <code>OpMode</code> class and captures all of our hardware and implements basic methods for
- * interacting with the motors. Basic driving and robot operations are also achieved in this class.
+ * interacting with the motors.
+ * Basic driving and robot operations are also achieved in this class.
  *
  * @author Team 8668
  * @see OpMode

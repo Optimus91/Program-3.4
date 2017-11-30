@@ -3,9 +3,16 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
+/**
+ * rearJewelBlueMeet1Vuforia extends the <code>Error404_Hardware_Tier2</code> class and
+ * contains the instructions to complete our autonomous missions on the
+ * rear blue corner of the field.
+ *
+ * @author Team 8668
+ * @see Error404_Hardware_Tier2
+ */
 @Autonomous(name="Blue Jewel Rear Vuforia", group="Jewel")
 @Disabled
-
 public class rearJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
 
 {
@@ -16,16 +23,36 @@ public class rearJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
     public rearJewelBlueMeet1Vuforia()
     {
     }
+
+    /**
+     * Adding gyro functionality to the Tier1 init method for this program
+     */
     @Override public void init(){
         super.init();
         telemetry.addData("Gyro: ", getHeading());
         telemetry.addData("","V 1");
     }
+
+    /**
+     * Overriding the start method to provide a place to put things at this tier when the driver presses start.
+     */
     @Override public void start(){
         //resetAllEncoders_withWait();
         //gyroCalibrate();
 
     }
+
+    /**
+     * The autonomous program for this mission.
+     * It uses a state machine to step through the movements necessary to execute the mission.
+     * In this mission we:
+     * <ul>
+     *     <li>Identify the correct jewel with the pixycam and knock it off</li>
+     *     <li>Drive to the safezone</li>
+     *     <li>On the way to the safezone read the pictograph on the wall</li>
+     *     <li>Insert pre-loaded glyph into the column of the cryptobox specified by the pictograph</li>
+     * </ul>
+     */
     @Override public void loop ()
     {
         switch (state)
