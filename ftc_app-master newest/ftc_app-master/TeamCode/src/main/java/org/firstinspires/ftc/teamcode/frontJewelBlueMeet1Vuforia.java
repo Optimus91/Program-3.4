@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Blue Jewel Front Vuforia", group="Jewel")
+@Autonomous(name="Blue Front", group="Jewel")
 //@Disabled
 
 public class frontJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
@@ -12,7 +12,7 @@ public class frontJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
     private int state = 0;
     private int encoder=0;
     private double timer=0;
-    private int cryptoboxSlide=0;
+    private int cryptoboxSlide=300;
     public frontJewelBlueMeet1Vuforia()
     {
     }
@@ -83,11 +83,11 @@ public class frontJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
             case 6:
                 if(readCryptograph().equals("LEFT")){
                     //cryptoboxSlide=130;
-                    cryptoboxSlide=100;
+                    cryptoboxSlide=110;
                     state=7;
                 }
                 else if(readCryptograph().equals("RIGHT")){
-                    cryptoboxSlide=200;
+                    cryptoboxSlide=475;
                     //cryptoboxSlide=505;
                     state=7;
                 }
@@ -99,12 +99,10 @@ public class frontJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
                 if(((int)(getRuntime()-timer))>3) {
                     state=7;
                 }
-                cryptoboxSlide=100;
-                state=7;
                 break;
             case 7:
                 driveStraight("RUE",0.3,"r",0);
-                if(leftFront.getCurrentPosition()-encoder>500+cryptoboxSlide) {
+                if(leftFront.getCurrentPosition()-encoder>300+cryptoboxSlide) {
                     pointTurn("RUE",0,"r",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
@@ -123,7 +121,7 @@ public class frontJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
                 break;
             case 10:
                 driveStraight("RUE",0.3,"f",0);
-                if(leftFront.getCurrentPosition()-encoder>90) {
+                if(leftFront.getCurrentPosition()-encoder>150) {
                     driveStraight("RUE",0,"r",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();

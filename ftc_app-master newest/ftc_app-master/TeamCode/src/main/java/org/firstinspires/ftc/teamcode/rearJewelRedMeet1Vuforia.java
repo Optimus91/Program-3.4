@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Red Jewel Rear Vuforia", group="Jewel")
+@Autonomous(name="Red Rear", group="Jewel")
 //@Disabled
 
 public class rearJewelRedMeet1Vuforia extends Error404_Hardware_Tier2
@@ -12,13 +12,13 @@ public class rearJewelRedMeet1Vuforia extends Error404_Hardware_Tier2
     private int state = 0;
     private int encoder=0;
     private double timer=0;
-    private int cryptoboxSlide=0;
+    private int cryptoboxSlide=305;
     public rearJewelRedMeet1Vuforia()
     {
     }
     @Override public void init(){
         super.init();
-        driveStraight("RUE",0,"r",0);
+        driveStraight("RUE",0,"f",0);
         telemetry.addData("Gyro: ", getHeading());
         telemetry.addData("","V 1");
         arm.setPosition(0);
@@ -42,12 +42,12 @@ public class rearJewelRedMeet1Vuforia extends Error404_Hardware_Tier2
                 timer =getRuntime();
                 if(camera.getVoltage()<1.2){
                     telemetry.addData("On left","");
-                    state=3;
+                    state=2;
                     break;
                 }
                 else if(camera.getVoltage()>1.2){
                     telemetry.addData("On right","");
-                    state=2;
+                    state=3;
                     break;
                 }
             case 2:
@@ -72,9 +72,9 @@ public class rearJewelRedMeet1Vuforia extends Error404_Hardware_Tier2
                 }
                 break;
             case 5:
-                driveStraight("RUE",0.3,"r",0);
-                if(leftFront.getCurrentPosition()-encoder>100) {
-                    driveStraight("RUE",0,"r",0);
+                driveStraight("RUE",0.3,"f",0);
+                if(leftFront.getCurrentPosition()-encoder>220) {
+                    driveStraight("RUE",0,"f",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
                     timer =getRuntime();
@@ -82,24 +82,24 @@ public class rearJewelRedMeet1Vuforia extends Error404_Hardware_Tier2
                 break;
             case 6:
                 if(readCryptograph().equals("LEFT")){
-                    cryptoboxSlide=130;
-                    state=7;
+                    cryptoboxSlide=115;
+                    //state=7;
                 }
                 else if(readCryptograph().equals("RIGHT")){
-                    cryptoboxSlide=505;
-                    state=7;
+                    cryptoboxSlide=470;
+                    //state=7;
                 }
                 else if(readCryptograph().equals("CENTER")){
-                    cryptoboxSlide=320;
-                    state=7;
+                    cryptoboxSlide=305;
+                    //state=7;
                 }
                 if(((int)(getRuntime()-timer))>3) {
-                    state=7;
+                    //state=7;
                 }
                 break;
             case 7:
                 driveStraight("RUE",0.3,"f",0);
-                if(leftFront.getCurrentPosition()-encoder>500) {
+                if(leftFront.getCurrentPosition()-encoder>460) {
                     pointTurn("RUE",0,"f",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();

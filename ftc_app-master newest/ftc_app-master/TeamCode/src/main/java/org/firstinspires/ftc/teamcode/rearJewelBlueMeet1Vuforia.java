@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-@Autonomous(name="Blue Jewel Rear Vuforia", group="Jewel")
+@Autonomous(name="Blue Rear", group="Jewel")
 //@Disabled
 
 public class rearJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
@@ -13,7 +13,7 @@ public class rearJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
     private int state = 0;
     private int encoder=0;
     private double timer=0;
-    private int cryptoboxSlide=0;
+    private int cryptoboxSlide=320;
     public rearJewelBlueMeet1Vuforia()
     {
     }

@@ -28,6 +28,7 @@ import java.util.Locale;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
  */
 @Autonomous(name = "Sensor: REVColor", group = "Sensor")
+@Disabled
 public class SensorREVColorDistance extends LinearOpMode {
 
 
