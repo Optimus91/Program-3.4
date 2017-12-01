@@ -98,23 +98,18 @@ public class rearJewelRedMeet1Vuforia extends Error404_Hardware_Tier2
                 }
                 break;
             case 7:
-                driveStraight("RUE",0.3,"r",0);
+                driveStraight("RUE",0.3,"f",0);
                 if(leftFront.getCurrentPosition()-encoder>500) {
-                    pointTurn("RUE",0,"r",0);
+                    pointTurn("RUE",0,"f",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
                     }
                 break;
             case 8:
-                pointTurn("RUE",0.3,"r",0);
-                if(Math.abs(getHeading())>170){
-                    state++;
-                    slide_sideways("RUE",0,"r",0);
-                    encoder=leftFront.getCurrentPosition();
-                }
+                state++;
                 break;
             case 9:
-                slide_sideways("RUE",0.3,"r",0);
+                slide_sideways("RUE",0.3,"l",0);
                 if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
                     driveStraight("RUE",0,"f",0);
                     state++;
