@@ -125,7 +125,6 @@ public class team8668Teleop extends OpMode {
             pivotPos=0.64;
         }
         else {pivotPos=0.52;}
-        pivotPos=Range.clip(pivotPos, 0.0, 1.0);
 
 
 
