@@ -75,7 +75,7 @@ public class frontJewelRedMeet1Vuforia extends Error404_Hardware_Tier2
                 driveStraight("RUE",0.3,"f",0);
                 if(leftFront.getCurrentPosition()-encoder>220) {
                     driveStraight("RUE",0,"f",0);
-                    state++;
+                    state=6;
                     encoder=leftFront.getCurrentPosition();
                     timer =getRuntime();
                 }
