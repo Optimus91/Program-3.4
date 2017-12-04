@@ -47,6 +47,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected Servo shoulder;
     protected Servo hand;
     protected Servo elbow;
+    protected Servo swivel;
     protected IntegratingGyroscope gyro;
     protected NavxMicroNavigationSensor navxMicro;
     protected AnalogInput camera;
@@ -71,6 +72,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("Jewel Sword not found in config file", 0);
             arm = null;
+        }
+        try {
+            swivel = hardwareMap.get(Servo.class, "jewelSwivel");
+            swivel.setPosition(0.52);
+        } catch (Exception p_exeception) {
+            telemetry.addData("Jewel Swivel not found in config file", 0);
+            swivel = null;
         }
         try {
             glyph = hardwareMap.get(Servo.class, "glyph");

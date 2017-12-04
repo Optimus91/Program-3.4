@@ -26,6 +26,7 @@ public class team8668Teleop extends OpMode {
     Servo shoulder;
     Servo hand;
     Servo elbow;
+    Servo pivot;
     float launchspeed1;
     double powerval;
     double rightVal=0;
@@ -33,6 +34,7 @@ public class team8668Teleop extends OpMode {
     double incrementDir=0;
     double elbowPos=1;
     double shoulderPos=0.95;
+    double pivotPos =0.522;
     public team8668Teleop() {
     }
     @Override
@@ -56,11 +58,11 @@ public class team8668Teleop extends OpMode {
         elbow = hardwareMap.servo.get("elbow");
         hand = hardwareMap.servo.get("hand");
         glyph = hardwareMap.servo.get("glyph");
+        pivot=hardwareMap.servo.get("jewelSwivel");
         hand.setPosition(1);
         glyph.setPosition(0.25);
         arm.setPosition(0.0);
-
-        //rightVal=0.5;
+        pivot.setPosition(0.5);
     }
     @Override
     public void loop() {
@@ -87,18 +89,8 @@ public class team8668Teleop extends OpMode {
         RR = Range.clip(RR, -1, 1);
         LR = Range.clip(LR, -1, 1);
 
-        //////////////////////////////////////////
-        /////Ball Collector//////////////////////
-        /////////////////////////////////////////
-        //float collector = gamepad2.right_trigger-gamepad2.left_trigger;
-        //collector = (float) scaleInput(collector);
-        //collector = Range.clip(collector, -1, 1); //To keep power value within the acceptable range.
-
-        //////////////////////////////////////////////////////////
-        //////BEACON PRESSER////////////////
-        /////////////////////////////////////
         if(gamepad1.y){
-            arm.setPosition(0.5);
+            arm.setPosition(0.75);
         }
         else if(gamepad1.a){
             arm.setPosition(0.0);
@@ -126,6 +118,14 @@ public class team8668Teleop extends OpMode {
             hand.setPosition(1);
         }
 
+        if(gamepad1.x){
+            pivotPos=0.44;
+        }
+        else if(gamepad1.b){
+            pivotPos=0.64;
+        }
+        else {pivotPos=0.52;}
+
 
 
         rightFront.setPower(RF);
@@ -134,11 +134,13 @@ public class team8668Teleop extends OpMode {
         leftRear.setPower(LR);
         elbow.setPosition(elbowPos);
         shoulder.setPosition(shoulderPos);
+        pivot.setPosition(pivotPos);
 
       telemetry.addData("shoulder: ",shoulder.getPosition());
       telemetry.addData("grabber:",hand.getPosition());
       telemetry.addData("elbow: ",elbow.getPosition());
       telemetry.addData("pusher: ",glyph.getPosition());
+      telemetry.addData("pivot: ",pivot.getPosition());
 
     }
     @Override

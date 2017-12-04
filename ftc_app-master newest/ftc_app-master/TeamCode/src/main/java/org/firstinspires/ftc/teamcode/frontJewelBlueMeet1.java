@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="Blue Jewel Front", group="Jewel")
-
+@Disabled
 public class frontJewelBlueMeet1 extends Error404_Hardware_Tier2
 
 {

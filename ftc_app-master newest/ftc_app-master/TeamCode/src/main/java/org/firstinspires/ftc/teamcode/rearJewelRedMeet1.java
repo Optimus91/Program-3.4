@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="Red Jewel Rear", group="Jewel")
+@Disabled
 
 public class rearJewelRedMeet1 extends Error404_Hardware_Tier2
 
