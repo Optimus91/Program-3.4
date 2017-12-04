@@ -109,6 +109,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
             arm = null;
         }
         try {
+            swivel = hardwareMap.get(Servo.class, "jewelSwivel");
+            swivel.setPosition(0.52);
+        } catch (Exception p_exeception) {
+            telemetry.addData("Jewel Swivel not found in config file", 0);
+            swivel = null;
+        }
+        try {
             glyph = hardwareMap.get(Servo.class, "glyph");
         } catch (Exception p_exeception) {
             telemetry.addData("glyph servo not found in config file", 0);
@@ -324,7 +331,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
 
     //////////////////////////////////////////
     /*method that checks if the motor has   //
-    // reached or exceeded its goal. If found, else     //
+    // reached it's goal if found, else     //
     //          returns false.              //
     */////////////////////////////////////////
     public boolean is_encoder_reached(int goal, DcMotor motor)

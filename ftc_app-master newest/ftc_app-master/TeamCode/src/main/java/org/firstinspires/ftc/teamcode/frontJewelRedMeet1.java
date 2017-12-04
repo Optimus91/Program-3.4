@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
@@ -21,6 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
  * @see Error404_Hardware_Tier2
  */
 @Autonomous(name="Red Jewel Front", group="Jewel")
+@Disabled
 public class frontJewelRedMeet1 extends Error404_Hardware_Tier2
 
 {
