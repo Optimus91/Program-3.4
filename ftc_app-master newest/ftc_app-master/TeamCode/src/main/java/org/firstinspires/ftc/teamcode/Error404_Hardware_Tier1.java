@@ -56,6 +56,8 @@ public class Error404_Hardware_Tier1 extends OpMode {
 
     /** The arm servo makes the jewel sword rotate down to push a jewel. */
     protected Servo arm;
+    /** The swivel servo moves the jewel sword move left or right to knock the approriate jewel off the stand. */
+    protected Servo swivel;
     /** The glyph servo pushes the glyph out of the holding slot in the robot. */
     protected Servo glyph;
     /** The shoulder servo extends the relic arm during relic deployment. */

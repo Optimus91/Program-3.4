@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * @author Team 8668
  * @see Error404_Hardware_Tier2
  */
-@Autonomous(name="Blue Jewel Front Vuforia", group="Jewel")
-@Disabled
+@Autonomous(name="Blue Front", group="Jewel")
+//@Disabled
 public class frontJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
 
 {
@@ -45,7 +45,7 @@ public class frontJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
         super.start();
     }
 
-    }
+
 
     /**
      * The autonomous program for this mission.
