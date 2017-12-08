@@ -101,7 +101,7 @@ public class team8668Teleop extends OpMode {
         else if(gamepad2.a){
             shoulderPos-=0.001;
         }
-        shoulderPos = Range.clip(shoulderPos,0.83,0.95);
+        shoulderPos = Range.clip(shoulderPos,0.76,0.95);
 
         if(gamepad2.dpad_up){
             elbowPos+=0.001;
