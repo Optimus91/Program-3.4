@@ -82,11 +82,11 @@ public class rearJewelRedMeet1Vuforia extends Error404_Hardware_Tier2
                 break;
             case 6:
                 if(readCryptograph().equals("LEFT")){
-                    cryptoboxSlide=115;
+                    cryptoboxSlide=470;
                     state=7;
                 }
                 else if(readCryptograph().equals("RIGHT")){
-                    cryptoboxSlide=470;
+                    cryptoboxSlide=115;
                     state=7;
                 }
                 else if(readCryptograph().equals("CENTER")){
