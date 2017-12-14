@@ -7,7 +7,13 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
     private int state = 0;
     private int encoder=0;
     private double timer=0;
-    private int cryptoboxSlide=300;
+    private int cryptoboxDriveDistance;
+    private int stoneToMarket;
+    private int turnToFrontCryptobox;
+    private int turnToRearCryptobox;
+    private int cryptoboxSlide;
+    private int location=0;
+
     private String fieldSide;
     private String sideLocation;
 
@@ -23,6 +29,42 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         swivel.setPosition(0.52);
         glyph.setPosition(0.25);
         encoder=leftFront.getCurrentPosition();
+        if(fieldSide.equals("BLUE")){
+            if(sideLocation.equals("FRONT")) {
+                cryptoboxDriveDistance = 300;
+                stoneToMarket = 0;
+                cryptoboxSlide=0;
+                turnToRearCryptobox=0;
+                turnToFrontCryptobox=85;
+                location=0;
+            }
+            if(sideLocation.equals("REAR")){
+                cryptoboxDriveDistance = 0;
+                stoneToMarket = 500;
+                cryptoboxSlide=320;
+                turnToRearCryptobox=170;
+                turnToFrontCryptobox=0;
+                location=1;
+            }
+        }
+        if(fieldSide.equals("RED")){
+            if(sideLocation.equals("FRONT")) {
+                cryptoboxDriveDistance = 300;
+                stoneToMarket = 0;
+                cryptoboxSlide=0;
+                turnToRearCryptobox=0;
+                turnToFrontCryptobox=85;
+                location=2;
+            }
+            if(sideLocation.equals("REAR")){
+                cryptoboxDriveDistance = 0;
+                stoneToMarket = 460;
+                cryptoboxSlide=305;
+                turnToRearCryptobox=0;
+                turnToFrontCryptobox=0;
+                location=3;
+            }
+        }
     }
     @Override public void start(){
         super.start();
@@ -45,12 +87,22 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 timer =getRuntime();
                 if(camera.getVoltage()<1.2){
                     telemetry.addData("On left","");
-                    state=2;
+                    if(fieldSide.equals("BLUE")){
+                        state=3;
+                    }
+                    if(fieldSide.equals("RED")){
+                        state=2;
+                    }
                     break;
                 }
                 else if(camera.getVoltage()>1.2){
                     telemetry.addData("On right","");
-                    state=3;
+                    if(fieldSide.equals("BLUE")){
+                        state=2;
+                    }
+                    if(fieldSide.equals("RED")){
+                        state=3;
+                    }
                     break;
                 }
             case 2:
@@ -71,31 +123,19 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 if(((int)(getRuntime()-timer))>1) {
                     arm.setPosition(0);
                     swivel.setPosition(0.5);
-                    state++;
-                }
-                break;
-            case 5:
-                driveStraight("RUE",0.3,"f",0);
-                if(leftFront.getCurrentPosition()-encoder>220) {
-                    driveStraight("RUE",0,"f",0);
                     state=6;
-                    encoder=leftFront.getCurrentPosition();
-                    timer =getRuntime();
                 }
                 break;
             case 6:
                 if(readCryptograph().equals("LEFT")){
-                    //cryptoboxSlide=130;
                     cryptoboxSlide=130;
                     state=7;
                 }
                 else if(readCryptograph().equals("RIGHT")){
                     cryptoboxSlide=475;
-                    //cryptoboxSlide=505;
                     state=7;
                 }
                 else if(readCryptograph().equals("CENTER")){
-                    //cryptoboxSlide=320;
                     cryptoboxSlide=300;
                     state=7;
                 }
