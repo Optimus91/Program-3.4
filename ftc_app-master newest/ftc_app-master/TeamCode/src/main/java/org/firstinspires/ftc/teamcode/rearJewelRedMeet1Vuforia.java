@@ -101,7 +101,7 @@ public class rearJewelRedMeet1Vuforia extends Error404_Hardware_Tier2
             case 7:
                 driveStraight("RUE",0.3,"f",0);
                 if(leftFront.getCurrentPosition()-encoder>460) {
-                    pointTurn("RUE",0,"f",0);
+                    slide_sideways("RUE",0,"l",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
                     }

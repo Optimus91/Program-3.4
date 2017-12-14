@@ -22,7 +22,6 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
     }
     @Override public void init(){
         super.init();
-        driveStraight("RUE",0,"f",0);
         telemetry.addData("Gyro: ", getHeading());
         telemetry.addData("","V 1");
         arm.setPosition(0);
@@ -37,6 +36,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 turnToRearCryptobox=0;
                 turnToFrontCryptobox=85;
                 location=0;
+                driveStraight("RUE",0,"r",0);
             }
             if(sideLocation.equals("REAR")){
                 cryptoboxDriveDistance = 0;
@@ -45,6 +45,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 turnToRearCryptobox=170;
                 turnToFrontCryptobox=0;
                 location=1;
+                driveStraight("RUE",0,"r",0);
             }
         }
         if(fieldSide.equals("RED")){
@@ -55,6 +56,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 turnToRearCryptobox=0;
                 turnToFrontCryptobox=85;
                 location=2;
+                driveStraight("RUE",0,"f",0);
             }
             if(sideLocation.equals("REAR")){
                 cryptoboxDriveDistance = 0;
@@ -63,8 +65,10 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 turnToRearCryptobox=0;
                 turnToFrontCryptobox=0;
                 location=3;
+                driveStraight("RUE",0,"f",0);
             }
         }
+        encoder=leftFront.getCurrentPosition();
     }
     @Override public void start(){
         super.start();
@@ -128,15 +132,66 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
             case 6:
                 if(readCryptograph().equals("LEFT")){
-                    cryptoboxSlide=130;
+                    switch (location){
+                        case 0:
+                            cryptoboxDriveDistance=110;
+                            cryptoboxSlide=0;
+                            break;
+                        case 1:
+                            cryptoboxDriveDistance=0;
+                            cryptoboxSlide=130;
+                            break;
+                        case 2:
+                            cryptoboxDriveDistance=130;
+                            cryptoboxSlide=0;
+                            break;
+                        case 3:
+                            cryptoboxDriveDistance=0;
+                            cryptoboxSlide=470;
+                            break;
+                    }
                     state=7;
                 }
                 else if(readCryptograph().equals("RIGHT")){
-                    cryptoboxSlide=475;
+                    switch (location){
+                        case 0:
+                            cryptoboxDriveDistance=475;
+                            cryptoboxSlide=0;
+                            break;
+                        case 1:
+                            cryptoboxDriveDistance=0;
+                            cryptoboxSlide=505;
+                            break;
+                        case 2:
+                            cryptoboxDriveDistance=475;
+                            cryptoboxSlide=0;
+                            break;
+                        case 3:
+                            cryptoboxDriveDistance=0;
+                            cryptoboxSlide=115;
+                            break;
+                    }
                     state=7;
                 }
                 else if(readCryptograph().equals("CENTER")){
-                    cryptoboxSlide=300;
+                    switch (location){
+                        case 0:
+                            cryptoboxDriveDistance=300;
+                            cryptoboxSlide=0;
+                            break;
+                        case 1:
+                            cryptoboxDriveDistance=0;
+                            cryptoboxSlide=320;
+                            break;
+                        case 2:
+                            cryptoboxDriveDistance=300;
+                            cryptoboxSlide=0;
+                            break;
+                        case 3:
+                            cryptoboxDriveDistance=0;
+                            cryptoboxSlide=305;
+                            break;
+                    }
                     state=7;
                 }
                 if(((int)(getRuntime()-timer))>3) {
@@ -144,12 +199,47 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 break;
             case 7:
-                driveStraight("RUE",0.3,"f",0);
-                if(leftFront.getCurrentPosition()-encoder>300+cryptoboxSlide) {
-                    pointTurn("RUE",0,"r",0);
-                    state++;
-                    encoder=leftFront.getCurrentPosition();
+                if(cryptoboxDriveDistance>0) {
+                    switch (location){
+                        case 0:
+                            driveStraight("RUE", 0.3, "r", 0);
+                            if (leftFront.getCurrentPosition() - encoder > 300 + cryptoboxDriveDistance) {
+                                pointTurn("RUE", 0, "r", 0);
+                                state++;
+                                encoder = leftFront.getCurrentPosition();
+                            }
+                            break;
+                        case 2:
+                            driveStraight("RUE", 0.3, "f", 0);
+                            if (leftFront.getCurrentPosition() - encoder > 300 + cryptoboxDriveDistance) {
+                                pointTurn("RUE", 0, "r", 0);
+                                state++;
+                                encoder = leftFront.getCurrentPosition();
+                            }
+                            break;
                     }
+                }
+                else{
+                    switch (location){
+                        case 1:
+                            driveStraight("RUE", 0.3, "r", 0);
+                            if (leftFront.getCurrentPosition() - encoder > stoneToMarket) {
+                                pointTurn("RUE", 0, "r", 0);
+                                state++;
+                                encoder = leftFront.getCurrentPosition();
+                            }
+                            break;
+                        case 3:
+                            driveStraight("RUE", 0.3, "f", 0);
+                            if (leftFront.getCurrentPosition() - encoder > stoneToMarket) {
+                                pointTurn("RUE", 0, "r", 0);
+                                state++;
+                                encoder = leftFront.getCurrentPosition();
+                            }
+                            break;
+                    }
+                    state++;
+                }
                 break;
             case 8:
                 pointTurn("RUE",0.3,"r",0);
