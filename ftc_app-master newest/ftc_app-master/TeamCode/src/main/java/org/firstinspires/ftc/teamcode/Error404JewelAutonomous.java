@@ -1,25 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-
-@Autonomous(name="Blue Rear", group="Jewel")
-@Disabled
-
-public class rearJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
+public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 
 {
     ///////////////////////////////////////////////////////////////////
     private int state = 0;
     private int encoder=0;
     private double timer=0;
-    private int cryptoboxSlide=320;
-    public rearJewelBlueMeet1Vuforia()
+    private int cryptoboxSlide=300;
+    private String fieldSide;
+    private String sideLocation;
+
+    public Error404JewelAutonomous()
     {
     }
     @Override public void init(){
         super.init();
-        driveStraight("RUE",0,"r",0);
+        driveStraight("RUE",0,"f",0);
         telemetry.addData("Gyro: ", getHeading());
         telemetry.addData("","V 1");
         arm.setPosition(0);
@@ -30,6 +27,11 @@ public class rearJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
     @Override public void start(){
         super.start();
     }
+
+    public void setLocation(String frontOrBack, String redOrBlue){
+        fieldSide = redOrBlue;
+        sideLocation = frontOrBack;
+}
 
     @Override public void loop ()
     {
@@ -43,12 +45,12 @@ public class rearJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
                 timer =getRuntime();
                 if(camera.getVoltage()<1.2){
                     telemetry.addData("On left","");
-                    state=3;
+                    state=2;
                     break;
                 }
                 else if(camera.getVoltage()>1.2){
                     telemetry.addData("On right","");
-                    state=2;
+                    state=3;
                     break;
                 }
             case 2:
@@ -73,25 +75,28 @@ public class rearJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
                 }
                 break;
             case 5:
-                driveStraight("RUE",0.3,"r",0);
-                if(leftFront.getCurrentPosition()-encoder>100) {
-                    driveStraight("RUE",0,"r",0);
-                    state=7;
+                driveStraight("RUE",0.3,"f",0);
+                if(leftFront.getCurrentPosition()-encoder>220) {
+                    driveStraight("RUE",0,"f",0);
+                    state=6;
                     encoder=leftFront.getCurrentPosition();
                     timer =getRuntime();
                 }
                 break;
             case 6:
                 if(readCryptograph().equals("LEFT")){
+                    //cryptoboxSlide=130;
                     cryptoboxSlide=130;
                     state=7;
                 }
                 else if(readCryptograph().equals("RIGHT")){
-                    cryptoboxSlide=505;
+                    cryptoboxSlide=475;
+                    //cryptoboxSlide=505;
                     state=7;
                 }
                 else if(readCryptograph().equals("CENTER")){
-                    cryptoboxSlide=320;
+                    //cryptoboxSlide=320;
+                    cryptoboxSlide=300;
                     state=7;
                 }
                 if(((int)(getRuntime()-timer))>3) {
@@ -99,8 +104,8 @@ public class rearJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
                 }
                 break;
             case 7:
-                driveStraight("RUE",0.3,"r",0);
-                if(leftFront.getCurrentPosition()-encoder>500) {
+                driveStraight("RUE",0.3,"f",0);
+                if(leftFront.getCurrentPosition()-encoder>300+cryptoboxSlide) {
                     pointTurn("RUE",0,"r",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
@@ -108,23 +113,18 @@ public class rearJewelBlueMeet1Vuforia extends Error404_Hardware_Tier2
                 break;
             case 8:
                 pointTurn("RUE",0.3,"r",0);
-                if(Math.abs(getHeading())>170){
+                if(Math.abs(getHeading())>85){
                     state++;
-                    slide_sideways("RUE",0,"r",0);
+                    driveStraight("RUE",0,"f",0);
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
             case 9:
-                slide_sideways("RUE",0.3,"r",0);
-                if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
-                    driveStraight("RUE",0,"f",0);
-                    state++;
-                    encoder=leftFront.getCurrentPosition();
-                }
+                state++;
                 break;
             case 10:
                 driveStraight("RUE",0.3,"f",0);
-                if(leftFront.getCurrentPosition()-encoder>90) {
+                if(leftFront.getCurrentPosition()-encoder>150) {
                     driveStraight("RUE",0,"r",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
