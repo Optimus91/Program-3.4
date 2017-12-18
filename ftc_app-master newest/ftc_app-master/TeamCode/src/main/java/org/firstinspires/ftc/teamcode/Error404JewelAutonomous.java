@@ -260,36 +260,26 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 break;
             case 8:
-                switch (location){
-                    case 0:
-                        pointTurn("RUE",0.3,"r",0);
-                        if(Math.abs(getHeading())>turnToFrontCryptobox){
-                            state++;
-                            driveStraight("RUE",0,"f",0);
-                            encoder=leftFront.getCurrentPosition();
-                        }
-                        break;
-                    case 1:
+                if(sideLocation.equals("FRONT")){
+                    pointTurn("RUE",0.3,"r",0);
+                    if(Math.abs(getHeading())>turnToFrontCryptobox){
+                        state++;
+                        driveStraight("RUE",0,"f",0);
+                        encoder=leftFront.getCurrentPosition();
+                    }
+                }
+                    if(location==1){
                         pointTurn("RUE",0.3,"r",0);
                         if(Math.abs(getHeading())>turnToRearCryptobox){
                             state++;
                             driveStraight("RUE",0,"f",0);
                             encoder=leftFront.getCurrentPosition();
                         }
-                        break;
-                    case 2:
-                        pointTurn("RUE",0.3,"r",0);
-                        if(Math.abs(getHeading())>turnToFrontCryptobox){
-                            state++;
-                            driveStraight("RUE",0,"f",0);
-                            encoder=leftFront.getCurrentPosition();
-                        }
-                        break;
-                    case 3:
+                    }
+                    if(location==3){
                         state++;
+                    }
                         break;
-                }
-                break;
             case 9:
                 if(location==3){
                     slide_sideways("RUE",0.3,"l",0);
