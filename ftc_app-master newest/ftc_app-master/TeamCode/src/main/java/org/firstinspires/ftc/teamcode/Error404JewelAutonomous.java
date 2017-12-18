@@ -289,7 +289,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                         encoder=leftFront.getCurrentPosition();
                     }
                 }
-                else if(location==12){
+                else if(location==1){
                     slide_sideways("RUE",0.3,"r",0);
                     if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
                         driveStraight("RUE",0,"f",0);
