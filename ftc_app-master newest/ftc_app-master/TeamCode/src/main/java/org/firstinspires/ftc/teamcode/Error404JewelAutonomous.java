@@ -148,7 +148,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                             break;
                         case 3:
                             cryptoboxDriveDistance=0;
-                            cryptoboxSlide=470;
+                            cryptoboxSlide=460;
                             break;
                     }
                     state=7;
@@ -278,7 +278,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                         }
                         break;
                     case 2:
-                        pointTurn("RUE",0.3,"l",0);
+                        pointTurn("RUE",0.3,"r",0);
                         if(Math.abs(getHeading())>turnToFrontCryptobox){
                             state++;
                             driveStraight("RUE",0,"f",0);
@@ -291,7 +291,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 break;
             case 9:
-                if(fieldSide.equals("RED")){
+                if(location==3){
                     slide_sideways("RUE",0.3,"l",0);
                     if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
                         driveStraight("RUE",0,"f",0);
@@ -299,13 +299,16 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                         encoder=leftFront.getCurrentPosition();
                     }
                 }
-                else if(fieldSide.equals("BLUE")){
+                else if(location==12){
                     slide_sideways("RUE",0.3,"r",0);
                     if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
                         driveStraight("RUE",0,"f",0);
                         state++;
                         encoder=leftFront.getCurrentPosition();
                     }
+                }
+                else{
+                    state++;
                 }
                 break;
             case 10:
