@@ -19,7 +19,6 @@ public class e404_BlueFront extends Error404JewelAutonomous
     @Override public void start(){
         super.start();
     }
-
     @Override public void loop ()
     {
         super.loop();

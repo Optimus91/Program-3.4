@@ -30,7 +30,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         encoder=leftFront.getCurrentPosition();
         if(fieldSide.equals("BLUE")){
             if(sideLocation.equals("FRONT")) {
-                cryptoboxDriveDistance = 300;
+                cryptoboxDriveDistance = 350;
                 stoneToMarket = 0;
                 cryptoboxSlide=0;
                 turnToRearCryptobox=0;
@@ -40,7 +40,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
             }
             if(sideLocation.equals("REAR")){
                 cryptoboxDriveDistance = 0;
-                stoneToMarket = 500;
+                stoneToMarket = 600;
                 cryptoboxSlide=320;
                 turnToRearCryptobox=170;
                 turnToFrontCryptobox=0;
@@ -50,7 +50,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         }
         if(fieldSide.equals("RED")){
             if(sideLocation.equals("FRONT")) {
-                cryptoboxDriveDistance = 300;
+                cryptoboxDriveDistance = 370;
                 stoneToMarket = 0;
                 cryptoboxSlide=0;
                 turnToRearCryptobox=0;
@@ -60,7 +60,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
             }
             if(sideLocation.equals("REAR")){
                 cryptoboxDriveDistance = 0;
-                stoneToMarket = 460;
+                stoneToMarket = 560;
                 cryptoboxSlide=305;
                 turnToRearCryptobox=0;
                 turnToFrontCryptobox=0;
@@ -128,6 +128,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     arm.setPosition(0);
                     swivel.setPosition(0.5);
                     state=6;
+                    timer =getRuntime();
                 }
                 break;
             case 6:
@@ -139,7 +140,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                             break;
                         case 1:
                             cryptoboxDriveDistance=0;
-                            cryptoboxSlide=130;
+                            cryptoboxSlide=135;
                             break;
                         case 2:
                             cryptoboxDriveDistance=130;
@@ -160,7 +161,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                             break;
                         case 1:
                             cryptoboxDriveDistance=0;
-                            cryptoboxSlide=505;
+                            cryptoboxSlide=500;
                             break;
                         case 2:
                             cryptoboxDriveDistance=475;
@@ -176,12 +177,12 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 else if(readCryptograph().equals("CENTER")){
                     switch (location){
                         case 0:
-                            cryptoboxDriveDistance=300;
+                            cryptoboxDriveDistance=305;
                             cryptoboxSlide=0;
                             break;
                         case 1:
                             cryptoboxDriveDistance=0;
-                            cryptoboxSlide=320;
+                            cryptoboxSlide=318;
                             break;
                         case 2:
                             cryptoboxDriveDistance=300;
@@ -194,7 +195,25 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     }
                     state=7;
                 }
-                if(((int)(getRuntime()-timer))>3) {
+                if(((int)(getRuntime()-timer))>2) {
+                    switch (location){
+                        case 0:
+                            cryptoboxDriveDistance=300;
+                            cryptoboxSlide=0;
+                            break;
+                        case 1:
+                            cryptoboxDriveDistance=0;
+                            cryptoboxSlide=318;
+                            break;
+                        case 2:
+                            cryptoboxDriveDistance=300;
+                            cryptoboxSlide=0;
+                            break;
+                        case 3:
+                            cryptoboxDriveDistance=0;
+                            cryptoboxSlide=305;
+                            break;
+                    }
                     state=7;
                 }
                 break;
@@ -203,7 +222,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     switch (location){
                         case 0:
                             driveStraight("RUE", 0.3, "r", 0);
-                            if (leftFront.getCurrentPosition() - encoder > 300 + cryptoboxDriveDistance) {
+                            if (leftFront.getCurrentPosition() - encoder > 400 + cryptoboxDriveDistance) {
                                 pointTurn("RUE", 0, "r", 0);
                                 state++;
                                 encoder = leftFront.getCurrentPosition();
@@ -211,7 +230,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                             break;
                         case 2:
                             driveStraight("RUE", 0.3, "f", 0);
-                            if (leftFront.getCurrentPosition() - encoder > 300 + cryptoboxDriveDistance) {
+                            if (leftFront.getCurrentPosition() - encoder > 400 + cryptoboxDriveDistance) {
                                 pointTurn("RUE", 0, "l", 0);
                                 state++;
                                 encoder = leftFront.getCurrentPosition();
@@ -238,7 +257,6 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                             }
                             break;
                     }
-                    state++;
                 }
                 break;
             case 8:
@@ -329,6 +347,21 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         telemetry.addData("3. Camera:  ", camera.getVoltage());
         telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("5. Delta Position: ", encoder);
+        telemetry.addData("Pattern: ", readCryptograph());
+        switch (location){
+            case 0:
+                telemetry.addData("Blue Front","");
+                break;
+            case 1:
+                telemetry.addData("Blue Rear","");
+                break;
+            case 2:
+                telemetry.addData("Red Front","");
+                break;
+            case 3:
+                telemetry.addData("Red Rear","");
+                break;
+        }
 
 
 
