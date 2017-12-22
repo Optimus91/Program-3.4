@@ -11,7 +11,17 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         leftRear.setPower(0.0);
         rightRear.setPower(0.0);
     }
-
+    public void driveStraightCombo(double power){
+        if(power>0){
+            driveStraight("RUE",power,"f",0);
+        }
+        else if(power<0){
+            driveStraight("RUE",Math.abs(power),"r",0);
+        }
+        else if(power==0){
+            stopEverything();
+        }
+    }
     public void setMultipleDirections(String movement, String direction){
         if(movement.equals("straight")){
             if(direction.equals("forward")){
