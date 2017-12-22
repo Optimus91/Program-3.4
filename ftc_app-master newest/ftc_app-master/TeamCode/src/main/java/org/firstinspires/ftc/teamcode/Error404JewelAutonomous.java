@@ -79,7 +79,13 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
     public void setLocation(String frontOrBack, String redOrBlue){
         fieldSide = redOrBlue;
         sideLocation = frontOrBack;
-}
+    }
+
+    protected void updateFromVuforia(String cryptoboxKey)
+    {
+
+    }
+
 
     @Override public void loop ()
     {
@@ -134,86 +140,94 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 break;
             case 6:
-                if(readCryptograph().equals("LEFT")){
-                    switch (location){
-                        case 0:
-                            cryptoboxDriveDistance=110;
-                            cryptoboxSlide=0;
-                            break;
-                        case 1:
-                            cryptoboxDriveDistance=0;
-                            cryptoboxSlide=135;
-                            break;
-                        case 2:
-                            cryptoboxDriveDistance=130;
-                            cryptoboxSlide=0;
-                            break;
-                        case 3:
-                            cryptoboxDriveDistance=0;
-                            cryptoboxSlide=460;
-                            break;
-                    }
-                    state=7;
-                }
-                else if(readCryptograph().equals("RIGHT")){
-                    switch (location){
-                        case 0:
-                            cryptoboxDriveDistance=475;
-                            cryptoboxSlide=0;
-                            break;
-                        case 1:
-                            cryptoboxDriveDistance=0;
-                            cryptoboxSlide=500;
-                            break;
-                        case 2:
-                            cryptoboxDriveDistance=475;
-                            cryptoboxSlide=0;
-                            break;
-                        case 3:
-                            cryptoboxDriveDistance=0;
-                            cryptoboxSlide=115;
-                            break;
-                    }
-                    state=7;
-                }
-                else if(readCryptograph().equals("CENTER")){
-                    switch (location){
-                        case 0:
-                            cryptoboxDriveDistance=305;
-                            cryptoboxSlide=0;
-                            break;
-                        case 1:
-                            cryptoboxDriveDistance=0;
-                            cryptoboxSlide=318;
-                            break;
-                        case 2:
-                            cryptoboxDriveDistance=300;
-                            cryptoboxSlide=0;
-                            break;
-                        case 3:
-                            cryptoboxDriveDistance=0;
-                            cryptoboxSlide=305;
-                            break;
-                    }
-                    state=7;
-                }
-                if(((int)(getRuntime()-timer))>2) {
-                    switch (location){
-                        case 0:
-                            cryptoboxDriveDistance=300;
-                            cryptoboxSlide=0;
-                            break;
-                        case 1:
-                            cryptoboxDriveDistance=0;
-                            cryptoboxSlide=318;
-                            break;
-                        case 2:
-                            cryptoboxDriveDistance=300;
-                            cryptoboxSlide=0;
-                            break;
-                        case 3:
-                            cryptoboxDriveDistance=0;
-                            cryptoboxSlide=305;
+                updateFromVuforia(readCryptograph())
+
+
+
+//                if(readCryptograph().equals("LEFT")){
+//                    switch (location){
+//                        case 0:
+//                            cryptoboxDriveDistance=110;
+//                            cryptoboxSlide=0;
+//                            break;
+//                        case 1:
+//                            cryptoboxDriveDistance=0;
+//                            cryptoboxSlide=135;
+//                            break;
+//                        case 2:
+//                            cryptoboxDriveDistance=130;
+//                            cryptoboxSlide=0;
+//                            break;
+//                        case 3:
+//                            cryptoboxDriveDistance=0;
+//                            cryptoboxSlide=460;
+//                            break;
+//                    }
+//                    state=7;
+//                }
+//                else if(readCryptograph().equals("RIGHT")){
+//                    switch (location){
+//                        case 0:
+//                            cryptoboxDriveDistance=475;
+//                            cryptoboxSlide=0;
+//                            break;
+//                        case 1:
+//                            cryptoboxDriveDistance=0;
+//                            cryptoboxSlide=500;
+//                            break;
+//                        case 2:
+//                            cryptoboxDriveDistance=475;
+//                            cryptoboxSlide=0;
+//                            break;
+//                        case 3:
+//                            cryptoboxDriveDistance=0;
+//                            cryptoboxSlide=115;
+//                            break;
+//                    }
+//                    state=7;
+//                }
+//                else if(readCryptograph().equals("CENTER")){
+//                    switch (location){
+//                        case 0:
+//                            cryptoboxDriveDistance=305;
+//                            cryptoboxSlide=0;
+//                            break;
+//                        case 1:
+//                            cryptoboxDriveDistance=0;
+//                            cryptoboxSlide=318;
+//                            break;
+//                        case 2:
+//                            cryptoboxDriveDistance=300;
+//                            cryptoboxSlide=0;
+//                            break;
+//                        case 3:
+//                            cryptoboxDriveDistance=0;
+//                            cryptoboxSlide=305;
+//                            break;
+//                    }
+//                    state=7;
+//                }
+
+                if(((int)(getRuntime()-timer))>2)
+                {
+                    updateFromVuforia("CENTER");
+
+//                    switch (location){
+//                        case 0:
+//                            cryptoboxDriveDistance=300;
+//                            cryptoboxSlide=0;
+//                            break;
+//                        case 1:
+//                            cryptoboxDriveDistance=0;
+//                            cryptoboxSlide=318;
+//                            break;
+//                        case 2:
+//                            cryptoboxDriveDistance=300;
+//                            cryptoboxSlide=0;
+//                            break;
+//                        case 3:
+//                            cryptoboxDriveDistance=0;
+//                            cryptoboxSlide=305;
                             break;
                     }
                     state=7;

@@ -24,6 +24,7 @@ public class e404_BlueFront extends Error404JewelAutonomous
        // location=0;
         driveStraight("RUE",0,"r",0);
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
+
     }
     @Override public void start(){
         super.start();
