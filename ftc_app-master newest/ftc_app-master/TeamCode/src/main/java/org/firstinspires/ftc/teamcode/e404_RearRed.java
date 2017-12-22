@@ -13,8 +13,18 @@ public class e404_RearRed extends Error404JewelAutonomous
     {
         setLocation("REAR", "RED");
     }
-    @Override public void init(){
-        super.init();
+    @Override public void init()
+    {
+        cryptoboxDriveDistance = 0;
+       // stoneToMarket = 560;
+        cryptoboxSlide=305;
+       // turnToRearCryptobox=0;
+       // turnToFrontCryptobox=0;
+        turnToCryptobox=0;
+        // location=3;
+        driveStraight("RUE",0,"f",0);
+        super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
+
     }
     @Override public void start(){
         super.start();
@@ -24,4 +34,7 @@ public class e404_RearRed extends Error404JewelAutonomous
     {
         super.loop();
     } // loop
-} //
+
+
+
+}

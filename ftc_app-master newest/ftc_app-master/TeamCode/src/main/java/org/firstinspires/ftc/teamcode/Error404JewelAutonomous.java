@@ -7,12 +7,13 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
     private int state = 0;
     private int encoder=0;
     private double timer=0;
-    private int cryptoboxDriveDistance;
-    private int stoneToMarket;
-    private int turnToFrontCryptobox;
-    private int turnToRearCryptobox;
-    private int cryptoboxSlide;
-    private int location=0;
+    protected int cryptoboxDriveDistance;
+    // protected int stoneToMarket;
+    // protected int turnToFrontCryptobox;
+    // protected int turnToRearCryptobox;
+    protected int turnToCryptobox;
+    protected int cryptoboxSlide;
+    // protected int location=0;
 
     private String fieldSide;
     private String sideLocation;
@@ -28,7 +29,8 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         swivel.setPosition(0.52);
         glyph.setPosition(0.25);
         encoder=leftFront.getCurrentPosition();
-        if(fieldSide.equals("BLUE")){
+
+     /*   if(fieldSide.equals("BLUE")){
             if(sideLocation.equals("FRONT")) {
                 cryptoboxDriveDistance = 350;
                 stoneToMarket = 0;
@@ -37,8 +39,8 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 turnToFrontCryptobox=85;
                 location=0;
                 driveStraight("RUE",0,"r",0);
-            }
-            if(sideLocation.equals("REAR")){
+            } */
+            /*if(sideLocation.equals("REAR")){
                 cryptoboxDriveDistance = 0;
                 stoneToMarket = 600;
                 cryptoboxSlide=320;
@@ -47,8 +49,8 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 location=1;
                 driveStraight("RUE",0,"r",0);
             }
-        }
-        if(fieldSide.equals("RED")){
+        } */
+        /*if(fieldSide.equals("RED")){
             if(sideLocation.equals("FRONT")) {
                 cryptoboxDriveDistance = 370;
                 stoneToMarket = 0;
@@ -57,8 +59,8 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 turnToFrontCryptobox=85;
                 location=2;
                 driveStraight("RUE",0,"f",0);
-            }
-            if(sideLocation.equals("REAR")){
+            }*/
+            /*if(sideLocation.equals("REAR")){
                 cryptoboxDriveDistance = 0;
                 stoneToMarket = 560;
                 cryptoboxSlide=305;
@@ -67,7 +69,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 location=3;
                 driveStraight("RUE",0,"f",0);
             }
-        }
+        }*/
         encoder=leftFront.getCurrentPosition();
     }
     @Override public void start(){
@@ -218,67 +220,83 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 break;
             case 7:
-                if(cryptoboxDriveDistance>0) {
-                    switch (location){
-                        case 0:
-                            driveStraight("RUE", 0.3, "r", 0);
-                            if (leftFront.getCurrentPosition() - encoder > 400 + cryptoboxDriveDistance) {
-                                pointTurn("RUE", 0, "r", 0);
-                                state++;
-                                encoder = leftFront.getCurrentPosition();
-                            }
-                            break;
-                        case 2:
-                            driveStraight("RUE", 0.3, "f", 0);
-                            if (leftFront.getCurrentPosition() - encoder > 400 + cryptoboxDriveDistance) {
-                                pointTurn("RUE", 0, "l", 0);
-                                state++;
-                                encoder = leftFront.getCurrentPosition();
-                            }
-                            break;
-                    }
+                driveStraight("RUE", 0.3, "f", 0);
+
+                if (leftFront.getCurrentPosition() - encoder > cryptoboxDriveDistance) {
+                    slide_sideways("RUE", 0, "l", 0);
+                    state++;
+                    encoder = leftFront.getCurrentPosition();
                 }
-                else{
-                    switch (location){
-                        case 1:
-                            driveStraight("RUE", 0.3, "r", 0);
-                            if (leftFront.getCurrentPosition() - encoder > stoneToMarket) {
-                                pointTurn("RUE", 0, "r", 0);
-                                state++;
-                                encoder = leftFront.getCurrentPosition();
-                            }
-                            break;
-                        case 3:
-                            driveStraight("RUE", 0.3, "f", 0);
-                            if (leftFront.getCurrentPosition() - encoder > stoneToMarket) {
-                                slide_sideways("RUE", 0, "l", 0);
-                                state++;
-                                encoder = leftFront.getCurrentPosition();
-                            }
-                            break;
-                    }
-                }
+
+//                if(cryptoboxDriveDistance>0) {
+//                    switch (location){
+//                        case 0:
+//                            driveStraight("RUE", 0.3, "r", 0);
+//                            if (leftFront.getCurrentPosition() - encoder > 400 + cryptoboxDriveDistance) {
+//                                pointTurn("RUE", 0, "r", 0);
+//                                state++;
+//                                encoder = leftFront.getCurrentPosition();
+//                            }
+//                            break;
+//                        case 2:
+//                            driveStraight("RUE", 0.3, "f", 0);
+//                            if (leftFront.getCurrentPosition() - encoder > 400 + cryptoboxDriveDistance) {
+//                                pointTurn("RUE", 0, "l", 0);
+//                                state++;
+//                                encoder = leftFront.getCurrentPosition();
+//                            }
+//                            break;
+//                    }
+//                }
+//                else{
+//                    switch (location){
+//                        case 1:
+//                            driveStraight("RUE", 0.3, "r", 0);
+//                            if (leftFront.getCurrentPosition() - encoder > stoneToMarket) {
+//                                pointTurn("RUE", 0, "r", 0);
+//                                state++;
+//                                encoder = leftFront.getCurrentPosition();
+//                            }
+//                            break;
+//                        case 3:
+//                            driveStraight("RUE", 0.3, "f", 0);
+//                            if (leftFront.getCurrentPosition() - encoder > stoneToMarket) {
+//                                slide_sideways("RUE", 0, "l", 0);
+//                                state++;
+//                                encoder = leftFront.getCurrentPosition();
+//                            }
+//                            break;
+//                    }
+//                }
                 break;
             case 8:
-                if(sideLocation.equals("FRONT")){
+                if(location==1){
                     pointTurn("RUE",0.3,"r",0);
-                    if(Math.abs(getHeading())>turnToFrontCryptobox){
+                    if(Math.abs(getHeading())>turnToCryptobox){
                         state++;
                         driveStraight("RUE",0,"f",0);
                         encoder=leftFront.getCurrentPosition();
                     }
-                }
-                    if(location==1){
-                        pointTurn("RUE",0.3,"r",0);
-                        if(Math.abs(getHeading())>turnToRearCryptobox){
-                            state++;
-                            driveStraight("RUE",0,"f",0);
-                            encoder=leftFront.getCurrentPosition();
-                        }
-                    }
-                    if(location==3){
-                        state++;
-                    }
+
+//                if(sideLocation.equals("FRONT")){
+//                    pointTurn("RUE",0.3,"r",0);
+//                    if(Math.abs(getHeading())>turnToFrontCryptobox){
+//                        state++;
+//                        driveStraight("RUE",0,"f",0);
+//                        encoder=leftFront.getCurrentPosition();
+//                    }
+//                }
+//                    if(location==1){
+//                        pointTurn("RUE",0.3,"r",0);
+//                        if(Math.abs(getHeading())>turnToRearCryptobox){
+//                            state++;
+//                            driveStraight("RUE",0,"f",0);
+//                            encoder=leftFront.getCurrentPosition();
+//                        }
+//                    }
+//                    if(location==3){
+//                        state++;
+//                    }
                         break;
             case 9:
                 if(location==3){
@@ -289,17 +307,26 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                         encoder=leftFront.getCurrentPosition();
                     }
                 }
-                else if(location==1){
-                    slide_sideways("RUE",0.3,"r",0);
-                    if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
-                        driveStraight("RUE",0,"f",0);
-                        state++;
-                        encoder=leftFront.getCurrentPosition();
-                    }
-                }
-                else{
-                    state++;
-                }
+
+//                if(location==3){
+//                    slide_sideways("RUE",0.3,"l",0);
+//                    if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
+//                        driveStraight("RUE",0,"f",0);
+//                        state++;
+//                        encoder=leftFront.getCurrentPosition();
+//                    }
+//                }
+//                else if(location==1){
+//                    slide_sideways("RUE",0.3,"r",0);
+//                    if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
+//                        driveStraight("RUE",0,"f",0);
+//                        state++;
+//                        encoder=leftFront.getCurrentPosition();
+//                    }
+//                }
+//                else{
+//                    state++;
+//                }
                 break;
             case 10:
                 driveStraight("RUE",0.3,"f",0);
@@ -341,20 +368,20 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("5. Delta Position: ", encoder);
         telemetry.addData("Pattern: ", readCryptograph());
-        switch (location){
-            case 0:
-                telemetry.addData("Blue Front","");
-                break;
-            case 1:
-                telemetry.addData("Blue Rear","");
-                break;
-            case 2:
-                telemetry.addData("Red Front","");
-                break;
-            case 3:
-                telemetry.addData("Red Rear","");
-                break;
-        }
+//        switch (location){
+//            case 0:
+//                telemetry.addData("Blue Front","");
+//                break;
+//            case 1:
+//                telemetry.addData("Blue Rear","");
+//                break;
+//            case 2:
+//                telemetry.addData("Red Front","");
+//                break;
+//            case 3:
+//                telemetry.addData("Red Rear","");
+//                break;
+//        }
 
 
 
