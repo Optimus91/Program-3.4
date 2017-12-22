@@ -5,7 +5,44 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION 2.1.2
 
-    /// Beacon pusher method  //
+    public void stopEverything(){
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftRear.setPower(0.0);
+        rightRear.setPower(0.0);
+    }
+
+    public void setMultipleDirections(String movement, String direction){
+        if(movement.equals("straight")){
+            if(direction.equals("forward")){
+                set_direction(leftFront, "f");
+                set_direction(leftRear, "r");
+                set_direction(rightFront, "f");
+                set_direction(rightRear, "r");
+            }
+            if(direction.equals("reverse")){
+                set_direction(leftFront, "r");
+                set_direction(leftRear, "f");
+                set_direction(rightFront, "r");
+                set_direction(rightRear, "f");
+            }
+        }
+        if(movement.equals("turn")){
+            if(direction.equals("right")){
+                set_direction(leftFront, "f");
+                set_direction(leftRear, "r");
+                set_direction(rightFront, "r");
+                set_direction(rightRear, "f");
+            }
+            if(direction.equals("left")){
+                set_direction(leftFront, "r");
+                set_direction(leftRear, "f");
+                set_direction(rightFront, "f");
+                set_direction(rightRear, "r");
+            }
+        }
+    }
+
     public void setServoPos(Servo servomotor, Double position){
 
         servomotor.setPosition(position);
