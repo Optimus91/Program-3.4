@@ -15,14 +15,10 @@ public class e404_RearRed extends Error404JewelAutonomous
     }
     @Override public void init()
     {
-        cryptoboxDriveDistance = 0;
-       // stoneToMarket = 560;
+        cryptoboxDriveDistance = 560;
         cryptoboxSlide=305;
-       // turnToRearCryptobox=0;
-       // turnToFrontCryptobox=0;
         turnToCryptobox=0;
-        // location=3;
-        driveStraight("RUE",0,"f",0);
+        setMultipleDirections("straight", "forward");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
 
     }
@@ -36,20 +32,17 @@ public class e404_RearRed extends Error404JewelAutonomous
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxDriveDistance = 0;
-            cryptoboxSlide = 460;
+            cryptoboxSlide = -460;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
-            cryptoboxDriveDistance=0;
-            cryptoboxSlide=115;
+            cryptoboxSlide=-115;
             result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxDriveDistance=0;
-            cryptoboxSlide=305;
+            cryptoboxSlide=-305;
             result = true;
         }
         return result;
