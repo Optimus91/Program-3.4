@@ -182,81 +182,31 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 else
                 {
+                    setMultipleDirections("turn", "right");
                     state++;
+                    encoder = leftFront.getCurrentPosition();
                 }
-        }
 
-//                if(cryptoboxDriveDistance>0) {
-//                    switch (location){
-//                        case 0:
-//                            driveStraight("RUE", 0.3, "r", 0);
-//                            if (leftFront.getCurrentPosition() - encoder > 400 + cryptoboxDriveDistance) {
-//                                pointTurn("RUE", 0, "r", 0);
-//                                state++;
-//                                encoder = leftFront.getCurrentPosition();
-//                            }
-//                            break;
-//                        case 2:
-//                            driveStraight("RUE", 0.3, "f", 0);
-//                            if (leftFront.getCurrentPosition() - encoder > 400 + cryptoboxDriveDistance) {
-//                                pointTurn("RUE", 0, "l", 0);
-//                                state++;
-//                                encoder = leftFront.getCurrentPosition();
-//                            }
-//                            break;
-//                    }
-//                }
-//                else{
-//                    switch (location){
-//                        case 1:
-//                            driveStraight("RUE", 0.3, "r", 0);
-//                            if (leftFront.getCurrentPosition() - encoder > stoneToMarket) {
-//                                pointTurn("RUE", 0, "r", 0);
-//                                state++;
-//                                encoder = leftFront.getCurrentPosition();
-//                            }
-//                            break;
-//                        case 3:
-//                            driveStraight("RUE", 0.3, "f", 0);
-//                            if (leftFront.getCurrentPosition() - encoder > stoneToMarket) {
-//                                slide_sideways("RUE", 0, "l", 0);
-//                                state++;
-//                                encoder = leftFront.getCurrentPosition();
-//                            }
-//                            break;
-//                    }
-//                }
                 break;
 
             case 8:  //Face Cryptobox
-                if(location==1){
-                    pointTurn("RUE",0.3,"r",0);
-                    if(Math.abs(getHeading())>turnToCryptobox){
+                if(turnToCryptobox!=0)
+                {
+                    pointTurn("RUE", 0.3, "r", 0);
+                    if (Math.abs(getHeading()) > turnToCryptobox) {
                         state++;
-                        driveStraight("RUE",0,"f",0);
-                        encoder=leftFront.getCurrentPosition();
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
+                        encoder = leftFront.getCurrentPosition();
                     }
-
-//                if(sideLocation.equals("FRONT")){
-//                    pointTurn("RUE",0.3,"r",0);
-//                    if(Math.abs(getHeading())>turnToFrontCryptobox){
-//                        state++;
-//                        driveStraight("RUE",0,"f",0);
-//                        encoder=leftFront.getCurrentPosition();
-//                    }
-//                }
-//                    if(location==1){
-//                        pointTurn("RUE",0.3,"r",0);
-//                        if(Math.abs(getHeading())>turnToRearCryptobox){
-//                            state++;
-//                            driveStraight("RUE",0,"f",0);
-//                            encoder=leftFront.getCurrentPosition();
-//                        }
-//                    }
-//                    if(location==3){
-//                        state++;
-//                    }
-                        break;
+                }
+                else
+                {
+                    setMultipleDirections("straight", "forward");
+                    state++;
+                    encoder = leftFront.getCurrentPosition();
+                }
+                break;
 
             case 9:  // Slide to Cryptobox
                 if(location==3){
