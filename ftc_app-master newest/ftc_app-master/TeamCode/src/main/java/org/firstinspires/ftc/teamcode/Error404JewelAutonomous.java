@@ -83,7 +83,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 
     protected boolean updateFromVuforia(String cryptoboxKey)
     {
-
+        return true;
     }
 
 
@@ -209,34 +209,30 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
 
             case 9:  // Slide to Cryptobox
-                if(location==3){
-                    slide_sideways("RUE",0.3,"l",0);
+                if(cryptoboxSlide!=0)
+                {
+                    if(cryptoboxSlide>0)
+                    {
+                        slide_sideways("RUE",0.3,"r",0);
+                    }
+                    else
+                    {
+                        slide_sideways("RUE",0.3,"l",0);
+                    }
+
                     if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
-                        driveStraight("RUE",0,"f",0);
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
                         state++;
                         encoder=leftFront.getCurrentPosition();
                     }
                 }
-
-//                if(location==3){
-//                    slide_sideways("RUE",0.3,"l",0);
-//                    if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
-//                        driveStraight("RUE",0,"f",0);
-//                        state++;
-//                        encoder=leftFront.getCurrentPosition();
-//                    }
-//                }
-//                else if(location==1){
-//                    slide_sideways("RUE",0.3,"r",0);
-//                    if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
-//                        driveStraight("RUE",0,"f",0);
-//                        state++;
-//                        encoder=leftFront.getCurrentPosition();
-//                    }
-//                }
-//                else{
-//                    state++;
-//                }
+                else
+                {
+                    setMultipleDirections("straight", "forward");
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
                 break;
 
             case 10:  //Drive into Cryptobox
