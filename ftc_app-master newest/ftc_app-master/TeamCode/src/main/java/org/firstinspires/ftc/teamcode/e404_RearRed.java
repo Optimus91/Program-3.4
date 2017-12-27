@@ -30,24 +30,29 @@ public class e404_RearRed extends Error404JewelAutonomous
         super.start();
     }
 
-    @Override protected void updateFromVuforia(String cryptoboxKey)
+    @Override protected boolean updateFromVuforia(String cryptoboxKey)
     {
+        boolean result = false;
+
         if(cryptoboxKey.equals("LEFT"))
         {
             cryptoboxDriveDistance = 0;
             cryptoboxSlide = 460;
+            result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
             cryptoboxDriveDistance=0;
             cryptoboxSlide=115;
+            result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
             cryptoboxDriveDistance=0;
             cryptoboxSlide=305;
+            result = true;
         }
-
+        return result;
     }
 
     @Override public void loop ()

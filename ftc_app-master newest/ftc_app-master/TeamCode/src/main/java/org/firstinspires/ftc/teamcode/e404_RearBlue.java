@@ -28,6 +28,32 @@ public class e404_RearBlue extends Error404JewelAutonomous
     @Override public void start(){
         super.start();
     }
+
+    @Override protected boolean updateFromVuforia(String cryptoboxKey)
+    {
+        boolean result = false;
+
+        if(cryptoboxKey.equals("LEFT"))
+        {
+            cryptoboxDriveDistance = 0;
+            cryptoboxSlide = 135;
+            result = true;
+        }
+        else if(cryptoboxKey.equals("RIGHT"))
+        {
+            cryptoboxDriveDistance=0;
+            cryptoboxSlide=500;
+            result = true;
+        }
+        else if(cryptoboxKey.equals("CENTER"))
+        {
+            cryptoboxDriveDistance=0;
+            cryptoboxSlide=318;
+            result = true;
+        }
+        return result;
+    }
+
     @Override public void loop ()
     {
         super.loop();

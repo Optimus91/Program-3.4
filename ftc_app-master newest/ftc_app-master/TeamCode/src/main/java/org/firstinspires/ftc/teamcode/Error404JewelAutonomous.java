@@ -81,7 +81,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         sideLocation = frontOrBack;
     }
 
-    protected void updateFromVuforia(String cryptoboxKey)
+    protected boolean updateFromVuforia(String cryptoboxKey)
     {
 
     }
@@ -91,11 +91,12 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
     {
         switch (state)
         {
-            case 0:
+            case 0: // Lower Arm
                 arm.setPosition(0.75);
                     state++;
                 break;
-            case 1:
+
+            case 1:  //Find Jewel
                 timer =getRuntime();
                 if(camera.getVoltage()<1.2){
                     telemetry.addData("On left","");
@@ -117,21 +118,24 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     }
                     break;
                 }
-            case 2:
+
+            case 2:  //Swivel Right
                 if(((int)(getRuntime()-timer))>1) {
                     swivel.setPosition(0.7);
                     state=4;
                     timer =getRuntime();
                 }
                 break;
-            case 3:
+
+            case 3:  //Swivel Left
                 if(((int)(getRuntime()-timer))>1) {
                     swivel.setPosition(0.4);
                     state=4;
                     timer =getRuntime();
                 }
                 break;
-            case 4:
+
+            case 4:  //Reset Arm
                 if(((int)(getRuntime()-timer))>1) {
                     arm.setPosition(0);
                     swivel.setPosition(0.5);
@@ -139,101 +143,23 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     timer =getRuntime();
                 }
                 break;
-            case 6:
-                updateFromVuforia(readCryptograph())
 
+            case 6:  //Read Pictograph
+                if(updateFromVuforia(readCryptograph()))
+                {
+                    state= 7;
+                }
 
-
-//                if(readCryptograph().equals("LEFT")){
-//                    switch (location){
-//                        case 0:
-//                            cryptoboxDriveDistance=110;
-//                            cryptoboxSlide=0;
-//                            break;
-//                        case 1:
-//                            cryptoboxDriveDistance=0;
-//                            cryptoboxSlide=135;
-//                            break;
-//                        case 2:
-//                            cryptoboxDriveDistance=130;
-//                            cryptoboxSlide=0;
-//                            break;
-//                        case 3:
-//                            cryptoboxDriveDistance=0;
-//                            cryptoboxSlide=460;
-//                            break;
-//                    }
-//                    state=7;
-//                }
-//                else if(readCryptograph().equals("RIGHT")){
-//                    switch (location){
-//                        case 0:
-//                            cryptoboxDriveDistance=475;
-//                            cryptoboxSlide=0;
-//                            break;
-//                        case 1:
-//                            cryptoboxDriveDistance=0;
-//                            cryptoboxSlide=500;
-//                            break;
-//                        case 2:
-//                            cryptoboxDriveDistance=475;
-//                            cryptoboxSlide=0;
-//                            break;
-//                        case 3:
-//                            cryptoboxDriveDistance=0;
-//                            cryptoboxSlide=115;
-//                            break;
-//                    }
-//                    state=7;
-//                }
-//                else if(readCryptograph().equals("CENTER")){
-//                    switch (location){
-//                        case 0:
-//                            cryptoboxDriveDistance=305;
-//                            cryptoboxSlide=0;
-//                            break;
-//                        case 1:
-//                            cryptoboxDriveDistance=0;
-//                            cryptoboxSlide=318;
-//                            break;
-//                        case 2:
-//                            cryptoboxDriveDistance=300;
-//                            cryptoboxSlide=0;
-//                            break;
-//                        case 3:
-//                            cryptoboxDriveDistance=0;
-//                            cryptoboxSlide=305;
-//                            break;
-//                    }
-//                    state=7;
-//                }
 
                 if(((int)(getRuntime()-timer))>2)
                 {
                     updateFromVuforia("CENTER");
-
-//                    switch (location){
-//                        case 0:
-//                            cryptoboxDriveDistance=300;
-//                            cryptoboxSlide=0;
-//                            break;
-//                        case 1:
-//                            cryptoboxDriveDistance=0;
-//                            cryptoboxSlide=318;
-//                            break;
-//                        case 2:
-//                            cryptoboxDriveDistance=300;
-//                            cryptoboxSlide=0;
-//                            break;
-//                        case 3:
-//                            cryptoboxDriveDistance=0;
-//                            cryptoboxSlide=305;
-                            break;
-                    }
                     state=7;
                 }
                 break;
-            case 7:
+
+
+            case 7:  //Drive to Cryptobox
                 driveStraight("RUE", 0.3, "f", 0);
 
                 if (leftFront.getCurrentPosition() - encoder > cryptoboxDriveDistance) {
@@ -283,7 +209,8 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 //                    }
 //                }
                 break;
-            case 8:
+
+            case 8:  //Face Cryptobox
                 if(location==1){
                     pointTurn("RUE",0.3,"r",0);
                     if(Math.abs(getHeading())>turnToCryptobox){
@@ -312,7 +239,8 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 //                        state++;
 //                    }
                         break;
-            case 9:
+
+            case 9:  // Slide to Cryptobox
                 if(location==3){
                     slide_sideways("RUE",0.3,"l",0);
                     if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide) {
@@ -342,7 +270,8 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 //                    state++;
 //                }
                 break;
-            case 10:
+
+            case 10:  //Drive into Cryptobox
                 driveStraight("RUE",0.3,"f",0);
                 if(leftFront.getCurrentPosition()-encoder>150) {
                     driveStraight("RUE",0,"r",0);
@@ -350,19 +279,22 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
-            case 11:
+
+            case 11:  //Deploy Glyph
                 glyph.setPosition(0.75);
                 timer =getRuntime();
                 state++;
                 break;
-            case 12:
+
+            case 12:  //Wait
                 if(((int)(getRuntime()-timer))>4){
                     driveStraight("RUE",0,"r",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
-            case 13:
+
+            case 13:  //Finish Glyph
                 glyph.setPosition(0.75);
                 driveStraight("RUE",0.1,"r",0);
                 if(leftFront.getCurrentPosition()-encoder>90) {

@@ -29,6 +29,31 @@ public class e404_FrontRed extends Error404JewelAutonomous
         super.start();
     }
 
+    @Override protected boolean updateFromVuforia(String cryptoboxKey)
+    {
+        boolean result = false;
+
+        if(cryptoboxKey.equals("LEFT"))
+        {
+            cryptoboxDriveDistance = 130;
+            cryptoboxSlide = 0;
+            result = true;
+        }
+        else if(cryptoboxKey.equals("RIGHT"))
+        {
+            cryptoboxDriveDistance=475;
+            cryptoboxSlide=0;
+            result = true;
+        }
+        else if(cryptoboxKey.equals("CENTER"))
+        {
+            cryptoboxDriveDistance=300;
+            cryptoboxSlide=0;
+            result = true;
+        }
+        return result;
+    }
+
     @Override public void loop ()
     {
         super.loop();
