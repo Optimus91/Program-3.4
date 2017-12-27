@@ -15,7 +15,7 @@ public class e404_BlueFront extends Error404JewelAutonomous
     }
     @Override public void init()
     {
-        cryptoboxDriveDistance = 350;
+        cryptoboxDriveDistance = -350;
        // stoneToMarket = 0;
         cryptoboxSlide=0;
        // turnToRearCryptobox=0;

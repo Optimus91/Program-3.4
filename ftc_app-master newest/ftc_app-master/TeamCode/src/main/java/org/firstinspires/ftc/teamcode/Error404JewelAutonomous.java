@@ -160,13 +160,31 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 
 
             case 7:  //Drive to Cryptobox
-                driveStraight("RUE", 0.3, "f", 0);
+                if(cryptoboxDriveDistance!=0)
+                {
+                    //driveStraight("RUE", 0.3, "f", 0);
+                    if(cryptoboxDriveDistance>0)
+                    {
+                        driveStraightCombo(0.3);
+                    }
+                    else
+                    {
+                        driveStraightCombo(-0.3);
+                    }
 
-                if (leftFront.getCurrentPosition() - encoder > cryptoboxDriveDistance) {
-                    slide_sideways("RUE", 0, "l", 0);
-                    state++;
-                    encoder = leftFront.getCurrentPosition();
+                    if (leftFront.getCurrentPosition() - encoder > Math.abs(cryptoboxDriveDistance)) {
+                        //slide_sideways("RUE", 0, "l", 0);
+                        stopEverything();
+                        setMultipleDirections("turn", "right");
+                        state++;
+                        encoder = leftFront.getCurrentPosition();
+                    }
                 }
+                else
+                {
+                    state++;
+                }
+        }
 
 //                if(cryptoboxDriveDistance>0) {
 //                    switch (location){
