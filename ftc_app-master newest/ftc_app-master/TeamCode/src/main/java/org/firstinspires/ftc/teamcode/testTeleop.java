@@ -35,7 +35,7 @@ public class testTeleop extends OpMode {
     double elbowPos=1;
     double shoulderPos=0.95;
     double pivotPos =0.522;
-    public team8668Teleop() {
+    public testTeleop() {
     }
     @Override
     public void init() {
