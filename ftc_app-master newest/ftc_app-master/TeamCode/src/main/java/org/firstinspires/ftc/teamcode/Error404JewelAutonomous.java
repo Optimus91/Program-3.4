@@ -98,7 +98,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 
             case 1:  //Find Jewel
                 timer =getRuntime();
-                if(camera.getVoltage()<1.2){
+                if(camera.getVoltage()<2.1){
                     telemetry.addData("On left","");
                     if(fieldSide.equals("BLUE")){
                         state=3;
@@ -108,7 +108,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     }
                     break;
                 }
-                else if(camera.getVoltage()>1.2){
+                else if(camera.getVoltage()>2.1){
                     telemetry.addData("On right","");
                     if(fieldSide.equals("BLUE")){
                         state=2;
