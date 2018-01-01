@@ -202,7 +202,8 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
             case 8:  //Face Cryptobox
                 if(turnToCryptobox!=0)
                 {
-                    pointTurn("RUE", 0.3, "r", 0);
+                    //pointTurn("RUE", 0.3, "r", 0);
+                    pointTurnCombo(0.3);
                     if (Math.abs(getHeading()) > turnToCryptobox)
                     {
                         state++;

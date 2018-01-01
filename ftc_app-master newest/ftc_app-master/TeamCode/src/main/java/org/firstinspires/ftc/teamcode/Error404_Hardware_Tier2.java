@@ -36,10 +36,10 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
 
     public void pointTurnCombo(double power){
         if(power>0){
-            slide_sideways("RUE",power,"r",0);
+            pointTurn("RUE",power,"r",0);
         }
         else if(power<0){
-            slide_sideways("RUE",Math.abs(power),"l",0);
+            pointTurn("RUE",Math.abs(power),"l",0);
         }
         else if(power==0){
             stopEverything();
