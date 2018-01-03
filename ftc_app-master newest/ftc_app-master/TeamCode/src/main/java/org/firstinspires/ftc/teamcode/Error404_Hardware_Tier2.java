@@ -16,18 +16,24 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
     }
     public void glyphIntake(String inOrOut){
         if(inOrOut.toLowerCase().equals("in")){
+            rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightGlyph.setDirection(FORWARD);
             leftGlyph.setDirection(REVERSE);
             leftGlyph.setPower(0.5);
             rightGlyph.setPower(0.5);
         }
         if(inOrOut.toLowerCase().equals("out")){
+            rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightGlyph.setDirection(REVERSE);
             leftGlyph.setDirection(FORWARD);
             leftGlyph.setPower(0.5);
             rightGlyph.setPower(0.5);
         }
         if(inOrOut.toLowerCase().equals("stop")){
+            rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightGlyph.setDirection(FORWARD);
             leftGlyph.setDirection(REVERSE);
             leftGlyph.setPower(0);

@@ -260,8 +260,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
 
             case 11:  //Deploy Glyph
-
-                timer =getRuntime();
+                glyphIntake("out");
                 state++;
                 break;
 
@@ -275,7 +274,6 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
 
             case 13:  //Finish Glyph
-                glyph.setPosition(0.75);
                 driveStraight("RUE",0.1,"r",0);
                 if(leftFront.getCurrentPosition()-encoder>90)
                 {
