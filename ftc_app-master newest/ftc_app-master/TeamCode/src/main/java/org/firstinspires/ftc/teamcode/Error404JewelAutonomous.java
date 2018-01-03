@@ -29,7 +29,6 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         telemetry.addData("","V 1");
         arm.setPosition(0);
         swivel.setPosition(0.52);
-        glyph.setPosition(0.25);
         encoder=leftFront.getCurrentPosition();
 
 
@@ -101,7 +100,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         switch (state)
         {
             case 0: // Lower Arm
-                arm.setPosition(0.75);
+                arm.setPosition(0.79);
                     state++;
                 break;
 
@@ -261,7 +260,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
 
             case 11:  //Deploy Glyph
-                glyph.setPosition(0.75);
+
                 timer =getRuntime();
                 state++;
                 break;

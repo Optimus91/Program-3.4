@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
+
 public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION 2.1.2
 
     public void stopEverything(){
@@ -10,6 +13,26 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         rightFront.setPower(0.0);
         leftRear.setPower(0.0);
         rightRear.setPower(0.0);
+    }
+    public void glyphIntake(String inOrOut){
+        if(inOrOut.toLowerCase().equals("in")){
+            rightGlyph.setDirection(FORWARD);
+            leftGlyph.setDirection(REVERSE);
+            leftGlyph.setPower(0.5);
+            rightGlyph.setPower(0.5);
+        }
+        if(inOrOut.toLowerCase().equals("out")){
+            rightGlyph.setDirection(REVERSE);
+            leftGlyph.setDirection(FORWARD);
+            leftGlyph.setPower(0.5);
+            rightGlyph.setPower(0.5);
+        }
+        if(inOrOut.toLowerCase().equals("stop")){
+            rightGlyph.setDirection(FORWARD);
+            leftGlyph.setDirection(REVERSE);
+            leftGlyph.setPower(0);
+            rightGlyph.setPower(0);
+        }
     }
     public void driveStraightCombo(double power){
         if(power>0){
