@@ -224,12 +224,10 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 {
                     if(cryptoboxSlide>0)
                     {
-                        //slide_sideways("RUE",0.3,"r",0);
                         slideSidewaysCombo(0.3);
                     }
                     else
                     {
-                        //slide_sideways("RUE",0.3,"l",0);
                         slideSidewaysCombo(-0.3);
                     }
 
@@ -293,6 +291,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("5. Delta Position: ", encoder);
         telemetry.addData("6. Cryptobox Drive Distance: ", cryptoboxDriveDistance);
+        telemetry.addData("7. Cryptobox Slide: ", cryptoboxSlide);
         telemetry.addData("Pattern: ", readCryptograph());
 
 //        switch (location){
