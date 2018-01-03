@@ -32,17 +32,17 @@ public class e404_BlueFront extends Error404JewelAutonomous
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxDriveDistance = -110;
+            cryptoboxDriveDistance = -510;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
-            cryptoboxDriveDistance=-475;
+            cryptoboxDriveDistance=-875;
             result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxDriveDistance=-305;
+            cryptoboxDriveDistance=-705;
             result = true;
         }
         return result;

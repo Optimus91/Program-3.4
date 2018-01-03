@@ -45,7 +45,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             driveStraight("RUE",power,"f",0);
         }
         else if(power<0){
-            driveStraight("RUE",Math.abs(power),"r",0);
+            driveStraight("RUE",(power*(-1)),"r",0);
         }
         else if(power==0){
             stopEverything();
@@ -56,7 +56,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             slide_sideways("RUE",power,"r",0);
         }
         else if(power<0){
-            slide_sideways("RUE",Math.abs(power),"l",0);
+            slide_sideways("RUE",(power*(-1)),"l",0);
         }
         else if(power==0){
             stopEverything();
@@ -68,7 +68,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             pointTurn("RUE",power,"r",0);
         }
         else if(power<0){
-            pointTurn("RUE",Math.abs(power),"l",0);
+            pointTurn("RUE",(power*(-1)),"l",0);
         }
         else if(power==0){
             stopEverything();

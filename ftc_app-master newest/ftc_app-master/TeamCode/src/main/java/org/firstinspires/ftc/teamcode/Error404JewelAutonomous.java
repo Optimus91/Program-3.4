@@ -292,7 +292,9 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         telemetry.addData("3. Camera:  ", camera.getVoltage());
         telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("5. Delta Position: ", encoder);
+        telemetry.addData("6. Cryptobox Drive Distance: ", cryptoboxDriveDistance);
         telemetry.addData("Pattern: ", readCryptograph());
+
 //        switch (location){
 //            case 0:
 //                telemetry.addData("Blue Front","");
