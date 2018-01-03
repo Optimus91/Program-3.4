@@ -121,7 +121,7 @@ public class team8668Teleop extends OpMode {
         elbowPos = Range.clip(elbowPos,0,1);
 
         if(gamepad2.right_bumper){
-            hand.setPosition(0.8);
+            hand.setPosition(0.5);
         }
         if(gamepad2.left_bumper){
             hand.setPosition(1);
