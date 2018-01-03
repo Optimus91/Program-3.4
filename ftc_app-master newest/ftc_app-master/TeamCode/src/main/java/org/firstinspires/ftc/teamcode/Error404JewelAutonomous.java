@@ -265,9 +265,9 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
 
             case 12:  //Wait
-                if(((int)(getRuntime()-timer))>4)
+                if(leftGlyph.getCurrentPosition()>400)
                 {
-                    driveStraight("RUE",0,"r",0);
+                    glyphIntake("stop");
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
