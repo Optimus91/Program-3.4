@@ -104,6 +104,20 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
                 set_direction(rightRear, "r");
             }
         }
+        if(movement.equals("slide")){
+            if(direction.equals("right")){
+                set_direction(leftFront, "f");
+                set_direction(rightRear, "r");
+                set_direction(rightFront, "r");
+                set_direction(leftRear, "f");
+            }
+            if(direction.equals("left")){
+                set_direction(leftFront, "r");
+                set_direction(rightRear, "f");
+                set_direction(rightFront, "f");
+                set_direction(leftRear, "r");
+            }
+        }
     }
 
     public void setServoPos(Servo servomotor, Double position){

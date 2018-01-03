@@ -213,7 +213,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 else
                 {
-                    setMultipleDirections("straight", "forward");
+                    setMultipleDirections("slide", "left");
                     state++;
                     encoder = leftFront.getCurrentPosition();
                 }
