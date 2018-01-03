@@ -233,7 +233,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                         slideSidewaysCombo(-0.3);
                     }
 
-                    if(leftFront.getCurrentPosition()-encoder>cryptoboxSlide)
+                    if(leftFront.getCurrentPosition()-encoder>Math.abs(cryptoboxSlide))
                     {
                         stopEverything();
                         setMultipleDirections("straight", "forward");
