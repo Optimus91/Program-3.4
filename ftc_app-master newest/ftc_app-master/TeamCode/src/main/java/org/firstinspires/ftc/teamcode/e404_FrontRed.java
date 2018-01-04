@@ -31,17 +31,17 @@ public class e404_FrontRed extends Error404JewelAutonomous
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxDriveDistance = 130;
+            cryptoboxDriveDistance = 920;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
-            cryptoboxDriveDistance=475;
+            cryptoboxDriveDistance=620;
             result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxDriveDistance=300;
+            cryptoboxDriveDistance=780;
             result = true;
         }
         return result;

@@ -31,49 +31,6 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
         swivel.setPosition(0.52);
         encoder=leftFront.getCurrentPosition();
 
-
-//        if(fieldSide.equals("BLUE")){
-//            if(sideLocation.equals("FRONT")) {
-//                cryptoboxDriveDistance = 350;
-//                stoneToMarket = 0;
-//                cryptoboxSlide=0;
-//                turnToRearCryptobox=0;
-//                turnToFrontCryptobox=85;
-//                location=0;
-//                driveStraight("RUE",0,"r",0);
-//            }
-//            if(sideLocation.equals("REAR")){
-//                cryptoboxDriveDistance = 0;
-//                stoneToMarket = 600;
-//                cryptoboxSlide=320;
-//                turnToRearCryptobox=170;
-//                turnToFrontCryptobox=0;
-//                location=1;
-//                driveStraight("RUE",0,"r",0);
-//            }
-//        }
-//        if(fieldSide.equals("RED")){
-//            if(sideLocation.equals("FRONT")) {
-//                cryptoboxDriveDistance = 370;
-//                stoneToMarket = 0;
-//                cryptoboxSlide=0;
-//                turnToRearCryptobox=0;
-//                turnToFrontCryptobox=85;
-//                location=2;
-//                driveStraight("RUE",0,"f",0);
-//            }
-//            if(sideLocation.equals("REAR")){
-//                cryptoboxDriveDistance = 0;
-//                stoneToMarket = 560;
-//                cryptoboxSlide=305;
-//                turnToRearCryptobox=0;
-//                turnToFrontCryptobox=0;
-//                location=3;
-//                driveStraight("RUE",0,"f",0);
-//            }
-//        }
-
-
         encoder=leftFront.getCurrentPosition();
     }
 

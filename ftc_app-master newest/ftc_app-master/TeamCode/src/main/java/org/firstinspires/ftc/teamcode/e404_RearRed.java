@@ -32,7 +32,7 @@ public class e404_RearRed extends Error404JewelAutonomous
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxSlide = -460;
+            cryptoboxSlide = -465;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
@@ -42,7 +42,7 @@ public class e404_RearRed extends Error404JewelAutonomous
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxSlide=-305;
+            cryptoboxSlide=-290;
             result = true;
         }
         return result;
