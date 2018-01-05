@@ -39,7 +39,8 @@ public class team8668Teleop extends OpMode {
     double shoulderPos=0.95;
     double pivotPos =0.522;
 
-    boolean reverseGlyph;
+    boolean reverseLeftGlyph;
+    boolean reverseRightGlyph;
 
     public team8668Teleop() {
     }
@@ -138,25 +139,30 @@ public class team8668Teleop extends OpMode {
         }
         else {pivotPos=0.52;}
 
-        if(gamepad2.a){
-            if (reverseGlyph)
-                reverseGlyph = false;
-            else if (!reverseGlyph)
-                reverseGlyph = true;
-        }
+        if(gamepad2.x){
+            reverseLeftGlyph = true;}
+        else
+            reverseLeftGlyph = false;
+
+        if(gamepad2.b){
+            reverseRightGlyph = true;}
+        else
+            reverseRightGlyph = false;
+
 
         if(gamepad2.right_trigger > 0.1){
-            if(reverseGlyph)
+            if(reverseRightGlyph)
                 rightGlyph.setPower(-gamepad2.right_trigger);
-            else if (!reverseGlyph)
+            else {
                 rightGlyph.setPower(gamepad2.right_trigger);
+            }
         }
 
         if(gamepad2.left_trigger > 0.1){
-            if(reverseGlyph)
-                rightGlyph.setPower(-gamepad2.left_trigger);
-            else if (!reverseGlyph)
-                rightGlyph.setPower(gamepad2.left_trigger);
+            if(reverseLeftGlyph)
+                leftGlyph.setPower(-gamepad2.left_trigger);
+            else
+                leftGlyph.setPower(gamepad2.left_trigger);
         }
 
 
