@@ -220,17 +220,36 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
 
             case 12:  //Wait
-                if(leftGlyph.getCurrentPosition()>400)
+                if(leftGlyph.getCurrentPosition()>100)
                 {
-                    glyphIntake("stop");
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
 
             case 13:  //Finish Glyph
-                driveStraight("RUE",0.1,"r",0);
-                if(leftFront.getCurrentPosition()-encoder>90)
+                driveStraight("RUE",0.3,"r",0);
+                if(leftFront.getCurrentPosition()-encoder>130)
+                {
+                    driveStraight("RUE",0,"f",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                    glyphIntake("stop");
+                }
+                break;
+            case 14:
+                glyphIntake("outSlow");
+                driveStraight("RUE",0.3,"f",0);
+                if(leftFront.getCurrentPosition()-encoder>150)
+                {
+                    driveStraight("RUE",0,"r",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+            case 15:
+                driveStraight("RUE",0.5,"r",0);
+                if(leftFront.getCurrentPosition()-encoder>120)
                 {
                     driveStraight("RUE",0,"f",0);
                     state++;
@@ -238,6 +257,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 break;
             default:
+                glyphIntake("stop");
                 break;
 
 
