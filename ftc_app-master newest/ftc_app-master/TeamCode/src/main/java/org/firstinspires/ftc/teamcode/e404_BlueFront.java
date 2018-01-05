@@ -15,7 +15,7 @@ public class e404_BlueFront extends Error404JewelAutonomous
     }
     @Override public void init()
     {
-        cryptoboxDriveDistance = -350;
+        cryptoboxDriveDistance = -780;
         cryptoboxSlide=0;
         turnToCryptobox=80;
         setMultipleDirections("straight", "reverse");
@@ -32,17 +32,17 @@ public class e404_BlueFront extends Error404JewelAutonomous
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxDriveDistance = -510;
+            cryptoboxDriveDistance = -630;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
-            cryptoboxDriveDistance=-875;
+            cryptoboxDriveDistance=-990;
             result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxDriveDistance=-705;
+            cryptoboxDriveDistance=-805;
             result = true;
         }
         return result;
