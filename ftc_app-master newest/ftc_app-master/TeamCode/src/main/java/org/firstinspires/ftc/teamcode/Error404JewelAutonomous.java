@@ -249,7 +249,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
             case 15:
                 driveStraight("RUE",0.5,"r",0);
-                if(leftFront.getCurrentPosition()-encoder>120)
+                if(leftFront.getCurrentPosition()-encoder>100)
                 {
                     driveStraight("RUE",0,"f",0);
                     state++;
