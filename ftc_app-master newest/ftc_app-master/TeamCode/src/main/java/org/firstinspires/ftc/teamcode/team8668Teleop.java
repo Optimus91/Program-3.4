@@ -69,7 +69,7 @@ public class team8668Teleop extends OpMode {
         rightGlyph.setMode(RUN_USING_ENCODER);
         leftGlyph.setDirection(DcMotor.Direction.REVERSE);
         rightGlyph.setDirection(DcMotor.Direction.FORWARD);
-        hand.setPosition(1);
+        hand.setPosition(0.8);
         glyph.setPosition(0.25);
         arm.setPosition(0.0);
         pivot.setPosition(0.5);
@@ -125,10 +125,10 @@ public class team8668Teleop extends OpMode {
         elbowPos = Range.clip(elbowPos,0,1);
 
         if(gamepad2.right_bumper){
-            hand.setPosition(0.5);
+            hand.setPosition(0.6);
         }
         if(gamepad2.left_bumper){
-            hand.setPosition(1);
+            hand.setPosition(0.8);
         }
 
         if(gamepad1.x){
