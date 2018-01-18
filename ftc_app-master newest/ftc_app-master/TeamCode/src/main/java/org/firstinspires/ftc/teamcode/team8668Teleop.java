@@ -84,8 +84,6 @@ public class team8668Teleop extends OpMode {
         float xL_val = gamepad1.left_stick_x;            //reading raw values from the joysticks
         float xR_val = gamepad1.right_stick_x;
 
-        float RT_val = gamepad2.right_trigger;
-        float LT_val = gamepad2.left_trigger;
 
         //clip the right/left values so that the values never exceed +/- 1.
         yL_val = (float) scaleInput(yL_val);
@@ -139,21 +137,10 @@ public class team8668Teleop extends OpMode {
         }
         else {pivotPos=0.52;}
 
-        if(gamepad2.x) {
-            LT_val = LT_val * -1;
-        }
-
-        if(gamepad2.b){
-            RT_val = RT_val * -1;
-        }
-
-
         rightFront.setPower(RF);
         leftFront.setPower(LF);
         rightRear.setPower(RR);
         leftRear.setPower(LR);
-        rightGlyph.setPower(RT_val);
-        leftGlyph.setPower(LT_val);
         elbow.setPosition(elbowPos);
         shoulder.setPosition(shoulderPos);
         pivot.setPosition(pivotPos);
