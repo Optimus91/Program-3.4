@@ -38,6 +38,7 @@ public class team8668Teleop extends OpMode {
     double elbowPos=1;
     double shoulderPos=0.95;
     double pivotPos =0.522;
+    double handPos=0.7;
 
     public team8668Teleop() {
     }
@@ -123,10 +124,17 @@ public class team8668Teleop extends OpMode {
         elbowPos = Range.clip(elbowPos,0,1);
 
         if(gamepad2.right_bumper){
-            hand.setPosition(0.6);
+            handPos=0.4; //open
         }
         if(gamepad2.left_bumper){
-            hand.setPosition(0.7);
+            handPos=0.7; //closed
+        }
+        if(gamepad2.right_trigger>0.05){
+            handPos-=(gamepad2.right_trigger*0.001);
+        }
+
+        if(gamepad2.left_trigger>0.05){
+            handPos+=(gamepad2.left_trigger*0.001);
         }
 
         if(gamepad1.x){
@@ -136,7 +144,7 @@ public class team8668Teleop extends OpMode {
             pivotPos=0.64;
         }
         else {pivotPos=0.52;}
-
+        Range.clip(handPos, 0.35, 0.8);
         rightFront.setPower(RF);
         leftFront.setPower(LF);
         rightRear.setPower(RR);
@@ -144,6 +152,7 @@ public class team8668Teleop extends OpMode {
         elbow.setPosition(elbowPos);
         shoulder.setPosition(shoulderPos);
         pivot.setPosition(pivotPos);
+        hand.setPosition(handPos);
         rightGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
         leftGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
 
@@ -152,6 +161,7 @@ public class team8668Teleop extends OpMode {
       telemetry.addData("elbow: ",elbow.getPosition());
       telemetry.addData("pusher: ",glyph.getPosition());
       telemetry.addData("pivot: ",pivot.getPosition());
+      telemetry.addData("hand: ",handPos);
 
     }
     @Override
