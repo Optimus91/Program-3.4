@@ -50,7 +50,7 @@ public class analogTest extends LinearOpMode {
     public void runOpMode() {
 
 
-        potentiometer=hardwareMap.get(AnalogInput.class,"dial");
+        potentiometer=hardwareMap.get(AnalogInput.class,"camera");
 
         waitForStart();
         while (opModeIsActive()) {
