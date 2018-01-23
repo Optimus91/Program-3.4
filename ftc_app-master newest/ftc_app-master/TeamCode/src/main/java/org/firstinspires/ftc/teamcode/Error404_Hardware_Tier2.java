@@ -3,9 +3,123 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
+
 public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION 2.1.2
 
-    /// Beacon pusher method  //
+    public void stopEverything(){
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftRear.setPower(0.0);
+        rightRear.setPower(0.0);
+    }
+    public void glyphIntake(String inOrOut){
+        if(inOrOut.toLowerCase().equals("outSlow")){
+            rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightGlyph.setDirection(REVERSE);
+            leftGlyph.setDirection(FORWARD);
+            leftGlyph.setPower(0.2);
+            rightGlyph.setPower(0.2);
+        }
+        if(inOrOut.toLowerCase().equals("out")){
+            rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightGlyph.setDirection(REVERSE);
+            leftGlyph.setDirection(FORWARD);
+            leftGlyph.setPower(0.5);
+            rightGlyph.setPower(0.5);
+        }
+        if(inOrOut.toLowerCase().equals("stop")){
+            rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightGlyph.setDirection(FORWARD);
+            leftGlyph.setDirection(REVERSE);
+            leftGlyph.setPower(0);
+            rightGlyph.setPower(0);
+        }
+    }
+    public void driveStraightCombo(double power){
+        if(power>0){
+            driveStraight("RUE",power,"f",0);
+        }
+        else if(power<0){
+            driveStraight("RUE",(power*(-1)),"r",0);
+        }
+        else if(power==0){
+            stopEverything();
+        }
+    }
+    public void slideSidewaysCombo(double power){
+        if(power>0){
+            slide_sideways("RUE",power,"r",0);
+        }
+        else if(power<0){
+            slide_sideways("RUE",(power*(-1)),"l",0);
+        }
+        else if(power==0){
+            stopEverything();
+        }
+    }
+
+    public void pointTurnCombo(double power){
+        if(power>0){
+            pointTurn("RUE",power,"r",0);
+        }
+        else if(power<0){
+            pointTurn("RUE",(power*(-1)),"l",0);
+        }
+        else if(power==0){
+            stopEverything();
+        }
+    }
+
+    public void setMultipleDirections(String movement, String direction){
+        if(movement.equals("straight")){
+            if(direction.equals("forward")){
+                set_direction(leftFront, "f");
+                set_direction(leftRear, "r");
+                set_direction(rightFront, "f");
+                set_direction(rightRear, "r");
+            }
+            if(direction.equals("reverse")){
+                set_direction(leftFront, "r");
+                set_direction(leftRear, "f");
+                set_direction(rightFront, "r");
+                set_direction(rightRear, "f");
+            }
+        }
+        if(movement.equals("turn")){
+            if(direction.equals("right")){
+                set_direction(leftFront, "f");
+                set_direction(leftRear, "r");
+                set_direction(rightFront, "r");
+                set_direction(rightRear, "f");
+            }
+            if(direction.equals("left")){
+                set_direction(leftFront, "r");
+                set_direction(leftRear, "f");
+                set_direction(rightFront, "f");
+                set_direction(rightRear, "r");
+            }
+        }
+        if(movement.equals("slide")){
+            if(direction.equals("right")){
+                set_direction(leftFront, "f");
+                set_direction(rightRear, "r");
+                set_direction(rightFront, "r");
+                set_direction(leftRear, "f");
+            }
+            if(direction.equals("left")){
+                set_direction(leftFront, "r");
+                set_direction(rightRear, "f");
+                set_direction(rightFront, "f");
+                set_direction(leftRear, "r");
+            }
+        }
+    }
+
     public void setServoPos(Servo servomotor, Double position){
 
         servomotor.setPosition(position);

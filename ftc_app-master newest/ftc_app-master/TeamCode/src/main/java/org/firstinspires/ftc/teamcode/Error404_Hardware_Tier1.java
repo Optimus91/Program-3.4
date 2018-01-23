@@ -42,11 +42,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected DcMotor rightFront;
     protected DcMotor leftRear;
     protected DcMotor rightRear;
+    protected DcMotor leftGlyph;
+    protected DcMotor rightGlyph;
     protected Servo arm;
-    protected Servo glyph;
     protected Servo shoulder;
     protected Servo hand;
     protected Servo elbow;
+    protected Servo swivel;
     protected IntegratingGyroscope gyro;
     protected NavxMicroNavigationSensor navxMicro;
     protected AnalogInput camera;
@@ -73,10 +75,11 @@ public class Error404_Hardware_Tier1 extends OpMode {
             arm = null;
         }
         try {
-            glyph = hardwareMap.get(Servo.class, "glyph");
+            swivel = hardwareMap.get(Servo.class, "jewelSwivel");
+            swivel.setPosition(0.52);
         } catch (Exception p_exeception) {
-            telemetry.addData("glyph servo not found in config file", 0);
-            glyph = null;
+            telemetry.addData("Jewel Swivel not found in config file", 0);
+            swivel = null;
         }
         try {
             shoulder = hardwareMap.get(Servo.class, "shoulder");
@@ -134,6 +137,18 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("rightRear not found in config file", 0);
             rightRear = null;
+        }
+        try {
+            leftGlyph = hardwareMap.dcMotor.get("leftGlyph");
+        } catch (Exception p_exeception) {
+            telemetry.addData("leftGlyph not found in config file", 0);
+            leftFront = null;
+        }
+        try {
+            rightGlyph = hardwareMap.dcMotor.get("rightGlyph");
+        } catch (Exception p_exeception) {
+            telemetry.addData("rightGlyph not found in config file", 0);
+            leftFront = null;
         }
 
         //RGB.setI2cAddress(I2cAddr.create8bit(0x3C));       //30 is the decimal conversion from 7 bit hexadecimal value 0x1e converted from 8 bit hexadecimal 0x3c
