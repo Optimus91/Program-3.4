@@ -21,6 +21,9 @@ public class team8668Teleop extends OpMode {
     DcMotor leftFront;
     DcMotor rightRear;
     DcMotor leftRear;
+    DcMotor leftGlyph;
+    DcMotor rightGlyph;
+
     Servo arm;
     Servo glyph;
     Servo shoulder;
@@ -35,6 +38,8 @@ public class team8668Teleop extends OpMode {
     double elbowPos=1;
     double shoulderPos=0.95;
     double pivotPos =0.522;
+    double handPos=0.7;
+
     public team8668Teleop() {
     }
     @Override
@@ -59,7 +64,13 @@ public class team8668Teleop extends OpMode {
         hand = hardwareMap.servo.get("hand");
         glyph = hardwareMap.servo.get("glyph");
         pivot=hardwareMap.servo.get("jewelSwivel");
-        hand.setPosition(1);
+        leftGlyph = hardwareMap.dcMotor.get("leftGlyph");
+        rightGlyph = hardwareMap.dcMotor.get("rightGlyph");
+        leftGlyph.setMode(RUN_USING_ENCODER);
+        rightGlyph.setMode(RUN_USING_ENCODER);
+        leftGlyph.setDirection(DcMotor.Direction.REVERSE);
+        rightGlyph.setDirection(DcMotor.Direction.FORWARD);
+        hand.setPosition(0.7);
         glyph.setPosition(0.25);
         arm.setPosition(0.0);
         pivot.setPosition(0.5);
@@ -73,6 +84,7 @@ public class team8668Teleop extends OpMode {
         float yL_val = -gamepad1.left_stick_y;            //reading raw values from the joysticks
         float xL_val = gamepad1.left_stick_x;            //reading raw values from the joysticks
         float xR_val = gamepad1.right_stick_x;
+
 
         //clip the right/left values so that the values never exceed +/- 1.
         yL_val = (float) scaleInput(yL_val);
@@ -90,7 +102,7 @@ public class team8668Teleop extends OpMode {
         LR = Range.clip(LR, -1, 1);
 
         if(gamepad1.y){
-            arm.setPosition(0.75);
+            arm.setPosition(0.79);
         }
         else if(gamepad1.a){
             arm.setPosition(0.0);
@@ -101,7 +113,7 @@ public class team8668Teleop extends OpMode {
         else if(gamepad2.a){
             shoulderPos-=0.001;
         }
-        shoulderPos = Range.clip(shoulderPos,0.83,0.95);
+        shoulderPos = Range.clip(shoulderPos,0.76,0.95);
 
         if(gamepad2.dpad_up){
             elbowPos+=0.001;
@@ -112,22 +124,27 @@ public class team8668Teleop extends OpMode {
         elbowPos = Range.clip(elbowPos,0,1);
 
         if(gamepad2.right_bumper){
-            hand.setPosition(0.8);
+            handPos=0.4; //open
         }
         if(gamepad2.left_bumper){
-            hand.setPosition(1);
+            handPos=0.7; //closed
+        }
+        if(gamepad2.right_trigger>0.05){
+            handPos-=(gamepad2.right_trigger*0.001);
+        }
+
+        if(gamepad2.left_trigger>0.05){
+            handPos+=(gamepad2.left_trigger*0.001);
         }
 
         if(gamepad1.x){
-            pivotPos=0.44;
+            pivotPos=0.40;
         }
         else if(gamepad1.b){
             pivotPos=0.64;
         }
         else {pivotPos=0.52;}
-
-
-
+        Range.clip(handPos, 0.35, 0.8);
         rightFront.setPower(RF);
         leftFront.setPower(LF);
         rightRear.setPower(RR);
@@ -135,12 +152,16 @@ public class team8668Teleop extends OpMode {
         elbow.setPosition(elbowPos);
         shoulder.setPosition(shoulderPos);
         pivot.setPosition(pivotPos);
+        hand.setPosition(handPos);
+        rightGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
+        leftGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
 
       telemetry.addData("shoulder: ",shoulder.getPosition());
       telemetry.addData("grabber:",hand.getPosition());
       telemetry.addData("elbow: ",elbow.getPosition());
       telemetry.addData("pusher: ",glyph.getPosition());
       telemetry.addData("pivot: ",pivot.getPosition());
+      telemetry.addData("hand: ",handPos);
 
     }
     @Override
