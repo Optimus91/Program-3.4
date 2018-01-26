@@ -21,7 +21,7 @@ public class e404_RearBlue extends Error404JewelAutonomous
         setLocation("REAR", "BLUE");
     }
 
-    /** The movement distances for this quadrant. */
+    /** Setting the movement distances for this quadrant. */
     @Override public void init()
     {
         cryptoboxDriveDistance = -600;
