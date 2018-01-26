@@ -160,6 +160,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
 
     }
 
+    ////////////////////////////////////////////
+    /*    Method that reads the pictograph    //
+    //        and returns the side of         //
+    //   the cryptobox that the glyph needs   //
+    //    to go into to score bonus points    //
+    *///////////////////////////////////////////
     public String readCryptograph(){
         String dejavu="";
 
@@ -193,7 +199,6 @@ public class Error404_Hardware_Tier1 extends OpMode {
     }
     public void loop() { }
     public void stop() { }
-
     ////////////////////////////////////////////
     /*   Methods that return raw data use     //
     //       for decision making and          //
@@ -270,9 +275,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     // reached it's goal if found, else     //
     //          returns false.              //
     */////////////////////////////////////////
-//Sorry Josh. I had to change the if(encoderCount==goal) to
-// if(encoderCount>=goal) because otherwise, the method has to be called at the exact moment
-//the encoder value is at the desired position. ;-)
+
     public boolean is_encoder_reached(int goal, DcMotor motor)
     {
         int encoderCount = get_position(motor);
