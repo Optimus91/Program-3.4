@@ -29,7 +29,7 @@ public class team8668Teleop extends OpMode {
     Servo shoulder;
     Servo hand;
     Servo elbow;
-    Servo pivot;
+    Servo swivel;
     float launchspeed1;
     double powerval;
     double rightVal=0;
@@ -37,7 +37,7 @@ public class team8668Teleop extends OpMode {
     double incrementDir=0;
     double elbowPos=1;
     double shoulderPos=0.95;
-    double pivotPos =0.522;
+    double swivelPos =0.522;
     double handPos=0.7;
 
     public team8668Teleop() {
@@ -64,7 +64,7 @@ public class team8668Teleop extends OpMode {
         elbow = hardwareMap.servo.get("elbow");
         hand = hardwareMap.servo.get("hand");
         glyph = hardwareMap.servo.get("glyph");
-        pivot=hardwareMap.servo.get("jewelSwivel");
+        swivel=hardwareMap.servo.get("jewelSwivel");
         leftGlyph = hardwareMap.dcMotor.get("leftGlyph");
         rightGlyph = hardwareMap.dcMotor.get("rightGlyph");
         leftGlyph.setMode(RUN_USING_ENCODER);
@@ -74,7 +74,7 @@ public class team8668Teleop extends OpMode {
         hand.setPosition(0.7);
         glyph.setPosition(0.25);
         arm.setPosition(0.0);
-        pivot.setPosition(0.5);
+        swivel.setPosition(0.5);
         //Finish initializing the things
     }
     @Override
@@ -140,12 +140,12 @@ public class team8668Teleop extends OpMode {
         }
 
         if(gamepad1.x){                       //turn jewel servo to the side
-            pivotPos=0.40;
+            swivelPos=0.40;
         }
         else if(gamepad1.b){                  //turn jewel servo to the other side
-            pivotPos=0.64;
+            swivelPos=0.64;
         }
-        else {pivotPos=0.52;}
+        else {swivelPos=0.52;}
         Range.clip(handPos, 0.35, 0.8);
         rightFront.setPower(RF);              //Set all values to correct devices
         leftFront.setPower(LF);
@@ -153,7 +153,7 @@ public class team8668Teleop extends OpMode {
         leftRear.setPower(LR);
         elbow.setPosition(elbowPos);
         shoulder.setPosition(shoulderPos);
-        pivot.setPosition(pivotPos);
+        swivel.setPosition(swivelPos);
         hand.setPosition(handPos);
         rightGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
         leftGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
@@ -162,7 +162,7 @@ public class team8668Teleop extends OpMode {
       telemetry.addData("grabber:",hand.getPosition());          //print info to telemetry
       telemetry.addData("elbow: ",elbow.getPosition());
       telemetry.addData("pusher: ",glyph.getPosition());
-      telemetry.addData("pivot: ",pivot.getPosition());
+      telemetry.addData("swivel: ",swivel.getPosition());
       telemetry.addData("hand: ",handPos);
 
     }
