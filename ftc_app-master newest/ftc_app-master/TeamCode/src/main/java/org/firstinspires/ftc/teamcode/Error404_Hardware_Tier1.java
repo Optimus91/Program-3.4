@@ -53,17 +53,21 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected DcMotor leftRear;
     /** This motor is one of the drive motors that makes up the robot drivetrain. */
     protected DcMotor rightRear;
+    /** The leftGlyph motor spins the left glyph intake wheel. */
     protected DcMotor leftGlyph;
+    /** The rightGlyph motor spins the right glyph intake wheel. */
     protected DcMotor rightGlyph;
 
-    /** The arm servo makes the jewel sword rotate down to push a jewel. */
+    /** The arm servo makes the jewel sword rotate down in preperation for knocking the correct jewel off. */
     protected Servo arm;
+    /** The swivel servo rotates the jewel arm back and forth to knock off the correct jewel. */
+    protected Servo swivel;
+    /** The shoulder servo extends the relic arm over the field wall. */
     protected Servo shoulder;
     /** The elbow servo lifts the relic up and down. */
     protected Servo elbow;
     /** The hand servo opens and closes the relic claw. */
     protected Servo hand;
-    protected Servo swivel;
     /** The Rev Expansion Hub's own gryo and should only be used during initialization. */
     protected IntegratingGyroscope gyro;
     /** The navxMicro is a gyro and is used to record the robot's heading. */

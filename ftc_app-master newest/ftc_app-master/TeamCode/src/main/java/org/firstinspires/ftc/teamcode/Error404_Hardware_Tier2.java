@@ -14,12 +14,18 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
  */
 public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION 2.1.2
 
+    /** this method is used to stop all the drive motors. */
     public void stopEverything(){
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftRear.setPower(0.0);
         rightRear.setPower(0.0);
     }
+
+    /**
+     * THe glyphIntake method triggers the two intake motors that will suck in or spit out a glyph.
+     *
+     * @param inOrOut  A string that determines the motor powers and direction. */
     public void glyphIntake(String inOrOut){
         if(inOrOut.toLowerCase().equals("outSlow")){
             rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -46,6 +52,11 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             rightGlyph.setPower(0);
         }
     }
+
+    /**
+     * Combines direction and power into one drive method that drives forward and backward.
+     *
+     * @param power  determines the power which the motors run at*/
     public void driveStraightCombo(double power){
         if(power>0){
             driveStraight("RUE",power,"f",0);
@@ -57,6 +68,11 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             stopEverything();
         }
     }
+
+    /**
+     * Combines direction and power into one drive method that slides left and right.
+     *
+     * @param power  determines the power which the motors run at */
     public void slideSidewaysCombo(double power){
         if(power>0){
             slide_sideways("RUE",power,"r",0);
@@ -69,6 +85,10 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         }
     }
 
+    /**
+     * Combines direction and power into one turning method that spins the robot left and right.
+     *
+     * @param power  determines the power which the motors run at */
     public void pointTurnCombo(double power){
         if(power>0){
             pointTurn("RUE",power,"r",0);
@@ -81,6 +101,11 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         }
     }
 
+    /**
+     * Uses several parameters to set the motors the the directions needed for more complicated maneuvers.
+     *
+     * @param movement  specifies type of movement (i.e., straight, turn, slide)
+     * @param direction  sets motor directions for the encoders */
     public void setMultipleDirections(String movement, String direction){
         if(movement.equals("straight")){
             if(direction.equals("forward")){
