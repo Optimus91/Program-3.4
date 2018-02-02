@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+
+
 
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODERS;
@@ -32,6 +35,10 @@ public class team8668Teleop extends OpMode {
     Servo elbow;
     Servo swivel;
     Servo glyphter;
+
+    DigitalChannel bottom;
+    DigitalChannel top;
+
     float launchspeed1;
     double powerval;
     double rightVal=0;
@@ -41,6 +48,8 @@ public class team8668Teleop extends OpMode {
     double shoulderPos=0.95;
     double swivelPos =0.522;
     double handPos=0.7;
+    double glyphterSpeed=0.5;
+    int encoderDelta=0;
 
     public team8668Teleop() {
     }
@@ -73,6 +82,8 @@ public class team8668Teleop extends OpMode {
         leftGlyph = hardwareMap.dcMotor.get("leftGlyph");
         rightGlyph = hardwareMap.dcMotor.get("rightGlyph");
         glyphter = hardwareMap.servo.get("glyphter");
+        bottom = hardwareMap.get(DigitalChannel.class, "bottomTouch");
+        top = hardwareMap.get(DigitalChannel.class, "topTouch");
         leftGlyph.setMode(RUN_USING_ENCODER);
         rightGlyph.setMode(RUN_USING_ENCODER);
         leftGlyph.setDirection(DcMotor.Direction.REVERSE);
@@ -163,8 +174,44 @@ public class team8668Teleop extends OpMode {
         hand.setPosition(handPos);
         rightGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
         leftGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
-        glyphter.setPosition((scaleInput(gamepad2.left_stick_y)/2)+0.5);
-
+//1500
+        if(top.getState() && bottom.getState() && !gamepad2.left_stick_button && !gamepad2.right_stick_button){
+            glyphterSpeed = (((-1)*(scaleInput(gamepad2.left_stick_y)/2)+0.5));
+        }
+        if(!top.getState()) {
+            if (gamepad2.left_stick_y > 0.1) {
+                glyphterSpeed = (((-1) * (scaleInput(gamepad2.left_stick_y) / 2) + 0.5));
+            }
+            else{
+                glyphterSpeed=0.5;
+            }
+        }
+        if(!bottom.getState()) {
+            encoderDelta=encoderMotor.getCurrentPosition();
+            if (gamepad2.left_stick_y < 0.1) {
+                glyphterSpeed = (((-1) * (scaleInput(gamepad2.left_stick_y) / 2) + 0.5));
+            }
+            else{
+                glyphterSpeed=0.5;
+            }
+        }
+        if(gamepad2.left_stick_button){
+            if((encoderMotor.getCurrentPosition()-encoderDelta)<1500){
+                glyphterSpeed=1;
+            }
+            else if((encoderMotor.getCurrentPosition()-encoderDelta)>1500){
+                glyphterSpeed=0;
+            }
+            }
+        if(gamepad2.right_stick_button){
+            if((encoderMotor.getCurrentPosition()-encoderDelta)<3000){
+                glyphterSpeed=1;
+            }
+            else if((encoderMotor.getCurrentPosition()-encoderDelta)>3000){
+                glyphterSpeed=0;
+            }
+        }
+        glyphter.setPosition(glyphterSpeed);
       telemetry.addData("shoulder: ",shoulder.getPosition());
       telemetry.addData("grabber:",hand.getPosition());          //print info to telemetry
       telemetry.addData("elbow: ",elbow.getPosition());
@@ -172,6 +219,10 @@ public class team8668Teleop extends OpMode {
       telemetry.addData("swivel: ",swivel.getPosition());
       telemetry.addData("hand: ",handPos);
       telemetry.addData("glyphter position: ", encoderMotor.getCurrentPosition());
+      telemetry.addData("glyphter position with delta: ", (encoderMotor.getCurrentPosition()-encoderDelta));
+      telemetry.addData("glyphter speed: ", glyphterSpeed);
+      telemetry.addData("glyphter bottom: ", bottom.getState());
+      telemetry.addData("glyphter top: ", top.getState());
 
 
     }
