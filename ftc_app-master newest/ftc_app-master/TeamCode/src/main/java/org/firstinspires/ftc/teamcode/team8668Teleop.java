@@ -46,7 +46,7 @@ public class team8668Teleop extends OpMode {
     }
     @Override
     public void init() {
-        //Initialize all the things
+        //Initialize all motors, servos, and sensors, as well as setting some servos to initilaize to a particualr position.
         telemetry.addData ("0", "I AM HERE");
         arm=hardwareMap.servo.get("jewelSword");
         leftFront = hardwareMap.dcMotor.get("leftFront");
@@ -81,7 +81,7 @@ public class team8668Teleop extends OpMode {
         glyph.setPosition(0.25);
         arm.setPosition(0.0);
         swivel.setPosition(0.5);
-        //Finish initializing the things
+
     }
     @Override
     public void loop() {
@@ -163,6 +163,7 @@ public class team8668Teleop extends OpMode {
         hand.setPosition(handPos);
         rightGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
         leftGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
+        glyphter.setPosition((scaleInput(gamepad2.left_stick_y)/2)+0.5);
 
       telemetry.addData("shoulder: ",shoulder.getPosition());
       telemetry.addData("grabber:",hand.getPosition());          //print info to telemetry
@@ -170,6 +171,8 @@ public class team8668Teleop extends OpMode {
       telemetry.addData("pusher: ",glyph.getPosition());
       telemetry.addData("swivel: ",swivel.getPosition());
       telemetry.addData("hand: ",handPos);
+      telemetry.addData("glyphter position: ", encoderMotor.getCurrentPosition());
+
 
     }
     @Override
