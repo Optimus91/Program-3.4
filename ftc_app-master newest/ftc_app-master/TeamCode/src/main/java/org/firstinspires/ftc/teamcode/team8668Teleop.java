@@ -23,6 +23,7 @@ public class team8668Teleop extends OpMode {
     DcMotor leftRear;
     DcMotor leftGlyph;
     DcMotor rightGlyph;
+    DcMotor encoderMotor;
 
     Servo arm;
     Servo glyph;
@@ -30,6 +31,7 @@ public class team8668Teleop extends OpMode {
     Servo hand;
     Servo elbow;
     Servo swivel;
+    Servo glyphter;
     float launchspeed1;
     double powerval;
     double rightVal=0;
@@ -59,6 +61,9 @@ public class team8668Teleop extends OpMode {
         leftRear.setMode(RUN_USING_ENCODER);
         leftRear.setDirection(DcMotor.Direction.REVERSE);
         rightRear.setDirection(DcMotor.Direction.REVERSE);
+        encoderMotor = hardwareMap.dcMotor.get("encoderMotor");
+        encoderMotor.setMode(RUN_USING_ENCODER);
+        encoderMotor.setDirection(DcMotor.Direction.FORWARD);
         telemetry.addData("","V 2");
         shoulder = hardwareMap.servo.get("shoulder");
         elbow = hardwareMap.servo.get("elbow");
@@ -67,6 +72,7 @@ public class team8668Teleop extends OpMode {
         swivel=hardwareMap.servo.get("jewelSwivel");
         leftGlyph = hardwareMap.dcMotor.get("leftGlyph");
         rightGlyph = hardwareMap.dcMotor.get("rightGlyph");
+        glyphter = hardwareMap.servo.get("glyphter");
         leftGlyph.setMode(RUN_USING_ENCODER);
         rightGlyph.setMode(RUN_USING_ENCODER);
         leftGlyph.setDirection(DcMotor.Direction.REVERSE);
