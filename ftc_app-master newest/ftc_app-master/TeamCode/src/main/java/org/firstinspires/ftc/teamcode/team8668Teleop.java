@@ -127,12 +127,15 @@ public class team8668Teleop extends OpMode {
             arm.setPosition(0.0);     //move up jewel arm
         }
         if(gamepad2.y){
-            shoulderPos+=0.001;       //increment shoulder servo
+            shoulderPos+=0.005;       //increment shoulder servo
         }
         else if(gamepad2.a){
-            shoulderPos-=0.001;       //increment shoulder servo down
+            shoulderPos-=0.005;       //increment shoulder servo down
         }
-        shoulderPos = Range.clip(shoulderPos,0.76,0.95); //keep shoulder servo value in given range
+        if(gamepad1.left_stick_button){
+            shoulderPos=0.7;
+        }
+        shoulderPos = Range.clip(shoulderPos,0.7,0.95); //keep shoulder servo value in given range
 
         if(gamepad2.dpad_up){
             elbowPos+=0.001;         //increment elbow out
