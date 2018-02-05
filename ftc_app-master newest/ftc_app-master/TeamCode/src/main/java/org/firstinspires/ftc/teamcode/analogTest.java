@@ -20,7 +20,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
  */
-@Autonomous(name = " Potentiometer Test", group = "Sensor")
+@Autonomous(name = " Pixycam Test", group = "Sensor")
 public class analogTest extends LinearOpMode {
 
 
@@ -50,13 +50,15 @@ public class analogTest extends LinearOpMode {
     public void runOpMode() {
 
 
-        potentiometer=hardwareMap.get(AnalogInput.class,"dial");
+        potentiometer=hardwareMap.get(AnalogInput.class,"camera");
 
         waitForStart();
         while (opModeIsActive()) {
 
             position = potentiometer.getVoltage();
             telemetry.addData("Red Position: ", position);
+            telemetry.addData("Desired position (red on left): ", "INSERT NUMBER HERE");
+
 
             telemetry.update();
         }
