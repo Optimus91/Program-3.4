@@ -49,10 +49,15 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected Servo hand;
     protected Servo elbow;
     protected Servo swivel;
+    protected Servo leftWhiskerServo;
+    protected Servo rightWhiskerServo;
+
     protected IntegratingGyroscope gyro;
+
     protected NavxMicroNavigationSensor navxMicro;
     protected AnalogInput camera;
-    protected AnalogInput whisker;
+    protected AnalogInput leftWhisker;
+    protected AnalogInput rightWhisker;
 
     OpenGLMatrix lastLocation = null;
     VuforiaLocalizer vuforia;
@@ -88,13 +93,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
             telemetry.addData("shoulder servo not found in config file", 0);
             shoulder = null;
         }
-        try {
+
+        try {try {
             hand = hardwareMap.get(Servo.class, "hand");
         } catch (Exception p_exeception) {
             telemetry.addData("hand servo not found in config file", 0);
             hand = null;
         }
-        try {
             elbow = hardwareMap.get(Servo.class, "elbow");
         } catch (Exception p_exeception) {
             telemetry.addData("elbow servo not found in config file", 0);
@@ -107,10 +112,16 @@ public class Error404_Hardware_Tier1 extends OpMode {
             camera = null;
         }
         try {
-            whisker = hardwareMap.get(AnalogInput.class, "whisker");
+            leftWhisker = hardwareMap.get(AnalogInput.class, "leftWhisker");
         } catch (Exception p_exeception) {
-            telemetry.addData("whisker not found in config file", 0);
-            whisker = null;
+            telemetry.addData("left whisker not found in config file", 0);
+            leftWhisker = null;
+        }
+        try {
+            rightWhisker = hardwareMap.get(AnalogInput.class, "rightWhisker");
+        } catch (Exception p_exeception) {
+            telemetry.addData("right whisker not found in config file", 0);
+            rightWhisker = null;
         }
         try {
             navxMicro = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
@@ -156,6 +167,17 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("rightGlyph not found in config file", 0);
             leftFront = null;
+        }
+        try {
+            rightWhiskerServo = hardwareMap.get(Servo.class, "rightWhiskerServo");
+        } catch (Exception p_exeception) {
+            telemetry.addData("right whisker servo not found in config file", 0);
+            rightWhiskerServo = null;
+        }try {
+            leftWhiskerServo = hardwareMap.get(Servo.class, "leftWhiskerServo");
+        } catch (Exception p_exeception) {
+            telemetry.addData("left whisker servo not found in config file", 0);
+            leftWhiskerServo = null;
         }
 
         //RGB.setI2cAddress(I2cAddr.create8bit(0x3C));       //30 is the decimal conversion from 7 bit hexadecimal value 0x1e converted from 8 bit hexadecimal 0x3c
