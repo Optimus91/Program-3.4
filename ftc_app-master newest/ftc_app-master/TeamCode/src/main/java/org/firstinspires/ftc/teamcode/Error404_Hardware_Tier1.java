@@ -68,12 +68,19 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected Servo elbow;
     /** The hand servo opens and closes the relic claw. */
     protected Servo hand;
+    protected Servo elbow;
+    protected Servo swivel;
+    protected Servo leftWhiskerServo;
+    protected Servo rightWhiskerServo;
+
     /** The Rev Expansion Hub's own gryo and should only be used during initialization. */
     protected IntegratingGyroscope gyro;
     /** The navxMicro is a gyro and is used to record the robot's heading. */
     protected NavxMicroNavigationSensor navxMicro;
     /** The camera is used to differentiate colors during the jewel mission. */
     protected AnalogInput camera;
+    protected AnalogInput leftWhisker;
+    protected AnalogInput rightWhisker;
 
 
     /* The Vuforia system is used to track special patterns on the edge of the field. */
@@ -125,13 +132,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
             telemetry.addData("shoulder servo not found in config file", 0);
             shoulder = null;
         }
-        try {
+
+        try {try {
             hand = hardwareMap.get(Servo.class, "hand");
         } catch (Exception p_exeception) {
             telemetry.addData("hand servo not found in config file", 0);
             hand = null;
         }
-        try {
             elbow = hardwareMap.get(Servo.class, "elbow");
         } catch (Exception p_exeception) {
             telemetry.addData("elbow servo not found in config file", 0);
@@ -142,6 +149,18 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("camera not found in config file", 0);
             camera = null;
+        }
+        try {
+            leftWhisker = hardwareMap.get(AnalogInput.class, "leftWhisker");
+        } catch (Exception p_exeception) {
+            telemetry.addData("left whisker not found in config file", 0);
+            leftWhisker = null;
+        }
+        try {
+            rightWhisker = hardwareMap.get(AnalogInput.class, "rightWhisker");
+        } catch (Exception p_exeception) {
+            telemetry.addData("right whisker not found in config file", 0);
+            rightWhisker = null;
         }
         try {
             navxMicro = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
@@ -187,6 +206,17 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("rightGlyph not found in config file", 0);
             leftFront = null;
+        }
+        try {
+            rightWhiskerServo = hardwareMap.get(Servo.class, "rightWhiskerServo");
+        } catch (Exception p_exeception) {
+            telemetry.addData("right whisker servo not found in config file", 0);
+            rightWhiskerServo = null;
+        }try {
+            leftWhiskerServo = hardwareMap.get(Servo.class, "leftWhiskerServo");
+        } catch (Exception p_exeception) {
+            telemetry.addData("left whisker servo not found in config file", 0);
+            leftWhiskerServo = null;
         }
 
         //RGB.setI2cAddress(I2cAddr.create8bit(0x3C));       //30 is the decimal conversion from 7 bit hexadecimal value 0x1e converted from 8 bit hexadecimal 0x3c
@@ -237,7 +267,6 @@ public class Error404_Hardware_Tier1 extends OpMode {
     }
     public void loop() { }
     public void stop() { }
-
     ////////////////////////////////////////////
     /*   Methods that return raw data use     //
     //       for decision making and          //
@@ -344,6 +373,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     // reached it's goal if found, else     //
     //          returns false.              //
     */////////////////////////////////////////
+
     public boolean is_encoder_reached(int goal, DcMotor motor)
     {
         int encoderCount = get_position(motor);

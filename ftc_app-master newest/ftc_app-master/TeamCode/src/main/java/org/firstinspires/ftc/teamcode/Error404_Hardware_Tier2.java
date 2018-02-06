@@ -180,6 +180,8 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * @param direction  a String that tells the direction (forward "f" or reverse "r")
      * @param position  an Int that tells the motor position on the robot
      */
+
+    //tells robot to drive straight at a certain power in a direction until the desired position is reached
     public void driveStraight(String mode, double power, String direction, int position) {
         position=distance2encoder(position,6,1);
         if (direction.toLowerCase().equals("f")) {
@@ -211,6 +213,8 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      *
      * @param power  a Duble that is the power for the left motors
      */
+
+    //sets power to left side of robot to desired power value
     public void left_set_power(double power)
     {
         set_power(power, leftFront);
@@ -222,6 +226,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      *
      * @param power  a Double that is the power for the right motors
      */
+    //sets power to right side of robot to desired power value
     public void right_set_power(double power)
     {
         set_power(power, rightFront);
@@ -292,9 +297,10 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * @param direction  a String that is the direction of movement
      * @param position  an Int that is the motors' position on the robot
      */
+    //slides sideways until the wheels reach the desired encoder count
     public void slide_sideways(String mode, double power, String direction, int position){
         position = distance2encoder(position, 4, 1);
-        position=position*2; //because the wheels on the meccanum wheels are at 45', multiply the encoder counts by 2
+        position=position*2; //because the wheels on the mecanum wheels are at 45', multiply the encoder counts by 2
         set_mode(leftFront, mode);
         set_mode(leftRear, mode);
         set_mode(rightFront, mode);
@@ -399,6 +405,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * @param fraction_to_change_power
      * @param direction  a String that is the direction of movement
      */
+    //turns to a desired gyroscope position at a certain power
     public void turn_gyro_power_new(int desired_gyro, double starting_power, double fraction_to_change_power, String direction){
         double powervalue=0;
         int heading = getHeading();
