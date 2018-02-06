@@ -52,6 +52,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected IntegratingGyroscope gyro;
     protected NavxMicroNavigationSensor navxMicro;
     protected AnalogInput camera;
+    protected AnalogInput whisker;
 
     OpenGLMatrix lastLocation = null;
     VuforiaLocalizer vuforia;
@@ -104,6 +105,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("camera not found in config file", 0);
             camera = null;
+        }
+        try {
+            whisker = hardwareMap.get(AnalogInput.class, "whisker");
+        } catch (Exception p_exeception) {
+            telemetry.addData("whisker not found in config file", 0);
+            whisker = null;
         }
         try {
             navxMicro = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
