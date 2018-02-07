@@ -68,9 +68,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected Servo elbow;
     /** The hand servo opens and closes the relic claw. */
     protected Servo hand;
-    protected Servo elbow;
-    protected Servo swivel;
+    /**  */
     protected Servo leftWhiskerServo;
+    /**  */
     protected Servo rightWhiskerServo;
 
     /** The Rev Expansion Hub's own gryo and should only be used during initialization. */
@@ -79,7 +79,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected NavxMicroNavigationSensor navxMicro;
     /** The camera is used to differentiate colors during the jewel mission. */
     protected AnalogInput camera;
+    /**  */
     protected AnalogInput leftWhisker;
+    /**  */
     protected AnalogInput rightWhisker;
 
 

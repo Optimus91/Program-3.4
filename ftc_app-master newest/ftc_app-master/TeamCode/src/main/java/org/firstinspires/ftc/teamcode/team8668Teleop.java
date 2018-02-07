@@ -39,6 +39,10 @@ public class team8668Teleop extends OpMode {
     DcMotor leftGlyph;
     /** The right glyph intake motor -- used in conjunction with the leftGlyph motor to suck in glyphs. */
     DcMotor rightGlyph;
+    /**
+     * Actaully just an encoder counter attached to the axle the glyphter servo spins.
+     * This encoder counter lets us move a servo with encoder counts like a DC motor.
+     * */
     DcMotor encoderMotor;
 
    
@@ -52,11 +56,17 @@ public class team8668Teleop extends OpMode {
     Servo elbow;
     /** The hand servo controls the claw that grabs the relic. */
     Servo hand;
-    Servo elbow;
-    Servo swivel;
+    /** The glyphter servo raises and lowers the glyph lifter so that glyphs can be deployed at any of the four levels. */
     Servo glyphter;
 
+    /**
+     * A limit switch on the bottom of the glyph lifter. It acts as a hard stop to prevent the
+     * glyph lifter from going down too far. The bottom limit switch also acts as
+     * the home position for the glyph lifter.
+     * */
     DigitalChannel bottom;
+    /** A limit switch on the top of the glyph lifter. It acts as a hard stop to prevent the
+     * glyph lifter from going up too far. */
     DigitalChannel top;
 
     float launchspeed1;
@@ -72,7 +82,11 @@ public class team8668Teleop extends OpMode {
     double swivelPos =0.522;
     /** Setting the start position for the hand servo. */
     double handPos=0.7;
+    /** Setting the starting speed for the glyph lifter. For a servo like the glyphter servo, 0.5 is stopped. */
     double glyphterSpeed=0.5;
+    /** An int that is the delta for the encoder count for the glyph lifter. This int is set to zero
+     * everytime the bottom limit switch is pressed, giving us the usualbilty of a real encoder
+     * motor with physical limits. */
     int encoderDelta=0;
 
     public team8668Teleop() {
@@ -103,7 +117,6 @@ public class team8668Teleop extends OpMode {
         shoulder = hardwareMap.servo.get("shoulder");
         elbow = hardwareMap.servo.get("elbow");
         hand = hardwareMap.servo.get("hand");
-        glyph = hardwareMap.servo.get("glyph");
         swivel=hardwareMap.servo.get("jewelSwivel");
         leftGlyph = hardwareMap.dcMotor.get("leftGlyph");
         rightGlyph = hardwareMap.dcMotor.get("rightGlyph");
@@ -245,7 +258,6 @@ public class team8668Teleop extends OpMode {
       telemetry.addData("shoulder: ",shoulder.getPosition());
       telemetry.addData("grabber:",hand.getPosition());          //print info to telemetry
       telemetry.addData("elbow: ",elbow.getPosition());
-      telemetry.addData("pusher: ",glyph.getPosition());
       telemetry.addData("swivel: ",swivel.getPosition());
       telemetry.addData("hand: ",handPos);
       telemetry.addData("glyphter position: ", encoderMotor.getCurrentPosition());

@@ -213,7 +213,6 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      *
      * @param power  a Duble that is the power for the left motors
      */
-
     //sets power to left side of robot to desired power value
     public void left_set_power(double power)
     {
