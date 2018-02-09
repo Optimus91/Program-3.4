@@ -16,7 +16,7 @@ public class e404_RearBlue extends Error404JewelAutonomous
     @Override public void init()
     {
         cryptoboxDriveDistance = -600;
-        cryptoboxSlide=305;
+        cryptoboxSlide=395;
         turnToCryptobox=170;
         setMultipleDirections("straight", "reverse");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
@@ -31,17 +31,17 @@ public class e404_RearBlue extends Error404JewelAutonomous
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxSlide = 150;
+            cryptoboxSlide = 240;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
-            cryptoboxSlide=490;
+            cryptoboxSlide=580;
             result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxSlide=305;
+            cryptoboxSlide=395;
             result = true;
         }
         return result;
