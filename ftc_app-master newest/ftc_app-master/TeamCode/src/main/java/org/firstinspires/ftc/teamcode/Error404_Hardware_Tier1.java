@@ -44,10 +44,10 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected DcMotor rightRear;
     protected DcMotor leftGlyph;
     protected DcMotor rightGlyph;
-    protected Servo arm;
     protected Servo shoulder;
     protected Servo hand;
     protected Servo elbow;
+    protected Servo arm;
     protected Servo swivel;
     protected Servo leftWhiskerServo;
     protected Servo rightWhiskerServo;
