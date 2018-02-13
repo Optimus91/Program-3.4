@@ -227,7 +227,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 break;
 
-            case 13:  //Finish Glyph
+            case 13:  // Back Up
                 driveStraight("RUE",0.3,"r",0);
                 if(leftFront.getCurrentPosition()-encoder>130)
                 {
@@ -237,7 +237,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     glyphIntake("stop");
                 }
                 break;
-            case 14:
+            case 14: // Push Glyph in
                 glyphIntake("outSlow");
                 driveStraight("RUE",0.3,"f",0);
                 if(leftFront.getCurrentPosition()-encoder>150)
