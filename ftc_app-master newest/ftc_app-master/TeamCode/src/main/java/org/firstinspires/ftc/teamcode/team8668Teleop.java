@@ -35,6 +35,10 @@ public class team8668Teleop extends OpMode {
     Servo elbow;
     Servo swivel;
     Servo glyphter;
+    Servo glyphTrayTilt;
+    Servo glyphTrayMove;
+
+
 
     DigitalChannel bottom;
     DigitalChannel top;
@@ -49,6 +53,8 @@ public class team8668Teleop extends OpMode {
     double swivelPos =0.522;
     double handPos=0.7;
     double glyphterSpeed=0.5;
+    double tiltPosition=0.05;
+    double trayMovePosition=0.5;
     int encoderDelta=0;
 
     public team8668Teleop() {
@@ -75,6 +81,8 @@ public class team8668Teleop extends OpMode {
         encoderMotor.setDirection(DcMotor.Direction.FORWARD);
         telemetry.addData("","V 2");
         shoulder = hardwareMap.servo.get("shoulder");
+        glyphTrayMove = hardwareMap.servo.get("glyphMove");
+        glyphTrayTilt = hardwareMap.servo.get("glyphTilt");
         elbow = hardwareMap.servo.get("elbow");
         hand = hardwareMap.servo.get("hand");
         glyph = hardwareMap.servo.get("glyph");
@@ -225,17 +233,38 @@ public class team8668Teleop extends OpMode {
             }
         }
         glyphter.setPosition(glyphterSpeed);
+
+        //Tilting the glyph tray towards the cryptobox
+        tiltPosition+=(gamepad2.right_stick_y)*(0.001);
+        tiltPosition=Range.clip(tiltPosition, 0.05, 0.13);
+        glyphTrayTilt.setPosition(tiltPosition);
+
+        //moving the belt on the glyph tray
+        if (gamepad1.right_bumper) {
+            trayMovePosition=0;
+        }
+        else if(gamepad1.left_bumper){
+            trayMovePosition=1;
+        }
+        else{
+            trayMovePosition=0.5;
+        }
+        glyphTrayMove.setPosition(trayMovePosition);
+
+
       telemetry.addData("shoulder: ",shoulder.getPosition());
       telemetry.addData("grabber:",hand.getPosition());          //print info to telemetry
       telemetry.addData("elbow: ",elbow.getPosition());
       telemetry.addData("pusher: ",glyph.getPosition());
       telemetry.addData("swivel: ",swivel.getPosition());
       telemetry.addData("hand: ",handPos);
-      telemetry.addData("glyphter position: ", encoderMotor.getCurrentPosition());
-      telemetry.addData("glyphter position with delta: ", (encoderMotor.getCurrentPosition()-encoderDelta));
-      telemetry.addData("glyphter speed: ", glyphterSpeed);
-      telemetry.addData("glyphter bottom: ", bottom.getState());
-      telemetry.addData("glyphter top: ", top.getState());
+      telemetry.addData("glyph Tray Position: ",glyphTrayMove);
+      telemetry.addData("glyph Tray Tilt: ",glyphTrayTilt);
+      //telemetry.addData("glyphter position: ", encoderMotor.getCurrentPosition());
+      //telemetry.addData("glyphter position with delta: ", (encoderMotor.getCurrentPosition()-encoderDelta));
+      //telemetry.addData("glyphter speed: ", glyphterSpeed);
+      //telemetry.addData("glyphter bottom: ", !bottom.getState());
+      //telemetry.addData("glyphter top: ", !top.getState());
 
 
     }
