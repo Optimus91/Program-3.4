@@ -19,7 +19,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightGlyph.setDirection(REVERSE);
-            leftGlyph.setDirection(FORWARD);
+            leftGlyph.setDirection(REVERSE);
             leftGlyph.setPower(0.2);
             rightGlyph.setPower(0.2);
         }
@@ -27,7 +27,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightGlyph.setDirection(REVERSE);
-            leftGlyph.setDirection(FORWARD);
+            leftGlyph.setDirection(REVERSE);
             leftGlyph.setPower(0.5);
             rightGlyph.setPower(0.5);
         }
@@ -35,7 +35,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightGlyph.setDirection(FORWARD);
-            leftGlyph.setDirection(REVERSE);
+            leftGlyph.setDirection(FORWARD);
             leftGlyph.setPower(0);
             rightGlyph.setPower(0);
         }

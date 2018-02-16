@@ -94,7 +94,7 @@ public class team8668Teleop extends OpMode {
         top = hardwareMap.get(DigitalChannel.class, "topTouch");
         leftGlyph.setMode(RUN_USING_ENCODER);
         rightGlyph.setMode(RUN_USING_ENCODER);
-        leftGlyph.setDirection(DcMotor.Direction.REVERSE);
+        leftGlyph.setDirection(DcMotor.Direction.FORWARD);
         rightGlyph.setDirection(DcMotor.Direction.FORWARD);
         hand.setPosition(0.7);
         glyph.setPosition(0.25);
