@@ -98,7 +98,7 @@ public class team8668Teleop extends OpMode {
         rightGlyph.setDirection(DcMotor.Direction.FORWARD);
         hand.setPosition(0.7);
         glyph.setPosition(0.25);
-        arm.setPosition(0.0);
+        arm.setPosition(0.1);
         swivel.setPosition(0.5);
 
     }
@@ -132,7 +132,7 @@ public class team8668Teleop extends OpMode {
             arm.setPosition(0.79);    //move down jewel arm
         }
         else if(gamepad1.a){
-            arm.setPosition(0.0);     //move up jewel arm
+            arm.setPosition(0.1);     //move up jewel arm
         }
         if(gamepad2.y){
             shoulderPos+=0.005;       //increment shoulder servo
@@ -146,21 +146,22 @@ public class team8668Teleop extends OpMode {
         shoulderPos = Range.clip(shoulderPos,0.7,0.95); //keep shoulder servo value in given range
 
         if(gamepad2.dpad_up){
-            if (elbowPos < 0.32) {
-                elbowPos += 0.006;
-            } else {
-
-                elbowPos += 0.01;
-            }         //increment elbow out
+                elbowPos += 0.001;
+            //increment elbow out
         }
         else if(gamepad2.dpad_down) { //increment elbow in
-            if (elbowPos < 0.32) {
-                elbowPos -= 0.006;
-            } else {
-
-                elbowPos -= 0.01;
-            }
+                elbowPos -= 0.001;
         }
+        elbowPos+=gamepad2.left_stick_y/0.01;
+
+        if(gamepad2.right_stick_button){
+            elbowPos=0;
+        }
+
+        if(gamepad2.left_stick_button){
+            elbowPos=0.8;
+        }
+
         elbowPos = Range.clip(elbowPos,0,1); //keep elbow servo value in given range
 
         if(gamepad2.right_bumper){
@@ -184,6 +185,7 @@ public class team8668Teleop extends OpMode {
             swivelPos=0.64;
         }
         else {swivelPos=0.52;}
+
         Range.clip(handPos, 0.35, 0.8);
         rightFront.setPower(RF);              //Set all values to correct devices
         leftFront.setPower(LF);
@@ -195,48 +197,50 @@ public class team8668Teleop extends OpMode {
         hand.setPosition(handPos);
         rightGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
         leftGlyph.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
+
+
 //1500
-        if(top.getState() && bottom.getState() && !gamepad2.left_stick_button && !gamepad2.right_stick_button){
-            glyphterSpeed = (((-1)*(scaleInput(gamepad2.left_stick_y)/2)+0.5));
-        }
-        if(!top.getState()) {
-            if (gamepad2.left_stick_y > 0.1) {
-                glyphterSpeed = (((-1) * (scaleInput(gamepad2.left_stick_y) / 2) + 0.5));
-            }
-            else{
-                glyphterSpeed=0.5;
-            }
-        }
-        if(!bottom.getState()) {
-            encoderDelta=encoderMotor.getCurrentPosition();
-            if (gamepad2.left_stick_y < 0.1) {
-                glyphterSpeed = (((-1) * (scaleInput(gamepad2.left_stick_y) / 2) + 0.5));
-            }
-            else{
-                glyphterSpeed=0.5;
-            }
-        }
-        if(gamepad2.left_stick_button){
-            if((encoderMotor.getCurrentPosition()-encoderDelta)<1500){
-                glyphterSpeed=1;
-            }
-            else if((encoderMotor.getCurrentPosition()-encoderDelta)>1500){
-                glyphterSpeed=0;
-            }
-            }
-        if(gamepad2.right_stick_button){
-            if((encoderMotor.getCurrentPosition()-encoderDelta)<3000){
-                glyphterSpeed=1;
-            }
-            else if((encoderMotor.getCurrentPosition()-encoderDelta)>3000){
-                glyphterSpeed=0;
-            }
-        }
-        glyphter.setPosition(glyphterSpeed);
+//        if(top.getState() && bottom.getState() && !gamepad2.left_stick_button && !gamepad2.right_stick_button){
+//            glyphterSpeed = (((-1)*(scaleInput(gamepad2.left_stick_y)/2)+0.5));
+//        }
+//        if(!top.getState()) {
+//            if (gamepad2.left_stick_y > 0.1) {
+//                glyphterSpeed = (((-1) * (scaleInput(gamepad2.left_stick_y) / 2) + 0.5));
+//            }
+//            else{
+//                glyphterSpeed=0.5;
+//            }
+//        }
+//        if(!bottom.getState()) {
+//            encoderDelta=encoderMotor.getCurrentPosition();
+//            if (gamepad2.left_stick_y < 0.1) {
+//                glyphterSpeed = (((-1) * (scaleInput(gamepad2.left_stick_y) / 2) + 0.5));
+//            }
+//            else{
+//                glyphterSpeed=0.5;
+//            }
+//        }
+//        if(gamepad2.left_stick_button){
+//            if((encoderMotor.getCurrentPosition()-encoderDelta)<1500){
+//                glyphterSpeed=1;
+//            }
+//            else if((encoderMotor.getCurrentPosition()-encoderDelta)>1500){
+//                glyphterSpeed=0;
+//            }
+//            }
+//        if(gamepad2.right_stick_button){
+//            if((encoderMotor.getCurrentPosition()-encoderDelta)<3000){
+//                glyphterSpeed=1;
+//            }
+//            else if((encoderMotor.getCurrentPosition()-encoderDelta)>3000){
+//                glyphterSpeed=0;
+//            }
+//        }
+//        glyphter.setPosition(glyphterSpeed);
 
         //Tilting the glyph tray towards the cryptobox
         tiltPosition+=(gamepad2.right_stick_y)*(0.001);
-        tiltPosition=Range.clip(tiltPosition, 0.05, 0.13);
+        tiltPosition=Range.clip(tiltPosition, 0.05, 0.10);
         glyphTrayTilt.setPosition(tiltPosition);
 
         //moving the belt on the glyph tray
@@ -258,8 +262,8 @@ public class team8668Teleop extends OpMode {
       telemetry.addData("pusher: ",glyph.getPosition());
       telemetry.addData("swivel: ",swivel.getPosition());
       telemetry.addData("hand: ",handPos);
-      telemetry.addData("glyph Tray Position: ",glyphTrayMove);
-      telemetry.addData("glyph Tray Tilt: ",glyphTrayTilt);
+      telemetry.addData("glyph Tray Position: ",glyphTrayMove.getPosition());
+      telemetry.addData("glyph Tray Tilt: ",glyphTrayTilt.getPosition());
       //telemetry.addData("glyphter position: ", encoderMotor.getCurrentPosition());
       //telemetry.addData("glyphter position with delta: ", (encoderMotor.getCurrentPosition()-encoderDelta));
       //telemetry.addData("glyphter speed: ", glyphterSpeed);
