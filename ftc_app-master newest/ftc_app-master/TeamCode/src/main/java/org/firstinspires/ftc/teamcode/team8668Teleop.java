@@ -94,6 +94,8 @@ public class team8668Teleop extends OpMode {
         glyphter = hardwareMap.servo.get("glyphter");
         bottom = hardwareMap.get(DigitalChannel.class, "bottomTouch");
         top = hardwareMap.get(DigitalChannel.class, "topTouch");
+        rightFinger=hardwareMap.servo.get("rightFinger");
+        leftFinger=hardwareMap.servo.get("leftFinger");
         leftGlyph.setMode(RUN_USING_ENCODER);
         rightGlyph.setMode(RUN_USING_ENCODER);
         leftGlyph.setDirection(DcMotor.Direction.FORWARD);
@@ -102,14 +104,11 @@ public class team8668Teleop extends OpMode {
         glyph.setPosition(0.25);
         arm.setPosition(0.1);
         swivel.setPosition(0.5);
-
-        rightFinger=hardwareMap.servo.get("rightFinger");
-        leftFinger=hardwareMap.servo.get("leftFinger");
-        rightFinger.setPosition(0);
-        leftFinger.setPosition(1);
     }
     @Override
     public void loop() {
+        rightFinger.setPosition(0.2);
+        leftFinger.setPosition(0.8);
         //////////////////////////////////////////
         /////Drive Train//////////////////////////
         /////////////////////////////////////////
@@ -166,7 +165,7 @@ public class team8668Teleop extends OpMode {
             handPos=0.4;                      //open grabber
         }
         if(gamepad2.left_bumper){
-            handPos=0.7;                      //close grabber
+            handPos=0.65;                      //close grabber
         }
         if(gamepad2.right_trigger>0.05){      //increment grabber open
             handPos-=(gamepad2.right_trigger*0.001);
