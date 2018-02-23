@@ -152,15 +152,7 @@ public class team8668Teleop extends OpMode {
         else if(gamepad2.dpad_down) { //increment elbow in
                 elbowPos -= 0.001;
         }
-        elbowPos+=gamepad2.left_stick_y/0.01;
 
-        if(gamepad2.right_stick_button){
-            elbowPos=0;
-        }
-
-        if(gamepad2.left_stick_button){
-            elbowPos=0.8;
-        }
 
         elbowPos = Range.clip(elbowPos,0,1); //keep elbow servo value in given range
 
