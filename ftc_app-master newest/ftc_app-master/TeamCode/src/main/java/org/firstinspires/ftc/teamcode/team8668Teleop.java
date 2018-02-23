@@ -37,6 +37,8 @@ public class team8668Teleop extends OpMode {
     Servo glyphter;
     Servo glyphTrayTilt;
     Servo glyphTrayMove;
+    Servo rightFinger;
+    Servo leftFinger;
 
 
 
@@ -101,6 +103,10 @@ public class team8668Teleop extends OpMode {
         arm.setPosition(0.1);
         swivel.setPosition(0.5);
 
+        rightFinger=hardwareMap.servo.get("rightFinger");
+        leftFinger=hardwareMap.servo.get("leftFinger");
+        rightFinger.setPosition(0);
+        leftFinger.setPosition(1);
     }
     @Override
     public void loop() {
@@ -256,6 +262,8 @@ public class team8668Teleop extends OpMode {
       telemetry.addData("hand: ",handPos);
       telemetry.addData("glyph Tray Position: ",glyphTrayMove.getPosition());
       telemetry.addData("glyph Tray Tilt: ",glyphTrayTilt.getPosition());
+      telemetry.addData("Right Rear Position: ", rightRear.getCurrentPosition());
+      telemetry.addData("Right Front Position: ", rightFront.getCurrentPosition());
       //telemetry.addData("glyphter position: ", encoderMotor.getCurrentPosition());
       //telemetry.addData("glyphter position with delta: ", (encoderMotor.getCurrentPosition()-encoderDelta));
       //telemetry.addData("glyphter speed: ", glyphterSpeed);
