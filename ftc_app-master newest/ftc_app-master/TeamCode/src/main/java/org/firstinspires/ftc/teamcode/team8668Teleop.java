@@ -98,7 +98,7 @@ public class team8668Teleop extends OpMode {
         leftFinger=hardwareMap.servo.get("leftFinger");
         leftGlyph.setMode(RUN_USING_ENCODER);
         rightGlyph.setMode(RUN_USING_ENCODER);
-        leftGlyph.setDirection(DcMotor.Direction.FORWARD);
+        leftGlyph.setDirection(DcMotor.Direction.REVERSE);
         rightGlyph.setDirection(DcMotor.Direction.FORWARD);
         hand.setPosition(0.7);
         glyph.setPosition(0.25);
@@ -236,8 +236,8 @@ public class team8668Teleop extends OpMode {
 //        glyphter.setPosition(glyphterSpeed);
 
         //Tilting the glyph tray towards the cryptobox
-        tiltPosition+=(gamepad2.right_stick_y)*(0.001);
-        tiltPosition=Range.clip(tiltPosition, 0.05, 0.10);
+        tiltPosition+=(gamepad2.right_stick_y)*(0.003);
+        tiltPosition=Range.clip(tiltPosition, 0.05, 0.227);
         glyphTrayTilt.setPosition(tiltPosition);
 
         //moving the belt on the glyph tray
