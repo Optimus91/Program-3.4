@@ -9,10 +9,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODERS;
 
 @TeleOp(name="Wannabe Teleop", group="Teleop")
-@Disabled
+//@Disabled
 public class wannabeTeleop extends OpMode {
     ////////////////////////////////////////////
     // This is the Teleop program for driver control.
@@ -37,16 +38,16 @@ public class wannabeTeleop extends OpMode {
         leftFront = hardwareMap.dcMotor.get("leftFront");
         rightFront = hardwareMap.dcMotor.get("rightFront");
 
-        leftFront.setMode(RUN_USING_ENCODERS);
-        rightFront.setMode(RUN_USING_ENCODERS);
+        leftFront.setMode(RUN_USING_ENCODER);
+        rightFront.setMode(RUN_USING_ENCODER);
         leftFront.setDirection(DcMotor.Direction.FORWARD);
         rightFront.setDirection(DcMotor.Direction.REVERSE);
 
         leftRear = hardwareMap.dcMotor.get("leftRear");
         rightRear = hardwareMap.dcMotor.get("rightRear");
 
-        leftRear.setMode(RUN_USING_ENCODERS);
-        rightRear.setMode(RUN_USING_ENCODERS);
+        leftRear.setMode(RUN_USING_ENCODER);
+        rightRear.setMode(RUN_USING_ENCODER);
         leftRear.setDirection(DcMotor.Direction.FORWARD);
         rightRear.setDirection(DcMotor.Direction.REVERSE);
         telemetry.addData("","V 2");
